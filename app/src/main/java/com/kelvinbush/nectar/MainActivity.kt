@@ -3,11 +3,17 @@ package com.kelvinbush.nectar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.kelvinbush.nectar.NectarScreen.OnBoarding
+import com.kelvinbush.nectar.NectarScreen.Splash
+import com.kelvinbush.nectar.ui.screens.OnBoardingScreen
 import com.kelvinbush.nectar.ui.screens.SplashScreen
 import com.kelvinbush.nectar.ui.theme.NectarTheme
 
@@ -16,9 +22,26 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NectarTheme {
-                SplashScreen()
+                NectarApp()
             }
         }
+    }
+}
+
+@Composable
+fun NectarApp() {
+    val allScreens = NectarScreen.values().toList()
+    val navController = rememberNavController()
+    val backStackEntry = navController.currentBackStackEntryAsState()
+    val currentScreen = NectarScreen.fromRoute(
+        backStackEntry.value?.destination?.route
+    )
+    Scaffold { innerPadding ->
+        NavHost(navController = navController, startDestination = Splash.name) {
+            composable(Splash.name) { SplashScreen(navController) }
+            composable(OnBoarding.name) { OnBoardingScreen() }
+        }
+
     }
 }
 

@@ -1,5 +1,7 @@
 package com.kelvinbush.nectar.ui.screens
 
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,16 +13,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kelvinbush.nectar.NectarScreen.OnBoarding
+import com.kelvinbush.nectar.NectarScreen.Splash
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.theme.BGreen
-import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(navController: NavController) {
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = MaterialTheme.colors.isLight
     SideEffect {
@@ -41,7 +44,8 @@ fun SplashScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.ic_carrot),
                     contentDescription = "logo",
-                )
+
+                    )
             }
             Column {
                 Image(
@@ -52,13 +56,11 @@ fun SplashScreen() {
             }
         }
     }
-}
 
-@Composable
-@Preview
-fun See() {
-//    SplashScreen()
-    NectarTheme {
-        OnBoardingScreen()
-    }
+    Handler(Looper.getMainLooper()).postDelayed({
+        navController.navigate(OnBoarding.name) {
+            popUpTo(Splash.name) { inclusive = true }
+            launchSingleTop = true
+        }
+    }, 4000)
 }

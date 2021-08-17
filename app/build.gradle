@@ -69,4 +69,8 @@ dependencies {
 
     //compose
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
+
+    //nav
+    implementation("androidx.navigation:navigation-compose:$nav")
+
 }

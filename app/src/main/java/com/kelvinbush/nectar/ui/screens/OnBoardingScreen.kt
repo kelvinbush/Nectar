@@ -2,6 +2,7 @@ package com.kelvinbush.nectar.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -10,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 @Composable
 fun OnBoardingScreen() {
@@ -24,20 +27,16 @@ fun OnBoardingScreen() {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(
-                modifier = Modifier
-                    .height(230.dp)
-                    .width(32.dp)
-            )
             Image(
                 painter = painterResource(id = R.drawable.ic_carrot),
                 contentDescription = "logo",
                 modifier = Modifier
                     .width(49.dp)
                     .height(57.dp)
+                    .padding(bottom = 6.dp)
             )
             Text(
                 text = "Welcome",
@@ -45,13 +44,37 @@ fun OnBoardingScreen() {
             )
             Text(text = "to our store", style = MaterialTheme.typography.h1)
             Text(
-                text = "Get your groceries as fast as one hour"
+                modifier = Modifier.padding(top = 6.dp),
+                text = "Get your groceries as fast as one hour",
+                style = MaterialTheme.typography.h3
             )
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Get Started")
+            Spacer(
+                modifier = Modifier
+                    .fillMaxHeight(0.06f)
+            )
+            Button(
+                onClick = { /*TODO*/ }, modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .height(60.dp),
+                shape = RoundedCornerShape(30)
+            ) {
+                Text(text = "Get Started", style = MaterialTheme.typography.button)
             }
+            Spacer(
+                modifier = Modifier
+                    .fillMaxHeight(0.15f)
+            )
         }
 
+    }
+}
+
+@Composable
+@Preview
+fun See() {
+//    SplashScreen()
+    NectarTheme {
+        OnBoardingScreen()
     }
 }
 

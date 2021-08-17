@@ -3,6 +3,7 @@ buildscript {
     ext {
         compose_version = '1.0.1'
         accompanist_version = '0.16.1'
+        nav = '2.4.0-alpha06'
     }
     repositories {
         google()
