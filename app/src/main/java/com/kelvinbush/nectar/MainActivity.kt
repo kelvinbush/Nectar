@@ -7,6 +7,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -16,10 +17,18 @@ import com.kelvinbush.nectar.NectarScreen.Splash
 import com.kelvinbush.nectar.ui.screens.OnBoardingScreen
 import com.kelvinbush.nectar.ui.screens.SplashScreen
 import com.kelvinbush.nectar.ui.theme.NectarTheme
+import android.view.WindowManager
+import android.view.Window
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val w: Window = window
+        w.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
         setContent {
             NectarTheme {
                 NectarApp()
