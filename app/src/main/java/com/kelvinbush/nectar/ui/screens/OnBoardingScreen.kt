@@ -55,7 +55,7 @@ fun OnBoardingScreen(navController: NavController) {
             )
             Button(
                 onClick = {
-                    navController.navigate(Start.name)
+                    navController.navigate(Start.name) { launchSingleTop = true }
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.85f)

@@ -6,6 +6,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.kelvinbush.nectar.R
 
@@ -40,6 +41,33 @@ val Typography = Typography(
         letterSpacing = 0.sp,
         fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold))
     ),
+    h2 = TextStyle(
+        fontSize = 26.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Color(0xff030303),
+        lineHeight = 29.sp,
+        letterSpacing = 0.sp,
+        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
+        textAlign = TextAlign.Start
+    ),
+    h4 = TextStyle(
+        fontSize = 18.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Color(0xff030303),
+        lineHeight = 29.sp,
+        letterSpacing = 0.sp,
+        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
+        textAlign = TextAlign.Start
+    ),
+    caption = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = Color(0xff828282),
+        lineHeight = 0.sp,
+        letterSpacing = 0.sp,
+        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
+        textAlign = TextAlign.Center
+    )
     /* Other default text styles to override
     button = TextStyle(
         fontFamily = FontFamily.Default,

@@ -3,10 +3,12 @@ package com.kelvinbush.nectar.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -14,16 +16,20 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.ui.components.Btn
+import com.kelvinbush.nectar.ui.components.Leading
 
 private const val TAG = "GetStartedScreen"
 
 @Composable
 fun GetStartedScreen(navController: NavController, systemUiController: SystemUiController) {
+    var phoneNumber by remember { mutableStateOf("") }
     SideEffect {
         systemUiController.setSystemBarsColor(
             color = Color.Transparent,
@@ -63,25 +69,72 @@ fun GetStartedScreen(navController: NavController, systemUiController: SystemUiC
                 )
             }
         }
+        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom,
             modifier = Modifier
-                .fillMaxWidth(0.85f)
-                .fillMaxHeight(0.5f)
+                .fillMaxWidth()
+                .fillMaxHeight(0.77f)
+//                .padding(bottom = 45.dp)
         ) {
             Text(
                 text = "Get your groceries",
-                style = MaterialTheme.typography.h1,
-                color = Color(0xff030303),
-                textAlign = TextAlign.Start
+                style = MaterialTheme.typography.h2,
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
             )
             Text(
                 text = "with nectar",
-                style = MaterialTheme.typography.h1,
-                color = Color(0xff030303),
-                textAlign = TextAlign.Start
+                style = MaterialTheme.typography.h2,
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            TextField(
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it },
+                leadingIcon = { Leading() },
+                textStyle = MaterialTheme.typography.h4,
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxWidth(0.85f),
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = Color.Transparent,
+                    cursorColor = Color(0xff7c7c7c),
+                    focusedIndicatorColor = Color(0xffe2e2e2),
+                    unfocusedIndicatorColor = Color(0xffe2e2e2)
+                ),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Phone,
+                    imeAction = ImeAction.Done
+                )
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = "Or connect with social media", style = MaterialTheme.typography.caption)
+            Spacer(modifier = Modifier.height(10.dp))
+            Btn(
+                id = R.drawable.ic_google,
+                text = "Continue with Google",
+                clicked = {},
+                color = Color(0xff5383ec)
+            )
+            Btn(
+                id = R.drawable.ic_fb,
+                text = "Continue with Facebook",
+                clicked = { /*TODO*/ },
+                color = Color(0xff4a66ac)
             )
         }
-
     }
 }
+
+/*
+@Composable
+@Preview
+fun Get(){
+    NectarTheme {
+        GetStartedScreen()
+    }
+}*/
