@@ -1,24 +1,22 @@
 package com.kelvinbush.nectar
 
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kelvinbush.nectar.NectarScreen.OnBoarding
-import com.kelvinbush.nectar.NectarScreen.Splash
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kelvinbush.nectar.NectarScreen.*
+import com.kelvinbush.nectar.ui.screens.GetStartedScreen
 import com.kelvinbush.nectar.ui.screens.OnBoardingScreen
 import com.kelvinbush.nectar.ui.screens.SplashScreen
 import com.kelvinbush.nectar.ui.theme.NectarTheme
-import android.view.WindowManager
-import android.view.Window
 
 
 class MainActivity : ComponentActivity() {
@@ -39,30 +37,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NectarApp() {
-    val allScreens = NectarScreen.values().toList()
+    val systemUiController = rememberSystemUiController()
+    val allScreens = values().toList()
     val navController = rememberNavController()
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = NectarScreen.fromRoute(
         backStackEntry.value?.destination?.route
     )
     Scaffold { innerPadding ->
-        NavHost(navController = navController, startDestination = Splash.name) {
-            composable(Splash.name) { SplashScreen(navController) }
-            composable(OnBoarding.name) { OnBoardingScreen() }
+        NavHost(navController = navController, startDestination = Start.name) {
+            composable(Splash.name) { SplashScreen(navController, systemUiController) }
+            composable(OnBoarding.name) { OnBoardingScreen(navController) }
+            composable(Start.name) { GetStartedScreen(navController, systemUiController) }
         }
 
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    NectarTheme {
-        Greeting("Android")
     }
 }

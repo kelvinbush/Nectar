@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen.OnBoarding
 import com.kelvinbush.nectar.NectarScreen.Splash
@@ -28,15 +30,13 @@ import com.kelvinbush.nectar.ui.theme.BGreen
 
 
 @Composable
-fun SplashScreen(navController: NavController) {
-    val systemUiController = rememberSystemUiController()
-    val useDarkIcons = MaterialTheme.colors.isLight
-    /* SideEffect {
-         systemUiController.setSystemBarsColor(
-             color = BGreen,
-             darkIcons = false
-         )
-     }*/
+fun SplashScreen(navController: NavController, systemUiController: SystemUiController) {
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = BGreen,
+            darkIcons = false
+        )
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -81,5 +81,5 @@ fun SplashScreen(navController: NavController) {
             popUpTo(Splash.name) { inclusive = true }
             launchSingleTop = true
         }
-    }, 5000)
+    }, 2000)
 }
