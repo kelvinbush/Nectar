@@ -7,7 +7,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +23,7 @@ import com.google.accompanist.systemuicontroller.SystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.Btn
 import com.kelvinbush.nectar.ui.components.Leading
+import com.kelvinbush.nectar.ui.components.fieldColors
 
 private const val TAG = "GetStartedScreen"
 
@@ -98,12 +98,7 @@ fun GetStartedScreen(navController: NavController, systemUiController: SystemUiC
                 modifier = Modifier
                     .background(Color.White)
                     .fillMaxWidth(0.85f),
-                colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color(0xfffcfcfc),
-                    cursorColor = Color(0xff7c7c7c),
-                    focusedIndicatorColor = Color(0xffe2e2e2),
-                    unfocusedIndicatorColor = Color(0xffe2e2e2)
-                ),
+                colors = fieldColors(),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Phone,
