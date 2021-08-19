@@ -38,7 +38,7 @@ fun GetStartedScreen(navController: NavController, systemUiController: SystemUiC
     }
     Column(
         modifier = Modifier
-            .background(Color.White)
+            .background(Color(0xfffcfcfc))
             .fillMaxSize()
     ) {
         Box(
@@ -76,7 +76,6 @@ fun GetStartedScreen(navController: NavController, systemUiController: SystemUiC
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.77f)
-//                .padding(bottom = 45.dp)
         ) {
             Text(
                 text = "Get your groceries",
@@ -100,7 +99,7 @@ fun GetStartedScreen(navController: NavController, systemUiController: SystemUiC
                     .background(Color.White)
                     .fillMaxWidth(0.85f),
                 colors = TextFieldDefaults.textFieldColors(
-                    backgroundColor = Color.Transparent,
+                    backgroundColor = Color(0xfffcfcfc),
                     cursorColor = Color(0xff7c7c7c),
                     focusedIndicatorColor = Color(0xffe2e2e2),
                     unfocusedIndicatorColor = Color(0xffe2e2e2)
