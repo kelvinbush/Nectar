@@ -76,6 +76,15 @@ val Typography = Typography(
         letterSpacing = 0.sp,
         fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.SemiBold)),
         textAlign = TextAlign.End
+    ),
+    h5 = TextStyle(
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Medium,
+        color = Color(0xff7c7c7c),
+        lineHeight = 1.1.sp,
+        letterSpacing = 0.sp,
+        fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.Medium)),
+        textAlign = TextAlign.Start
     )
     /* Other default text styles to override
     button = TextStyle(

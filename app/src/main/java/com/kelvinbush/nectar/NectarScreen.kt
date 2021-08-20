@@ -4,7 +4,8 @@ enum class NectarScreen {
     OnBoarding,
     Start,
     Login,
-    Splash;
+    Splash,
+    Signup;
 
     companion object {
         fun fromRoute(route: String?): NectarScreen =
@@ -13,6 +14,7 @@ enum class NectarScreen {
                 Splash.name -> Splash
                 Start.name -> Start
                 Login.name -> Login
+                Signup.name -> Signup
                 null -> OnBoarding
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

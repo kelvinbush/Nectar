@@ -30,8 +30,9 @@ import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.fieldColors
 
 @Composable
-fun LoginScreen(systemUiController: SystemUiController) {
+fun SignupScreen(systemUiController: SystemUiController) {
     var email by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
 
@@ -52,17 +53,36 @@ fun LoginScreen(systemUiController: SystemUiController) {
         Image(painter = painterResource(id = R.drawable.ic_min_carrot), contentDescription = null)
         Spacer(modifier = Modifier.fillMaxHeight(0.13f))
         Text(
-            text = "Login", style = MaterialTheme.typography.h2, modifier = Modifier
+            text = "Sign Up", style = MaterialTheme.typography.h2, modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .padding(bottom = 6.dp)
         )
         Text(
-            text = "Enter your email and password",
+            text = "Enter your credentials to continue",
             style = MaterialTheme.typography.h3,
             color = Color(0xff727272),
             textAlign = TextAlign.Start, modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .padding(bottom = 20.dp)
+        )
+        Text(
+            text = "Username", style = MaterialTheme.typography.h3,
+            color = Color(0xff727272),
+            textAlign = TextAlign.Start,
+            lineHeight = 29.sp, modifier = Modifier
+                .fillMaxWidth(0.85f)
+        )
+        TextField(
+            value = username, onValueChange = { username = it },
+            textStyle = MaterialTheme.typography.h4,
+            modifier = Modifier
+                .background(Color.Transparent)
+                .fillMaxWidth(0.85f),
+            colors = fieldColors(), singleLine = true,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            )
         )
         Text(
             text = "Email", style = MaterialTheme.typography.h3,
@@ -117,19 +137,36 @@ fun LoginScreen(systemUiController: SystemUiController) {
                 )
             }
         )
-        Text(
-            text = "Forgot Password?", style = MaterialTheme.typography.h6,
-            modifier = Modifier
-                .fillMaxWidth(0.85f)
-                .padding(bottom = 22.dp)
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(0.85f),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Text(text = "By continuing you agree to our ", style = MaterialTheme.typography.h5)
+            Text(
+                text = "Terms of Service",
+                style = MaterialTheme.typography.h5,
+                color = MaterialTheme.colors.primary
+            )
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(0.85f),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Text(text = "and ", style = MaterialTheme.typography.h5)
+            Text(
+                text = "Privacy Policy.",
+                style = MaterialTheme.typography.h5,
+                color = MaterialTheme.colors.primary
+            )
+        }
+        Spacer(modifier = Modifier.height(22.dp))
         Button(
             onClick = { /*TODO*/ }, modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .height(60.dp),
             shape = RoundedCornerShape(30)
         ) {
-            Text(text = "Login", style = MaterialTheme.typography.button)
+            Text(text = "Sign Up", style = MaterialTheme.typography.button)
         }
         Spacer(modifier = Modifier.height(22.dp))
         Row(
@@ -138,7 +175,7 @@ fun LoginScreen(systemUiController: SystemUiController) {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Don't have an account?",
+                text = "Already have an account?",
                 style = MaterialTheme.typography.h6,
                 fontFamily = FontFamily(
                     Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)
@@ -147,7 +184,7 @@ fun LoginScreen(systemUiController: SystemUiController) {
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text(
-                text = "Signup",
+                text = "Sign in",
                 style = MaterialTheme.typography.h6,
                 fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
                 fontWeight = FontWeight.SemiBold,

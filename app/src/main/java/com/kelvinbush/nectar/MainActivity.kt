@@ -13,10 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen.*
-import com.kelvinbush.nectar.ui.screens.GetStartedScreen
-import com.kelvinbush.nectar.ui.screens.LoginScreen
-import com.kelvinbush.nectar.ui.screens.OnBoardingScreen
-import com.kelvinbush.nectar.ui.screens.SplashScreen
+import com.kelvinbush.nectar.ui.screens.*
 import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
@@ -46,11 +43,12 @@ fun NectarApp() {
         backStackEntry.value?.destination?.route
     )
     Scaffold { innerPadding ->
-        NavHost(navController = navController, startDestination = Login.name) {
+        NavHost(navController = navController, startDestination = Signup.name) {
             composable(Splash.name) { SplashScreen(navController, systemUiController) }
             composable(OnBoarding.name) { OnBoardingScreen(navController) }
             composable(Start.name) { GetStartedScreen(navController, systemUiController) }
             composable(Login.name) { LoginScreen(systemUiController) }
+            composable(Signup.name) { SignupScreen(systemUiController = systemUiController) }
         }
 
     }
