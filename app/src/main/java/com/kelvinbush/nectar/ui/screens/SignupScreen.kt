@@ -25,12 +25,17 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.SystemUiController
+import com.kelvinbush.nectar.NectarScreen
+import com.kelvinbush.nectar.NectarScreen.Login
+import com.kelvinbush.nectar.NectarScreen.Start
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.fieldColors
 
 @Composable
-fun SignupScreen(systemUiController: SystemUiController) {
+fun SignupScreen(systemUiController: SystemUiController, navController: NavController) {
     var email by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -161,13 +166,15 @@ fun SignupScreen(systemUiController: SystemUiController) {
         }
         Spacer(modifier = Modifier.height(22.dp))
         Button(
-            onClick = { /*TODO*/ }, modifier = Modifier
+            onClick = { navController.navigate(Login.name) { launchSingleTop = true } },
+            modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .height(60.dp),
             shape = RoundedCornerShape(30)
         ) {
             Text(text = "Sign Up", style = MaterialTheme.typography.button)
         }
+
         Spacer(modifier = Modifier.height(22.dp))
         Row(
             modifier = Modifier

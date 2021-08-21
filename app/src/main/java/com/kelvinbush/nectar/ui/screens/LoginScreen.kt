@@ -25,12 +25,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.SystemUiController
+import com.kelvinbush.nectar.NectarScreen.Start
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.fieldColors
 
 @Composable
-fun LoginScreen(systemUiController: SystemUiController) {
+fun LoginScreen(systemUiController: SystemUiController, navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
@@ -124,7 +126,8 @@ fun LoginScreen(systemUiController: SystemUiController) {
                 .padding(bottom = 22.dp)
         )
         Button(
-            onClick = { /*TODO*/ }, modifier = Modifier
+            onClick = { navController.navigate(Start.name) { launchSingleTop = true } },
+            modifier = Modifier
                 .fillMaxWidth(0.85f)
                 .height(60.dp),
             shape = RoundedCornerShape(30)

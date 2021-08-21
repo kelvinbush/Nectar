@@ -13,6 +13,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.kelvinbush.nectar.NectarScreen
+import com.kelvinbush.nectar.NectarScreen.Signup
 import com.kelvinbush.nectar.NectarScreen.Start
 import com.kelvinbush.nectar.R
 
@@ -55,7 +57,7 @@ fun OnBoardingScreen(navController: NavController) {
             )
             Button(
                 onClick = {
-                    navController.navigate(Start.name) { launchSingleTop = true }
+                    navController.navigate(Signup.name) { launchSingleTop = true }
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.85f)
