@@ -86,16 +86,13 @@ val Typography = Typography(
         fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.Medium)),
         textAlign = TextAlign.Start
     )
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
-    ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    )
-    */
+)
+val searchText = TextStyle(
+    fontSize = 14.sp,
+    fontWeight = FontWeight.SemiBold,
+    color = Color(0xff7C7C7C),
+    lineHeight = 0.sp,
+    letterSpacing = 0.sp,
+    fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
+    textAlign = TextAlign.Start
 )
