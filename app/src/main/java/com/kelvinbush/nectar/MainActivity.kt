@@ -51,7 +51,7 @@ fun NectarApp() {
     Scaffold { innerPadding ->
         NavHost(navController = navController, startDestination = Shop.name) {
             composable(Splash.name) { SplashScreen(navController, systemUiController) }
-            composable(OnBoarding.name) { OnBoardingScreen(navController) }
+            composable(OnBoarding.name) { OnBoardingScreen(/*navController*/) }
             composable(Start.name) { GetStartedScreen(navController, systemUiController) }
             composable(Login.name) { LoginScreen(systemUiController, navController) }
             composable(Signup.name) {
