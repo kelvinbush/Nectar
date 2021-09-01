@@ -87,12 +87,21 @@ val Typography = Typography(
         textAlign = TextAlign.Start
     )
 )
-val searchText = TextStyle(
-    fontSize = 14.sp,
+val itemNameTextStyle = TextStyle(
+    fontSize = 16.sp,
+    fontWeight = FontWeight.Bold,
+    color = Color(0xff181725),
+    lineHeight = 18.sp,
+    letterSpacing = 0.1.sp,
+    fontFamily = FontFamily(Font(R.font.gilroybold, weight = FontWeight.Bold)),
+    textAlign = TextAlign.Start
+)
+val itemPriceTextStyle = TextStyle(
+    fontSize = 18.sp,
     fontWeight = FontWeight.SemiBold,
-    color = Color(0xff7C7C7C),
-    lineHeight = 0.sp,
-    letterSpacing = 0.sp,
+    color = Color(0xff181725),
+    lineHeight = 18.sp,
+    letterSpacing = 0.1.sp,
     fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
     textAlign = TextAlign.Start
 )

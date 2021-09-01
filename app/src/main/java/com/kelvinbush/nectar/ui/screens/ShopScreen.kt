@@ -20,6 +20,7 @@ fun ShopScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
+            Spacer(modifier = Modifier.fillMaxHeight(0.05f))
             Image(
                 painter = painterResource(id = R.drawable.ic_min_carrot),
                 contentDescription = null,
@@ -29,7 +30,9 @@ fun ShopScreen() {
             )
             Row(
                 horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth(0.85f)
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .padding(vertical = 8.dp)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_location),
