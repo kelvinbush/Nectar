@@ -2,7 +2,6 @@ package com.kelvinbush.nectar.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -15,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
@@ -60,33 +60,39 @@ fun FoodItemComposable() {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
-                painter = painterResource(id = R.drawable.apple), contentDescription = null,
-                modifier = Modifier.background(Color(0xffffffff))
+                painter = painterResource(id = R.drawable.strawberries), contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxHeight(0.5f)
+                    .fillMaxWidth(0.9f)
             )
             Text(
                 text = "Red Apple", style = itemNameTextStyle,
                 modifier = Modifier.fillMaxWidth(0.9f)
+                    .padding(bottom = 2.dp)
             )
             Text(
                 text = "1kg, price", style = MaterialTheme.typography.h5,
                 modifier = Modifier.fillMaxWidth(0.9f)
+                    .padding(bottom = 8.dp)
             )
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(0.9f)
             ) {
                 Text(text = "$4.99", style = itemPriceTextStyle)
                 Button(
-                    onClick = { /*TODO*/ },
                     modifier = Modifier
-                        .height(46.dp)
-                        .width(46.dp),
-                    shape = RoundedCornerShape(17)
+                        .height(36.dp)
+                        .width(36.dp),
+                    onClick = {},
+                    shape = RoundedCornerShape(23),
+                    contentPadding = PaddingValues(5.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_add),
                         contentDescription = null,
-                        modifier = Modifier.fillMaxSize(0.7f)
                     )
                 }
             }
