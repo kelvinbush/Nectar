@@ -20,19 +20,11 @@ fun BottomNav() {
         backgroundColor = Color.White,
         modifier = Modifier.height(73.dp)
     ) {
-        BottomNavItem(
-            text = "Shop",
-            modifier = Modifier.padding(start = 16.dp),
-            id = R.drawable.shop
-        )
-        BottomNavItem(text = "Explore", modifier = Modifier, id = R.drawable.explore)
-        BottomNavItem(text = "Cart", modifier = Modifier, id = R.drawable.cart)
-        BottomNavItem(text = "Favourite", modifier = Modifier, id = R.drawable.favorite)
-        BottomNavItem(
-            text = "Account",
-            modifier = Modifier.padding(end = 16.dp),
-            id = R.drawable.account
-        )
+        BottomNavItem("Shop", Modifier.padding(start = 16.dp), R.drawable.shop)
+        BottomNavItem("Explore", Modifier, R.drawable.explore)
+        BottomNavItem("Cart", Modifier, R.drawable.cart)
+        BottomNavItem("Favourite", Modifier, R.drawable.favorite)
+        BottomNavItem("Account", Modifier.padding(end = 16.dp), R.drawable.account)
     }
 }
 
