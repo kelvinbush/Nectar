@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.NectarScreen.OnBoarding
 import com.kelvinbush.nectar.NectarScreen.Splash
 import com.kelvinbush.nectar.R
@@ -77,7 +78,7 @@ fun SplashScreen(navController: NavController, systemUiController: SystemUiContr
     }
 
     Handler(Looper.getMainLooper()).postDelayed({
-        navController.navigate(OnBoarding.name) {
+        navController.navigate(NectarScreen.Start.name) {
             popUpTo(Splash.name) { inclusive = true }
             launchSingleTop = true
         }

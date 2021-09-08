@@ -1,63 +1,74 @@
 package com.kelvinbush.nectar.ui.screens
 
-import androidx.compose.animation.*
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
-import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.Screen
 
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
 fun PagerScreen() {
-    val pagerState = rememberPagerState(pageCount = 10)
-    Column(modifier = Modifier.fillMaxHeight(0.45f), verticalArrangement = Arrangement.Center) {
-        /* HorizontalPager(state = pagerState) { page ->
-             Column(
-                 modifier = Modifier.fillMaxHeight(0.5f),
-                 horizontalAlignment = Alignment.CenterHorizontally
-             ) {*/
-        AnimatedVisibility(
-            visible = true,
-            enter = slideInHorizontally(
-                // Offsets the content by 1/3 of its width to the left, and slide towards right
-                initialOffsetX = { fullWidth -> -fullWidth / 3 },
-                // Overwrites the default animation with tween for this slide animation.
-                animationSpec = tween(durationMillis = 200)
-            ) + fadeIn(
-                // Overwrites the default animation with tween
-                animationSpec = tween(durationMillis = 200)
-            ),
-            exit = slideOutHorizontally(
-                // Overwrites the ending position of the slide-out to 200 (pixels) to the right
-                targetOffsetX = { 200 },
-                animationSpec = spring(stiffness = Spring.StiffnessHigh)
-            ) + fadeOut()
-        ) {
-            // Content that needs to appear/disappear goes here:
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .requiredHeight(200.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.carousel_1),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(text = "Page: $")
+    val navController = rememberNavController()
+    val bottomItems = listOf(
+        Screen.Shop,
+        Screen.Signup,
+        Screen.Login
+    )
+    Scaffold(
+        bottomBar = {
+            BottomNavigation {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+                bottomItems.forEach { screen ->
+                    BottomNavigationItem(
+                        icon = { Icon(painterResource(screen.drawableId), null) },
+                        label = { Text(stringResource(screen.resourceId)) },
+                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                // Pop up to the start destination of the graph to
+                                // avoid building up a large stack of destinations
+                                // on the back stack as users select items
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                // Avoid multiple copies of the same destination when
+                                // reselecting the same item
+                                launchSingleTop = true
+                                // Restore state when reselecting a previously selected item
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
             }
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController,
+            startDestination = Screen.Shop.route,
+            Modifier.padding(innerPadding)
+        ) {
+            composable(Screen.Shop.route) { ShopScreen(navController) }
+            composable(Screen.Login.route) {
+                LoginScreen(
+                    navController = navController
+                )
+            }
+            composable(Screen.Signup.route) { SignupScreen(navController) }
         }
     }
 }

@@ -13,16 +13,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.kelvinbush.nectar.NectarScreen
-import com.kelvinbush.nectar.NectarScreen.Signup
-import com.kelvinbush.nectar.NectarScreen.Start
+import androidx.navigation.NavHostController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.img), contentDescription = null,
@@ -76,11 +73,11 @@ fun OnBoardingScreen() {
 
     }
 }
-@Preview
+/*@Preview
 @Composable
 fun SeeBoard(){
     NectarTheme() {
-        OnBoardingScreen()
+        OnBoardingScreen(*//*navController*//*)
     }
-}
+}*/
 

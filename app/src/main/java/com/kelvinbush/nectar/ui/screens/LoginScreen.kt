@@ -32,17 +32,17 @@ import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.fieldColors
 
 @Composable
-fun LoginScreen(systemUiController: SystemUiController, navController: NavController) {
+fun LoginScreen(/*systemUiController: SystemUiController, */navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
 
-    SideEffect {
+   /* SideEffect {
         systemUiController.setSystemBarsColor(
             color = Color.Transparent,
             darkIcons = true
         )
-    }
+    }*/
     Column(
         modifier = Modifier
             .fillMaxSize()

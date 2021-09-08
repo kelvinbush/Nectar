@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.accompanist.systemuicontroller.SystemUiController
+import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.Btn
 import com.kelvinbush.nectar.ui.components.Leading
@@ -28,14 +28,14 @@ import com.kelvinbush.nectar.ui.components.fieldColors
 private const val TAG = "GetStartedScreen"
 
 @Composable
-fun GetStartedScreen(navController: NavController, systemUiController: SystemUiController) {
+fun GetStartedScreen(navController: NavController/*, systemUiController: SystemUiController*/) {
     var phoneNumber by remember { mutableStateOf("") }
-    SideEffect {
+    /*SideEffect {
         systemUiController.setSystemBarsColor(
             color = Color.Transparent,
             darkIcons = true
         )
-    }
+    }*/
     Column(
         modifier = Modifier
             .background(Color(0xfffcfcfc))
@@ -117,7 +117,11 @@ fun GetStartedScreen(navController: NavController, systemUiController: SystemUiC
             Btn(
                 id = R.drawable.ic_fb,
                 text = "Continue with Facebook",
-                clicked = { /*TODO*/ },
+                clicked = {
+                    navController.navigate(NectarScreen.Pager.name) {
+                        launchSingleTop = true
+                    }
+                },
                 color = Color(0xff4a66ac)
             )
         }

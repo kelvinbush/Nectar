@@ -11,16 +11,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.ui.components.BottomNav
+import com.kelvinbush.nectar.Screen
 import com.kelvinbush.nectar.ui.components.CategoryComponent
 import com.kelvinbush.nectar.ui.components.SearchTextField
 
 @Composable
-fun ShopScreen() {
+fun ShopScreen(navController1: NavController) {
     val items = (0..5).toList()
     var searchItem by remember { mutableStateOf("") }
-    Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = { BottomNav() }) {
+    Scaffold(modifier = Modifier.fillMaxSize(),
+       ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier

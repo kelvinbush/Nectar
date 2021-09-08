@@ -1,17 +1,25 @@
 package com.kelvinbush.nectar.ui.components
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.Screen
+import com.kelvinbush.nectar.ui.screens.*
 
 @Composable
 fun BottomNav() {
@@ -30,15 +38,16 @@ fun BottomNav() {
 
 @Composable
 fun BottomNavItem(text: String, modifier: Modifier, id: Int) {
-    Column(
-        modifier = modifier.fillMaxHeight(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            painter = painterResource(id = id),
-            contentDescription = null
-        )
-        Text(text = text, textAlign = TextAlign.Center)
-    }
+    /* Column(
+         modifier = modifier.fillMaxHeight(),
+         verticalArrangement = Arrangement.Center,
+         horizontalAlignment = Alignment.CenterHorizontally
+     ) {
+         Icon(
+             painter = painterResource(id = id),
+             contentDescription = null
+         )
+         Text(text = text, textAlign = TextAlign.Center)
+     }*/
+
 }
