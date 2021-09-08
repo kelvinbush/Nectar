@@ -16,7 +16,7 @@ import com.kelvinbush.nectar.R
 @Composable
 fun BottomNav() {
     BottomNavigation(
-        elevation = 8.dp,
+        elevation = 12.dp,
         backgroundColor = Color.White,
         modifier = Modifier.height(73.dp)
     ) {
