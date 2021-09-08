@@ -60,7 +60,7 @@ fun FoodItemComposable() {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
-                painter = painterResource(id = R.drawable.strawberries), contentDescription = null,
+                painter = painterResource(id = R.drawable.banana), contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxHeight(0.5f)
@@ -87,7 +87,7 @@ fun FoodItemComposable() {
                         .height(36.dp)
                         .width(36.dp),
                     onClick = {},
-                    shape = RoundedCornerShape(23),
+                    shape = RoundedCornerShape(33),
                     contentPadding = PaddingValues(5.dp)
                 ) {
                     Image(
