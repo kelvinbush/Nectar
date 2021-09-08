@@ -20,61 +20,33 @@ fun BottomNav() {
         backgroundColor = Color.White,
         modifier = Modifier.height(73.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(start = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(painter = painterResource(id = R.drawable.shop), contentDescription = null)
-            Text(text = "Shop", textAlign = TextAlign.Center)
-        }
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.explore),
-                contentDescription = null
-            )
-            Text(text = "Explore", textAlign = TextAlign.Center)
-        }
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.cart),
-                contentDescription = null
-            )
-            Text(text = "Cart", textAlign = TextAlign.Center)
-        }
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.favorite),
-                contentDescription = null
-            )
-            Text(text = "Favourite", textAlign = TextAlign.Center)
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxHeight()
-                .padding(end = 16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.account),
-                contentDescription = null
-            )
-            Text(text = "Account", textAlign = TextAlign.Center)
-        }
+        BottomNavItem(
+            text = "Shop",
+            modifier = Modifier.padding(start = 16.dp),
+            id = R.drawable.shop
+        )
+        BottomNavItem(text = "Explore", modifier = Modifier, id = R.drawable.explore)
+        BottomNavItem(text = "Cart", modifier = Modifier, id = R.drawable.cart)
+        BottomNavItem(text = "Favourite", modifier = Modifier, id = R.drawable.favorite)
+        BottomNavItem(
+            text = "Account",
+            modifier = Modifier.padding(end = 16.dp),
+            id = R.drawable.account
+        )
+    }
+}
+
+@Composable
+fun BottomNavItem(text: String, modifier: Modifier, id: Int) {
+    Column(
+        modifier = modifier.fillMaxHeight(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Icon(
+            painter = painterResource(id = id),
+            contentDescription = null
+        )
+        Text(text = text, textAlign = TextAlign.Center)
     }
 }
