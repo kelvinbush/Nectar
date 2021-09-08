@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.ui.components.BottomNav
 import com.kelvinbush.nectar.ui.components.CategoryComponent
 import com.kelvinbush.nectar.ui.components.SearchTextField
 
@@ -19,7 +20,7 @@ import com.kelvinbush.nectar.ui.components.SearchTextField
 fun ShopScreen() {
     val items = (0..5).toList()
     var searchItem by remember { mutableStateOf("") }
-    Scaffold(modifier = Modifier.fillMaxSize()) {
+    Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = { BottomNav() }) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
