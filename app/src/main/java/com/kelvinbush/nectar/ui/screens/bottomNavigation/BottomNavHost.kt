@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -30,14 +32,21 @@ fun BottomNavHost() {
         bottomBar = {
             BottomNavigation(
                 backgroundColor = Color.White,
-                elevation = 8.dp
+                elevation = 8.dp,
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 bottomItems.forEach { screen ->
                     BottomNavigationItem(
                         icon = { Icon(painterResource(screen.drawableId), null) },
-                        label = { Text(stringResource(screen.resourceId)) },
+                        label = {
+                            Text(stringResource(screen.resourceId),
+                                color = if (currentDestination?.hierarchy?.any {
+                                        it.route == screen.route
+                                    } == true)
+                                    MaterialTheme.colors.primary else Color.Black,
+                                textAlign = TextAlign.Start)
+                        },
                         selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                         onClick = {
                             navController.navigate(screen.route) {
