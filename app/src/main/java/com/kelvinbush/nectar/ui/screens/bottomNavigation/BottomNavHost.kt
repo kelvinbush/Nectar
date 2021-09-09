@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -30,7 +31,7 @@ fun BottomNavHost() {
     )
     Scaffold(
         bottomBar = {
-            BottomNavigation {
+            BottomNavigation(backgroundColor = Color.White) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 bottomItems.forEach { screen ->
@@ -47,12 +48,15 @@ fun BottomNavHost() {
                                     saveState = true
                                 }
                                 // Avoid multiple copies of the same destination when
-                                // reselecting the same item
+                                // re-selecting the same item
                                 launchSingleTop = true
-                                // Restore state when reselecting a previously selected item
+                                // Restore state when re-selecting a previously selected item
                                 restoreState = true
                             }
-                        }
+                        },
+                        alwaysShowLabel = true,
+                        selectedContentColor = MaterialTheme.colors.primary,
+                        unselectedContentColor = Color.Black
                     )
                 }
             }
