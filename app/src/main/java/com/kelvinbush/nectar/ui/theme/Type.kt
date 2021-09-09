@@ -116,6 +116,22 @@ val seeAllTextStyle = TextStyle(
     fontSize = 16.sp,
     fontWeight = FontWeight.SemiBold,
     color = Color(0xff53B175),
-    fontFamily = FontFamily(Font(R.font.gilroybold, weight = FontWeight.SemiBold)),
+    fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
     textAlign = TextAlign.Start
+)
+val headerTextStyle = TextStyle(
+    fontSize = 20.sp,
+    fontWeight = FontWeight.Bold,
+    color = Color(0xff181725),
+    fontFamily = FontFamily(Font(R.font.gilroybold, weight = FontWeight.Bold)),
+    textAlign = TextAlign.Start,
+    lineHeight = 18.sp
+)
+val categoryTextStyle = TextStyle(
+    fontSize = 16.sp,
+    fontWeight = FontWeight.Bold,
+    color = Color(0xff181725),
+    fontFamily = FontFamily(Font(R.font.gilroybold, weight = FontWeight.Bold)),
+    textAlign = TextAlign.Center,
+    lineHeight = 22.sp
 )

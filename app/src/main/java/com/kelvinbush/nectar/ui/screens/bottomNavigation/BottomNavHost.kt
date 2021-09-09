@@ -33,6 +33,7 @@ fun BottomNavHost() {
             BottomNavigation(
                 backgroundColor = Color.White,
                 elevation = 8.dp,
+                modifier = Modifier.height(62.dp)
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
@@ -65,7 +66,8 @@ fun BottomNavHost() {
                         },
                         alwaysShowLabel = true,
                         selectedContentColor = MaterialTheme.colors.primary,
-                        unselectedContentColor = Color.Black
+                        unselectedContentColor = Color.Black,
+                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
                     )
                 }
             }
