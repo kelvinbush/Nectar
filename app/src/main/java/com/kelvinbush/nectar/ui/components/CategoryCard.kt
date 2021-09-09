@@ -34,7 +34,10 @@ fun CategoryCard(bgColor: Color, imageUrl: String, text: String) {
                 painter = rememberImagePainter(data = imageUrl,
                     builder = {
                         crossfade(true)
-                    }), contentDescription = null
+                    }), contentDescription = null,
+                modifier = Modifier
+                    .height(75.dp)
+                    .width(112.dp)
             )
             Spacer(modifier = Modifier.fillMaxHeight(0.2f))
             Text(text = text, softWrap = true, style = categoryTextStyle)

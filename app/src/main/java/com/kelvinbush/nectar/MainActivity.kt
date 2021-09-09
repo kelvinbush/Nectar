@@ -5,6 +5,8 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -20,6 +22,8 @@ import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
 class MainActivity : ComponentActivity() {
+    @ExperimentalFoundationApi
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val w: Window = window
@@ -35,6 +39,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterialApi
+@ExperimentalFoundationApi
 @Composable
 fun NectarApp() {
     val systemUiController = rememberSystemUiController()

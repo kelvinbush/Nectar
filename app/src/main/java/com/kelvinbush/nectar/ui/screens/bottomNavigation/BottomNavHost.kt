@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -18,6 +19,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @Composable
 fun BottomNavHost() {
     val navController = rememberNavController()
