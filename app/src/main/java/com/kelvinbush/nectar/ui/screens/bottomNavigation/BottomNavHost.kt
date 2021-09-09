@@ -15,9 +15,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.kelvinbush.nectar.Screen
-import com.kelvinbush.nectar.ui.screens.LoginScreen
-import com.kelvinbush.nectar.ui.screens.SignupScreen
 
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
@@ -26,8 +23,10 @@ fun BottomNavHost() {
     val navController = rememberNavController()
     val bottomItems = listOf(
         Screen.Shop,
-        Screen.Signup,
-        Screen.Login
+        Screen.Explore,
+        Screen.Cart,
+        Screen.Favourite,
+        Screen.Account
     )
     Scaffold(
         bottomBar = {
@@ -65,14 +64,10 @@ fun BottomNavHost() {
             Modifier.padding(innerPadding)
         ) {
             composable(Screen.Shop.route) { ShopScreen(navController) }
-            composable(Screen.Login.route) {
-                LoginScreen(
-                    navController = navController
-                )
-            }
-            composable(Screen.Signup.route) { SignupScreen(navController) }
+            composable(Screen.Explore.route) { ExploreScreen() }
+            composable(Screen.Cart.route) { CartScreen() }
+            composable(Screen.Favourite.route) { FavouriteScreen() }
+            composable(Screen.Account.route) { AccountScreen() }
         }
     }
 }
-/*   }
-}*/
