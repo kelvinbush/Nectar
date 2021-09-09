@@ -5,24 +5,21 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen.*
-import com.kelvinbush.nectar.ui.screens.*
+import com.kelvinbush.nectar.ui.screens.GetStartedScreen
+import com.kelvinbush.nectar.ui.screens.SplashScreen
 import com.kelvinbush.nectar.ui.screens.bottomNavigation.BottomNavHost
 import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
 class MainActivity : ComponentActivity() {
-    @ExperimentalAnimationApi
-    @ExperimentalPagerApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val w: Window = window
@@ -38,8 +35,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@ExperimentalAnimationApi
-@ExperimentalPagerApi
 @Composable
 fun NectarApp() {
     val systemUiController = rememberSystemUiController()
@@ -54,7 +49,7 @@ fun NectarApp() {
             composable(Splash.name) { SplashScreen(navController, systemUiController) }
             /*composable(OnBoarding.name) { OnBoardingScreen(navController) }*/
             composable(Start.name) { GetStartedScreen(navController/*, systemUiController*/) }
-           /* composable(Login.name) { LoginScreen(systemUiController, navController) }*/
+            /* composable(Login.name) { LoginScreen(systemUiController, navController) }*/
             /*composable(Signup.name) {
                 SignupScreen(
                     systemUiController = systemUiController,
