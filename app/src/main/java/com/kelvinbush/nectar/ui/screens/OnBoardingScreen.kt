@@ -11,18 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
 @Composable
 fun OnBoardingScreen(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(id = R.drawable.img), contentDescription = null,
+            painter = painterResource(id = R.drawable.veg), contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )

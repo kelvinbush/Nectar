@@ -1,10 +1,7 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,7 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
+import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.CategoryCard
 import com.kelvinbush.nectar.ui.components.SearchTextField
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
@@ -35,10 +34,18 @@ fun ExploreScreen() {
         Spacer(modifier = Modifier.fillMaxHeight(0.07f))
         Text(text = "Find Products", style = headerTextStyle)
         SearchTextField(searchItem = search, changeEvent = { search = it })
-        LazyVerticalGrid(cells = GridCells.Fixed(2), state = rememberLazyListState()) {
+        Spacer(modifier = Modifier.fillMaxHeight(0.04f))
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(2), state = rememberLazyListState(),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
+        ) {
             itemsCategory.forEach { elem ->
                 item {
-                    CategoryCard(bgColor = elem.color, imageUrl = elem.url, text = elem.text)
+                    CategoryCard(
+                        bgColor = elem.color,
+                        imageUrl = R.drawable.veges,
+                        text = elem.text
+                    )
                 }
             }
         }
