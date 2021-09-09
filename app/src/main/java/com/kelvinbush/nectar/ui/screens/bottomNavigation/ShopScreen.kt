@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.ui.screens
+package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -12,10 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.Screen
 import com.kelvinbush.nectar.ui.components.CategoryComponent
 import com.kelvinbush.nectar.ui.components.SearchTextField
 

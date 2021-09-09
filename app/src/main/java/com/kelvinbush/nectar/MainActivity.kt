@@ -16,6 +16,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen.*
 import com.kelvinbush.nectar.ui.screens.*
+import com.kelvinbush.nectar.ui.screens.bottomNavigation.BottomNavHost
 import com.kelvinbush.nectar.ui.theme.NectarTheme
 
 
@@ -61,7 +62,7 @@ fun NectarApp() {
                 )
             }*/
 //            composable(Shop.name) { ShopScreen(navController) }
-            composable(Pager.name) { PagerScreen() }
+            composable(Pager.name) { BottomNavHost() }
         }
 
     }

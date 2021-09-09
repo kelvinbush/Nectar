@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Nectar</string>
     <string name="shop">Shop</string>
-    <string name="onboarding">Explore</string>
-    <string name="login">Account</string>
-    <string name="signup">Cart</string>
-    <string name="start">Favourite</string>
+    <string name="explore">Explore</string>
+    <string name="account">Account</string>
+    <string name="cart">Cart</string>
+    <string name="favourite">Favourite</string>
 </resources>

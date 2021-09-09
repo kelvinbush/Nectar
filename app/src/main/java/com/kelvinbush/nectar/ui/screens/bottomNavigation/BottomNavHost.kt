@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.ui.screens
+package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
@@ -16,11 +16,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.kelvinbush.nectar.Screen
+import com.kelvinbush.nectar.ui.screens.LoginScreen
+import com.kelvinbush.nectar.ui.screens.SignupScreen
 
 @ExperimentalAnimationApi
 @ExperimentalPagerApi
 @Composable
-fun PagerScreen() {
+fun BottomNavHost() {
     val navController = rememberNavController()
     val bottomItems = listOf(
         Screen.Shop,
