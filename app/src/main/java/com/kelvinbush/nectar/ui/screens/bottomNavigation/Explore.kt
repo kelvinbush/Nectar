@@ -43,7 +43,7 @@ fun ExploreScreen() {
                 item {
                     CategoryCard(
                         bgColor = elem.color,
-                        imageUrl = R.drawable.veges,
+                        imageUrl = elem.url,
                         text = elem.text,
                         border = elem.border
                     )
@@ -54,7 +54,7 @@ fun ExploreScreen() {
 }
 
 data class Category(
-    val url: String,
+    val url: Int,
     val color: Color,
     val text: String,
     val border: Color
@@ -62,51 +62,51 @@ data class Category(
 
 val list = listOf(
     Category(
-        "https://images.unsplash.com/photo-1627998393358-06afa811bf77?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fGZydWl0cyUyMGFuZCUyMHZlZ2V0YWJsZXN8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        R.drawable.veges,
         Color(0xff53b175).copy(alpha = 0.1f), "Fresh Fruits & Vegetables",
         Color(0xff53b175).copy(alpha = 0.7f)
     ),
     Category(
-        "https://copia.co.ke/wp-content/uploads/2020/07/KF403_630.png",
+        R.drawable.oil,
         Color(0xffF8A44C).copy(.1f), "Cooking Oil & Ghee",
         Color(0xffF8A44C).copy(.7f)
     ),
     Category(
-        "https://www.gfs.com/sites/default/files/styles/open_graph_image/public/MeatPoultryFish_ICHeader.jpg?itok=6c5beb2j",
+        R.drawable.fish,
         Color(0xffF7A593).copy(.25f),
         "Meat & Fish",
         Color(0xffF7A593).copy(1f)
     ),
     Category(
-        "https://c8.alamy.com/comp/C3CB1R/bakery-snacks-pastry-isolated-on-white-background-C3CB1R.jpg",
+        R.drawable.snacks,
         Color(0xffD3B0E0).copy(.25f),
         "Bakery & Snacks",
         Color(0xffD3B0E0).copy(1f)
     ),
     Category(
-        "https://image.shutterstock.com/image-photo/glass-jug-milk-two-eggs-260nw-69657883.jpg",
+        R.drawable.eggs,
         Color(0xffFDE598).copy(.25f),
         "Dairy & Eggs",
         Color(0xffFDE598).copy(1f)
     ),
     Category(
-        "https://media.nutrition.org/wp-content/uploads/2019/06/beverages-carbonated-drink-cold-drink-1571849.jpg",
+        R.drawable.beverages,
         Color(0xffB7DFF5).copy(.25f),
         "Beverages",
         Color(0xffB7DFF5).copy(1f)
     ),
     Category(
-        "https://images.unsplash.com/photo-1627998393358-06afa811bf77?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fGZydWl0cyUyMGFuZCUyMHZlZ2V0YWJsZXN8ZW58MHwyfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+        R.drawable.veges,
         Color(0xff53b175).copy(alpha = 0.1f), "Fresh Fruits & Vegetables",
         Color(0xff53b175).copy(alpha = 0.7f)
     ),
     Category(
-        "https://copia.co.ke/wp-content/uploads/2020/07/KF403_630.png",
+        R.drawable.oil,
         Color(0xffF8A44C).copy(.1f), "Cooking Oil & Ghee",
         Color(0xffF8A44C).copy(.7f)
     ),
     Category(
-        "https://www.gfs.com/sites/default/files/styles/open_graph_image/public/MeatPoultryFish_ICHeader.jpg?itok=6c5beb2j",
+        R.drawable.fish,
         Color(0xffF7A593).copy(.25f),
         "Meat & Fish",
         Color(0xffF7A593).copy(1f)
