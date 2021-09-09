@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,19 +14,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.ui.theme.categoryTextStyle
 
 @ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
-fun CategoryCard(bgColor: Color, imageUrl: Int, text: String) {
+fun CategoryCard(bgColor: Color, imageUrl: Int, text: String, border: Color) {
     Card(
         onClick = { /*TODO*/ },
-        shape = RoundedCornerShape(20),
+        shape = RoundedCornerShape(9),
         backgroundColor = bgColor, // Transparency B3(70%)
-        elevation = 2.dp,
-        modifier = Modifier.height(190.dp)
+        modifier = Modifier
+            .height(190.dp)
+            .padding(start = 8.dp, bottom = 8.dp),
+        border = BorderStroke(1.dp, border)
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -45,7 +47,10 @@ fun CategoryCard(bgColor: Color, imageUrl: Int, text: String) {
 
             )
             Spacer(modifier = Modifier.fillMaxHeight(0.2f))
-            Text(text = text, softWrap = true, style = categoryTextStyle)
+            Text(
+                text = text, softWrap = true, style = categoryTextStyle,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
         }
     }
 }
