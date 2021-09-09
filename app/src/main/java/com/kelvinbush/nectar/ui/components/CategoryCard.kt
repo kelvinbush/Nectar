@@ -1,6 +1,5 @@
 package com.kelvinbush.nectar.ui.components
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,13 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.ui.theme.categoryTextStyle
 
+@ExperimentalCoilApi
 @ExperimentalMaterialApi
 @Composable
-fun CategoryCard(bgColor: Color, @DrawableRes imageIdRes: Int, text: String) {
+fun CategoryCard(bgColor: Color, imageUrl: String, text: String) {
     Card(
         onClick = { /*TODO*/ },
         shape = RoundedCornerShape(23),
@@ -29,7 +30,12 @@ fun CategoryCard(bgColor: Color, @DrawableRes imageIdRes: Int, text: String) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(painter = painterResource(id = imageIdRes), contentDescription = null)
+            Image(
+                painter = rememberImagePainter(data = imageUrl,
+                    builder = {
+                        crossfade(true)
+                    }), contentDescription = null
+            )
             Spacer(modifier = Modifier.fillMaxHeight(0.2f))
             Text(text = text, softWrap = true, style = categoryTextStyle)
         }
