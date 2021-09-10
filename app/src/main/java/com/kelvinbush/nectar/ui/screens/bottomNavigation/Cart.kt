@@ -2,6 +2,7 @@ package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -23,6 +24,7 @@ fun CartScreen() {
     ) {
         Spacer(modifier = Modifier.fillMaxHeight(0.07f))
         Text(text = "My Cart", style = headerTextStyle)
+        Spacer(modifier = Modifier.height(16.dp))
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             pList.forEach { product ->
@@ -47,7 +49,15 @@ fun CartScreen() {
             }
         }
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        Button(onClick = { /*TODO*/ }) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(30)
+        ) {
             Text(text = "Go to Checkout", style = MaterialTheme.typography.button)
         }
     }
