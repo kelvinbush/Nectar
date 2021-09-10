@@ -135,3 +135,20 @@ val categoryTextStyle = TextStyle(
     textAlign = TextAlign.Center,
     lineHeight = 22.sp
 )
+val productTextStyle = TextStyle(
+    fontSize = 16.sp,
+    fontWeight = FontWeight.Bold,
+    color = Color(0xff181725),
+    fontFamily = FontFamily(Font(R.font.gilroybold, weight = FontWeight.Bold)),
+    textAlign = TextAlign.Start,
+    lineHeight = 18.sp,
+    letterSpacing = 0.1.sp
+)
+val priceTextStyle = TextStyle(
+    fontSize = 14.sp,
+    fontWeight = FontWeight.Medium,
+    color = Color(0xff7c7c7c),
+    fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.Medium)),
+    textAlign = TextAlign.Start,
+    lineHeight = 28.sp
+)
