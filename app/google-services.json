@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "635667074915",
+    "project_id": "nectar-atlantic",
+    "storage_bucket": "nectar-atlantic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635667074915:android:79dc0534eaa1910a2dcd56",
+        "android_client_info": {
+          "package_name": "com.kelvinbush.nectar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635667074915-pb2c3djshnb8963j2kfn3in6kqp0mfku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXSoB549Ep9xeMN1G84gzFMcJEAU_99OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635667074915-pb2c3djshnb8963j2kfn3in6kqp0mfku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
