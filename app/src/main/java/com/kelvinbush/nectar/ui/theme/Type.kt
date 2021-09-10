@@ -152,3 +152,11 @@ val priceTextStyle = TextStyle(
     textAlign = TextAlign.Start,
     lineHeight = 28.sp
 )
+val price2TextStyle = TextStyle(
+    fontSize = 18.sp,
+    fontWeight = FontWeight.SemiBold,
+    color = Color(0xff181725),
+    fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
+    textAlign = TextAlign.End,
+    lineHeight = 27.sp
+)
