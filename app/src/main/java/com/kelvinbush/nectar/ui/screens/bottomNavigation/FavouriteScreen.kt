@@ -1,18 +1,22 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
+import com.kelvinbush.nectar.ui.theme.price2TextStyle
+import com.kelvinbush.nectar.ui.theme.priceTextStyle
+import com.kelvinbush.nectar.ui.theme.productTextStyle
 
 @Composable
 fun FavouriteScreen() {
@@ -24,6 +28,27 @@ fun FavouriteScreen() {
         Text(text = "Favourite", style = headerTextStyle)
         Spacer(modifier = Modifier.height(16.dp))
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
+        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            likedList.forEach { liked ->
+                item {
+                    LikedCard(
+                        name = liked.name,
+                        size = liked.size,
+                        price = liked.price,
+                        image = liked.image
+                    )
+                    if (likedList.lastIndex != likedList.indexOf(liked)) {
+                        Divider(
+                            thickness = 1.dp,
+                            color = Color(0xffE2E2E2),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        )
+                    }
+                }
+            }
+        }
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(16.dp))
         Button(
@@ -39,16 +64,75 @@ fun FavouriteScreen() {
     }
 }
 
+@Composable
+fun LikedCard(name: String, size: String, price: Double, image: Int) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(97.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+    ) {
+
+        Column(
+            modifier = Modifier
+                .weight(0.25f)
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Image(
+                painter = painterResource(id = image), null,
+                contentScale = ContentScale.Inside
+            )
+        }
+        Column(
+            modifier = Modifier
+                .weight(0.5f)
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(text = name, style = productTextStyle)
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(text = "$size, Price", style = priceTextStyle)
+        }
+        Column(
+            modifier = Modifier
+                .weight(0.25f)
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "$$price", style = price2TextStyle)
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.next),
+                        null,
+                        tint = Color.Black
+                    )
+                }
+            }
+
+        }
+    }
+}
+
 data class Liked(
     val image: Int,
     val name: String,
     val size: String,
     val price: Double,
 )
+
 val likedList = listOf(
-    Liked(R.drawable.sprite, "Sprite Can","355ml", 1.50),
-    Liked(R.drawable.coke, "Diet Coke","355ml", 1.99),
-    Liked(R.drawable.juice, "Apple & Grape Juice","2l", 15.50),
-    Liked(R.drawable.sprite, "Coca Cola Can","325ml", 4.99),
-    Liked(R.drawable.pepsi, "Sprite Can","355ml", 1.50)
+    Liked(R.drawable.sprite, "Sprite Can", "355ml", 1.50),
+    Liked(R.drawable.coke, "Diet Coke", "355ml", 1.99),
+    Liked(R.drawable.juice, "Apple & Grape Juice", "2l", 15.50),
+    Liked(R.drawable.sprite, "Coca Cola Can", "325ml", 4.99),
+    Liked(R.drawable.pepsi, "Sprite Can", "330ml", 4.99)
 )
