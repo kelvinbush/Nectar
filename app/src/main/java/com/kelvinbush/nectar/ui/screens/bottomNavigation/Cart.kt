@@ -10,15 +10,17 @@ import com.kelvinbush.nectar.ui.components.ProductCard
 
 @Composable
 fun CartScreen() {
-   ItemListScreenHolder(headText = "My Cart", proList = pList, btnText = "Go to Checkout") {
-       ProductCard(
-           product = it, endCol = {
-               LastColumnCart(price = it.price, iconId = R.drawable.close)
-           },
-           lastColAlignment = Alignment.End,
-           lastColArrangement = Arrangement.SpaceBetween
-       )
-   }
+    ItemListScreenHolder(
+        headText = "My Cart", proList = pList, btnText = "Go to Checkout"
+    ) {
+        ProductCard(
+            product = it, endCol = {
+                LastColumnCart(price = it.price, iconId = R.drawable.close)
+            },
+            lastColAlignment = Alignment.End,
+            lastColArrangement = Arrangement.SpaceBetween
+        )
+    }
 
 }
 
