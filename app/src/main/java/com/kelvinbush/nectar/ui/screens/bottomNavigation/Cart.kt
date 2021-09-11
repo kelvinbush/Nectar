@@ -1,7 +1,6 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
@@ -14,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.CartProduct
+import com.kelvinbush.nectar.ui.components.ItemList
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 
 @Composable
@@ -26,27 +26,14 @@ fun CartScreen() {
         Text(text = "My Cart", style = headerTextStyle)
         Spacer(modifier = Modifier.height(16.dp))
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            pList.forEach { product ->
-                item {
-                    CartProduct(
-                        image = product.image,
-                        name = product.name,
-                        size = product.size,
-                        quantity = product.quantity,
-                        price = product.price
-                    )
-                    if (pList.lastIndex != pList.indexOf(product)) {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xffE2E2E2),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        )
-                    }
-                }
-            }
+        ItemList(myList = pList) {
+            CartProduct(
+                image = it.image,
+                name = it.name,
+                size = it.size,
+                quantity = it.quantity,
+                price = it.price
+            )
         }
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(16.dp))

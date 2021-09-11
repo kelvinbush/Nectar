@@ -13,6 +13,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.ui.components.ItemList
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 import com.kelvinbush.nectar.ui.theme.price2TextStyle
 import com.kelvinbush.nectar.ui.theme.priceTextStyle
@@ -28,26 +29,13 @@ fun FavouriteScreen() {
         Text(text = "Favourite", style = headerTextStyle)
         Spacer(modifier = Modifier.height(16.dp))
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            likedList.forEach { liked ->
-                item {
-                    LikedCard(
-                        name = liked.name,
-                        size = liked.size,
-                        price = liked.price,
-                        image = liked.image
-                    )
-                    if (likedList.lastIndex != likedList.indexOf(liked)) {
-                        Divider(
-                            thickness = 1.dp,
-                            color = Color(0xffE2E2E2),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                        )
-                    }
-                }
-            }
+        ItemList(myList = likedList) {
+            LikedCard(
+                name = it.name,
+                size = it.size,
+                price = it.price,
+                image = it.image
+            )
         }
         Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(16.dp))
@@ -89,7 +77,7 @@ fun LikedCard(name: String, size: String, price: Double, image: Int) {
             modifier = Modifier
                 .weight(0.5f)
                 .fillMaxHeight(),
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
         ) {
             Text(text = name, style = productTextStyle)
@@ -122,17 +110,11 @@ fun LikedCard(name: String, size: String, price: Double, image: Int) {
     }
 }
 
-data class Liked(
-    val image: Int,
-    val name: String,
-    val size: String,
-    val price: Double,
-)
 
 val likedList = listOf(
-    Liked(R.drawable.sprite, "Sprite Can", "355ml", 1.50),
-    Liked(R.drawable.coke, "Diet Coke", "355ml", 1.99),
-    Liked(R.drawable.juice, "Apple & Grape Juice", "2l", 15.50),
-    Liked(R.drawable.sprite, "Coca Cola Can", "325ml", 4.99),
-    Liked(R.drawable.pepsi, "Sprite Can", "330ml", 4.99)
+    Product(R.drawable.sprite, "Sprite Can", "355ml", 1.50),
+    Product(R.drawable.coke, "Diet Coke", "355ml", 1.99),
+    Product(R.drawable.juice, "Apple & Grape Juice", "2l", 15.50),
+    Product(R.drawable.sprite, "Coca Cola Can", "325ml", 4.99),
+    Product(R.drawable.pepsi, "Sprite Can", "330ml", 4.99)
 )
