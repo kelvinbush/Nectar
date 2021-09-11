@@ -2,9 +2,9 @@ package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,42 +13,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.ui.components.ItemList
-import com.kelvinbush.nectar.ui.theme.headerTextStyle
+import com.kelvinbush.nectar.ui.components.ItemListScreenHolder
+import com.kelvinbush.nectar.ui.components.ProductCard
 import com.kelvinbush.nectar.ui.theme.price2TextStyle
 import com.kelvinbush.nectar.ui.theme.priceTextStyle
 import com.kelvinbush.nectar.ui.theme.productTextStyle
 
 @Composable
 fun FavouriteScreen() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.fillMaxHeight(0.07f))
-        Text(text = "Favourite", style = headerTextStyle)
-        Spacer(modifier = Modifier.height(16.dp))
-        Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        ItemList(myList = likedList) {
-            LikedCard(
-                name = it.name,
-                size = it.size,
-                price = it.price,
-                image = it.image
-            )
-        }
-        Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(30)
-        ) {
-            Text(text = "Add All to Cart", style = MaterialTheme.typography.button)
-        }
+    ItemListScreenHolder(headText = "Favourite", proList = likedList, btnText = "Add All To Cart") {
+        ProductCard(
+            product = it,
+            arrangement = Arrangement.Center,
+            midCol = {})
     }
 }
 

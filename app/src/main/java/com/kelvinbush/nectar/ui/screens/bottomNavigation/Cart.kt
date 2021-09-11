@@ -1,53 +1,25 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.ui.components.CartProduct
-import com.kelvinbush.nectar.ui.components.ItemList
-import com.kelvinbush.nectar.ui.theme.headerTextStyle
+import com.kelvinbush.nectar.ui.components.ItemListScreenHolder
+import com.kelvinbush.nectar.ui.components.LastColumnCart
+import com.kelvinbush.nectar.ui.components.ProductCard
 
 @Composable
 fun CartScreen() {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.fillMaxHeight(0.07f))
-        Text(text = "My Cart", style = headerTextStyle)
-        Spacer(modifier = Modifier.height(16.dp))
-        Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        ItemList(myList = pList) {
-            CartProduct(
-                image = it.image,
-                name = it.name,
-                size = it.size,
-                quantity = it.quantity,
-                price = it.price
-            )
-        }
-        Divider(thickness = 1.dp, color = Color(0xffE2E2E2), modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .padding(horizontal = 16.dp),
-            shape = RoundedCornerShape(30)
-        ) {
-            Text(text = "Go to Checkout", style = MaterialTheme.typography.button)
-        }
-    }
+   ItemListScreenHolder(headText = "My Cart", proList = pList, btnText = "Go to Checkout") {
+       ProductCard(
+           product = it, endCol = {
+               LastColumnCart(price = it.price, iconId = R.drawable.close)
+           },
+           lastColAlignment = Alignment.End,
+           lastColArrangement = Arrangement.SpaceBetween
+       )
+   }
+
 }
 
 data class Product(
