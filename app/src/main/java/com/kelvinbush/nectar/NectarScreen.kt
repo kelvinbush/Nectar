@@ -1,7 +1,5 @@
 package com.kelvinbush.nectar
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 
 enum class NectarScreen {
     OnBoarding,
@@ -10,7 +8,8 @@ enum class NectarScreen {
     Splash,
     Signup,
     Pager,
-    Shop;
+    Shop,
+    ProductDetail;
 
     companion object {
         fun fromRoute(route: String?): NectarScreen =
@@ -22,6 +21,7 @@ enum class NectarScreen {
                 Signup.name -> Signup
                 Shop.name -> Shop
                 Pager.name -> Pager
+                ProductDetail.name -> ProductDetail
                 null -> OnBoarding
                 else -> throw IllegalArgumentException("Route $route is not recognized.")
             }

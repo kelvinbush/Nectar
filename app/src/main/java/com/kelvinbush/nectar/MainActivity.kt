@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen.*
 import com.kelvinbush.nectar.ui.screens.GetStartedScreen
+import com.kelvinbush.nectar.ui.screens.ProductDetailScreen
 import com.kelvinbush.nectar.ui.screens.SplashScreen
 import com.kelvinbush.nectar.ui.screens.bottomNavigation.BottomNavHost
 import com.kelvinbush.nectar.ui.theme.NectarTheme
@@ -50,8 +51,8 @@ fun NectarApp() {
     val currentScreen = NectarScreen.fromRoute(
         backStackEntry.value?.destination?.route
     )
-    Scaffold { innerPadding ->
-        NavHost(navController = navController, startDestination = Splash.name) {
+    Scaffold {
+        NavHost(navController = navController, startDestination = ProductDetail.name) {
             composable(Splash.name) { SplashScreen(navController, systemUiController) }
             /*composable(OnBoarding.name) { OnBoardingScreen(navController) }*/
             composable(Start.name) { GetStartedScreen(navController/*, systemUiController*/) }
@@ -64,6 +65,7 @@ fun NectarApp() {
             }*/
 //            composable(Shop.name) { ShopScreen(navController) }
             composable(Pager.name) { BottomNavHost() }
+            composable(ProductDetail.name) { ProductDetailScreen(navController) }
         }
 
     }
