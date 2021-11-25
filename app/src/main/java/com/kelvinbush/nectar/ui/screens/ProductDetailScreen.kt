@@ -30,6 +30,7 @@ import com.kelvinbush.nectar.ui.theme.productTextStyle
 @Composable
 fun ProductDetailScreen(navController: NavController) {
     var liked by remember { mutableStateOf(false) }
+    var amount by remember { mutableStateOf(1) }
     val likedIconId = if (liked) R.drawable.favorite else R.drawable.outline_favorite_border
     val loremIpsum = "I would like say that after conquerored React " +
             "also" +
@@ -125,7 +126,7 @@ fun ProductDetailScreen(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(modifier = Modifier.fillMaxWidth(0.4f)) {
-                        MidCol(quantity = 1)
+                        MidCol(quantity = amount)
                     }
                     Text(text = "$4.99", style = price2TextStyle)
                 }
