@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Nectar"
         android:usesCleartextTraffic="true"
         android:fullBackupContent="true"
-        android:allowBackup="true">u
+        android:allowBackup="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"
