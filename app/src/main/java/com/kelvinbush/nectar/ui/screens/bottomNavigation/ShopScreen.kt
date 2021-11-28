@@ -9,61 +9,44 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.CategoryComponent
 import com.kelvinbush.nectar.ui.components.SearchTextField
+import com.kelvinbush.nectar.ui.components.ShopHeaderComponent
+import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @Composable
-fun ShopScreen(navController1: NavController) {
+fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel) {
     val items = (0..5).toList()
     var searchItem by remember { mutableStateOf("") }
-    Scaffold(modifier = Modifier.fillMaxSize(),
-       ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        ShopHeaderComponent()
+        SearchTextField(searchItem = searchItem, changeEvent = { searchItem = it })
+        LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .padding(start = 16.dp)
         ) {
-            Spacer(modifier = Modifier.fillMaxHeight(0.05f))
-            Image(
-                painter = painterResource(id = R.drawable.ic_min_carrot),
-                contentDescription = null,
-                modifier = Modifier
-                    .width(27.dp)
-                    .height(31.dp)
-            )
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxWidth(0.94f)
-                    .padding(vertical = 8.dp)
-            ) {
+            item {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_location),
-                    contentDescription = null
+                    painter = painterResource(id = R.drawable.carousel_1),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                    contentScale = ContentScale.FillBounds
                 )
-                Text(text = " Nairobi, Kenya")
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            SearchTextField(searchItem = searchItem, changeEvent = { searchItem = it })
-            Spacer(modifier = Modifier.height(8.dp))
-            LazyColumn(modifier = Modifier.fillMaxWidth(0.9f)) {
-                item {
-                    Image(
-                        painter = painterResource(id = R.drawable.carousel_1),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxWidth(0.94f),
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-                items(items) {
-                    CategoryComponent()
-                }
+            items(items) {
+                CategoryComponent()
             }
         }
     }

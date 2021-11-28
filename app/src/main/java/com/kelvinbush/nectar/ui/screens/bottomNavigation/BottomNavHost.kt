@@ -95,7 +95,7 @@ fun BottomNavHost(viewModel: LoginScreenViewModel) {
             startDestination = Screen.Shop.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Shop.route) { ShopScreen(navController) }
+            composable(Screen.Shop.route) { ShopScreen(navController, viewModel) }
             composable(Screen.Explore.route) { ExploreScreen() }
             composable(Screen.Cart.route) { CartScreen() }
             composable(Screen.Favourite.route) { FavouriteScreen() }

@@ -36,6 +36,6 @@ fun SearchTextField(searchItem: String, changeEvent: (String) -> Unit) {
             focusedIndicatorColor = Color.Transparent,
             cursorColor = Color(0xff7c7c7c)
         ),
-        modifier = Modifier.fillMaxWidth(0.85f)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
     )
 }

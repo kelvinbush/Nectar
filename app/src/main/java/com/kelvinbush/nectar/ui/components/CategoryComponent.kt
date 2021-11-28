@@ -18,6 +18,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.network.NetworkProduct
 import com.kelvinbush.nectar.ui.theme.itemCategoryTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
 import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
@@ -25,23 +26,27 @@ import com.kelvinbush.nectar.ui.theme.seeAllTextStyle
 
 
 @Composable
-fun CategoryComponent() {
+fun CategoryComponent(category: String, products: List<NetworkProduct>) {
     val itemsList = (0..10).toList()
-    Column(modifier = Modifier.fillMaxWidth(0.94f)) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Exclusive Offer", style = itemCategoryTextStyle)
-            Text(text = "See all", style = seeAllTextStyle)
+            Text(
+                text = "See all",
+                style = seeAllTextStyle,
+                modifier = Modifier.padding(end = 16.dp)
+            )
         }
         Spacer(modifier = Modifier.height(16.dp))
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(itemsList) {
-                FoodItemComposable()
+            items(products) { product ->
+                FoodItemComposable(product)
             }
         }
     }
@@ -49,7 +54,7 @@ fun CategoryComponent() {
 }
 
 @Composable
-fun FoodItemComposable() {
+fun FoodItemComposable(product: NetworkProduct) {
     Card(
         elevation = 2.dp,
         shape = RoundedCornerShape(10),
@@ -67,13 +72,15 @@ fun FoodItemComposable() {
                     .fillMaxWidth(0.9f)
             )
             Text(
-                text = "Red Apple", style = itemNameTextStyle,
-                modifier = Modifier.fillMaxWidth(0.9f)
+                text = product.name, style = itemNameTextStyle,
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
                     .padding(bottom = 2.dp)
             )
             Text(
-                text = "1kg, price", style = MaterialTheme.typography.h5,
-                modifier = Modifier.fillMaxWidth(0.9f)
+                text = "Kshs, price", style = MaterialTheme.typography.h5,
+                modifier = Modifier
+                    .fillMaxWidth(0.9f)
                     .padding(bottom = 8.dp)
             )
             Row(
@@ -81,7 +88,7 @@ fun FoodItemComposable() {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth(0.9f)
             ) {
-                Text(text = "$4.99", style = itemPriceTextStyle)
+                Text(text = product.price.toString(), style = itemPriceTextStyle)
                 Button(
                     modifier = Modifier
                         .height(36.dp)
