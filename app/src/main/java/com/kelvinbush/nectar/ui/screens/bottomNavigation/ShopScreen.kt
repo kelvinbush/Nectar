@@ -31,6 +31,7 @@ fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel) {
         categories.add(item.category.name)
     }
     var searchItem by remember { mutableStateOf("") }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -55,7 +56,12 @@ fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel) {
             }
             categories.toSet().forEach { category ->
                 item {
-                    products?.let { CategoryComponent(category = category, products = it) }
+                    products?.let {
+                        CategoryComponent(
+                            category = category,
+                            products = it,
+                            addItem = { id -> viewModel.addCart(id) })
+                    }
                 }
             }
         }

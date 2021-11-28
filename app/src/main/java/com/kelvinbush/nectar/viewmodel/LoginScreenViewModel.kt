@@ -7,6 +7,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.domain.CartItemList
 import com.kelvinbush.nectar.domain.FruityUser
+import com.kelvinbush.nectar.network.CartAdd
 import com.kelvinbush.nectar.network.FruityService
 import com.kelvinbush.nectar.network.NetworkProduct
 import com.kelvinbush.nectar.utils.LoadingState
@@ -105,6 +106,23 @@ class LoginScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val token = "Bearer ${_idToken.value}"
             _cart.value = fruityService.getCart(token)
+        }
+    }
+
+    fun addCart(id:String, quantity:Int =1 ){
+        val user = Firebase.auth.currentUser
+        if (user != null) {
+            user.getIdToken(true).addOnSuccessListener {
+                _idToken.value = it.token
+                val token = "Bearer ${_idToken.value}"
+                val username = user.uid
+                viewModelScope.launch {
+                    fruityService.addToCart(token, CartAdd(username,id, quantity))
+                }
+                Log.d(TAG, "addCart: $id")
+            }
+        } else {
+            Log.d(TAG, "getAllProducts: user not found")
         }
     }
 

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.network.CartAdd
 import com.kelvinbush.nectar.network.NetworkProduct
 import com.kelvinbush.nectar.ui.theme.itemCategoryTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
@@ -29,7 +30,11 @@ import com.kelvinbush.nectar.ui.theme.seeAllTextStyle
 
 @ExperimentalCoilApi
 @Composable
-fun CategoryComponent(category: String, products: List<NetworkProduct>) {
+fun CategoryComponent(
+    category: String,
+    products: List<NetworkProduct>,
+    addItem: (id: String) -> Unit
+) {
     val sortedProducts = products.filter {
         it.category.name == category
     }
@@ -51,7 +56,7 @@ fun CategoryComponent(category: String, products: List<NetworkProduct>) {
             modifier = Modifier.fillMaxWidth()
         ) {
             items(sortedProducts) { product ->
-                FoodItemComposable(product)
+                FoodItemComposable(product, addingToCart = { id -> addItem(id) })
             }
         }
     }
@@ -60,7 +65,7 @@ fun CategoryComponent(category: String, products: List<NetworkProduct>) {
 
 @ExperimentalCoilApi
 @Composable
-fun FoodItemComposable(product: NetworkProduct) {
+fun FoodItemComposable(product: NetworkProduct, addingToCart: (id: String) -> Unit) {
     Card(
         elevation = 2.dp,
         shape = RoundedCornerShape(10),
@@ -99,7 +104,9 @@ fun FoodItemComposable(product: NetworkProduct) {
                     modifier = Modifier
                         .height(36.dp)
                         .width(36.dp),
-                    onClick = {},
+                    onClick = {
+                        addingToCart(product.id)
+                    },
                     shape = RoundedCornerShape(33),
                     contentPadding = PaddingValues(5.dp)
                 ) {
