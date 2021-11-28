@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.network.NetworkProduct
 import com.kelvinbush.nectar.ui.theme.itemCategoryTextStyle
@@ -25,15 +27,18 @@ import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
 import com.kelvinbush.nectar.ui.theme.seeAllTextStyle
 
 
+@ExperimentalCoilApi
 @Composable
 fun CategoryComponent(category: String, products: List<NetworkProduct>) {
-    val itemsList = (0..10).toList()
+    val sortedProducts = products.filter {
+        it.category.name == category
+    }
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Exclusive Offer", style = itemCategoryTextStyle)
+            Text(text = category, style = itemCategoryTextStyle)
             Text(
                 text = "See all",
                 style = seeAllTextStyle,
@@ -45,7 +50,7 @@ fun CategoryComponent(category: String, products: List<NetworkProduct>) {
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(products) { product ->
+            items(sortedProducts) { product ->
                 FoodItemComposable(product)
             }
         }
@@ -53,6 +58,7 @@ fun CategoryComponent(category: String, products: List<NetworkProduct>) {
     Spacer(modifier = Modifier.height(8.dp))
 }
 
+@ExperimentalCoilApi
 @Composable
 fun FoodItemComposable(product: NetworkProduct) {
     Card(
@@ -65,8 +71,8 @@ fun FoodItemComposable(product: NetworkProduct) {
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
-                painter = painterResource(id = R.drawable.banana), contentDescription = null,
-                contentScale = ContentScale.Crop,
+                painter = rememberImagePainter(product.imageUrl), contentDescription = null,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxHeight(0.5f)
                     .fillMaxWidth(0.9f)

@@ -7,21 +7,29 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.components.CategoryComponent
 import com.kelvinbush.nectar.ui.components.SearchTextField
 import com.kelvinbush.nectar.ui.components.ShopHeaderComponent
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
+@ExperimentalCoilApi
 @Composable
 fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel) {
     val items = (0..5).toList()
+    val products by viewModel.products.observeAsState()
+    val categories = ArrayList<String>()
+    products?.forEach { item ->
+        categories.add(item.category.name)
+    }
     var searchItem by remember { mutableStateOf("") }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,8 +53,10 @@ fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel) {
                     contentScale = ContentScale.FillBounds
                 )
             }
-            items(items) {
-                CategoryComponent()
+            categories.toSet().forEach { category ->
+                item {
+                    products?.let { CategoryComponent(category = category, products = it) }
+                }
             }
         }
     }

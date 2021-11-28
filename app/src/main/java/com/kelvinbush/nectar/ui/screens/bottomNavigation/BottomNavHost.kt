@@ -97,7 +97,7 @@ fun BottomNavHost(viewModel: LoginScreenViewModel) {
         ) {
             composable(Screen.Shop.route) { ShopScreen(navController, viewModel) }
             composable(Screen.Explore.route) { ExploreScreen() }
-            composable(Screen.Cart.route) { CartScreen() }
+            composable(Screen.Cart.route) { CartScreen(viewModel) }
             composable(Screen.Favourite.route) { FavouriteScreen() }
             composable(Screen.Account.route) { AccountScreen(navController, viewModel) }
         }

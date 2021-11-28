@@ -14,8 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.ui.screens.bottomNavigation.Product
+import com.kelvinbush.nectar.domain.CartItemList
+import com.kelvinbush.nectar.domain.CartProduct
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 import com.kelvinbush.nectar.ui.theme.price2TextStyle
 import com.kelvinbush.nectar.ui.theme.priceTextStyle
@@ -24,9 +26,9 @@ import com.kelvinbush.nectar.ui.theme.productTextStyle
 @Composable
 fun ItemListScreenHolder(
     headText: String,
-    proList: List<Product>,
+    proList: CartItemList,
     btnText: String,
-    prodCard: @Composable (prod: Product) -> Unit
+    prodCard: @Composable (prod: CartProduct) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -56,12 +58,12 @@ fun ItemListScreenHolder(
 
 
 @Composable
-fun ItemList(myList: List<Product>, content: @Composable (prod: Product) -> Unit) {
+fun ItemList(myList: CartItemList, content: @Composable (prod: CartProduct) -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
-        myList.forEach { elem ->
+        myList.cartItems.forEach { elem ->
             item {
                 content(elem)
-                if (myList.lastIndex != myList.indexOf(elem)) {
+                if (myList.cartItems.lastIndex != myList.cartItems.indexOf(elem)) {
                     Divider(
                         thickness = 1.dp,
                         color = Color(0xffE2E2E2),
@@ -77,11 +79,11 @@ fun ItemList(myList: List<Product>, content: @Composable (prod: Product) -> Unit
 
 @Composable
 fun ProductCard(
-    product: Product, arrangement: Arrangement.Vertical = Arrangement.Top,
+    product: CartProduct, arrangement: Arrangement.Vertical = Arrangement.Top,
     iconId: Int = R.drawable.next,
     tint: Color = Color.Black,
     midCol: @Composable () -> Unit = {
-        MidCol(quantity = product.quantity)
+        MidCol()
     },
     endCol: @Composable () -> Unit = {
         LastColumnFavourite(
@@ -108,8 +110,8 @@ fun ProductCard(
             horizontalAlignment = Alignment.Start
         ) {
             Image(
-                painter = painterResource(id = product.image), null,
-                contentScale = ContentScale.Inside
+                painter = rememberImagePainter(product.imageUrl), null,
+                contentScale = ContentScale.Fit
             )
         }
         Column(
@@ -121,7 +123,7 @@ fun ProductCard(
         ) {
             Text(text = product.name, style = productTextStyle)
             Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "${product.size}, Price", style = priceTextStyle)
+            Text(text = "Kshs, Price", style = priceTextStyle)
             midCol()
         }
         Column(
@@ -168,7 +170,7 @@ fun LastColumnCart(price: Double, iconId: Int) {
 
 
 @Composable
-fun MidCol(quantity: Int) {
+fun MidCol(quantity: Int = 1) {
     Row(
         modifier = Modifier
             .fillMaxWidth(.65f)
