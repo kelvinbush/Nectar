@@ -20,3 +20,6 @@ data class ProductInventory(
     val id: String,
     val quantity: Int
 )
+data class Result(
+    val result: List<NetworkProduct>
+)

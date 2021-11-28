@@ -1,11 +1,12 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -19,12 +20,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.kelvinbush.nectar.network.NetworkProduct
+import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-fun BottomNavHost() {
+fun BottomNavHost(viewModel: LoginScreenViewModel) {
+    val currentUser = Firebase.auth.currentUser
     val navController = rememberNavController()
     val bottomItems = listOf(
         Screen.Shop,
@@ -33,6 +39,12 @@ fun BottomNavHost() {
         Screen.Favourite,
         Screen.Account
     )
+    val token by viewModel.idToken.observeAsState()
+    val products by viewModel.products.observeAsState()
+    Log.d("BottomNavHost: ", products.toString())
+    LaunchedEffect(key1 = 1) {
+        viewModel.getAllProducts()
+    }
     Scaffold(
         bottomBar = {
             BottomNavigation(
@@ -87,7 +99,7 @@ fun BottomNavHost() {
             composable(Screen.Explore.route) { ExploreScreen() }
             composable(Screen.Cart.route) { CartScreen() }
             composable(Screen.Favourite.route) { FavouriteScreen() }
-            composable(Screen.Account.route) { AccountScreen() }
+            composable(Screen.Account.route) { AccountScreen(navController, viewModel) }
         }
     }
 }

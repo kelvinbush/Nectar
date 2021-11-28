@@ -29,7 +29,7 @@ object AppModule {
     @Provides
     fun provideRecipeService(moshi: Moshi): FruityService {
         return Retrofit.Builder()
-            .baseUrl("http://erp.novia.co.ke/QuickPatrol/")
+            .baseUrl("http://10.0.2.2:1446/")
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .build()
             .create(FruityService::class.java)

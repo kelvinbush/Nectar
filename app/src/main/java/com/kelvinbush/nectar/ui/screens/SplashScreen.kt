@@ -2,12 +2,14 @@ package com.kelvinbush.nectar.ui.screens
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,23 +23,38 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.PopUpToBuilder
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.NectarScreen.OnBoarding
 import com.kelvinbush.nectar.NectarScreen.Splash
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.ui.theme.BGreen
+import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 
 @Composable
-fun SplashScreen(navController: NavController, systemUiController: SystemUiController) {
+fun SplashScreen(
+    navController: NavController,
+    systemUiController: SystemUiController,
+    viewModel: LoginScreenViewModel
+) {
+    val currentUser = Firebase.auth.currentUser
     SideEffect {
         systemUiController.setSystemBarsColor(
             color = BGreen,
             darkIcons = false
         )
     }
+    LaunchedEffect(key1 = 1) {
+        currentUser?.getIdToken(true)?.addOnSuccessListener {
+            viewModel.setToken(it.token.toString())
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,9 +95,16 @@ fun SplashScreen(navController: NavController, systemUiController: SystemUiContr
     }
 
     Handler(Looper.getMainLooper()).postDelayed({
-        navController.navigate(NectarScreen.Start.name) {
-            popUpTo(Splash.name) { inclusive = true }
-            launchSingleTop = true
+        if (currentUser != null) {
+            navController.popBackStack()
+            navController.navigate(NectarScreen.Pager.name) {
+                launchSingleTop = true
+            }
+        } else {
+            navController.navigate(NectarScreen.Login.name) {
+                popUpTo(Splash.name) { inclusive = true }
+                launchSingleTop = true
+            }
         }
-    }, 2000)
+    }, 2500)
 }

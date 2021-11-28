@@ -7,8 +7,8 @@ import retrofit2.http.Header
 interface FruityService {
 
     @GET("/api/me")
-    suspend fun login(@Header("authorization") authToken: String): FruityUser
+    suspend fun login(@Header("Authorization") authToken: String): FruityUser
 
     @GET("/api/product")
-    suspend fun getAllProducts(@Header("authorization") authToken: String): List<NetworkProduct>
+    suspend fun getAllProducts(@Header("Authorization") authToken: String): Result
 }
