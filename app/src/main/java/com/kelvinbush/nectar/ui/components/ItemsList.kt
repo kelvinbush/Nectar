@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.domain.CartItemList
-import com.kelvinbush.nectar.domain.CartProduct
+import com.kelvinbush.nectar.domain.model.CartItemList
+import com.kelvinbush.nectar.domain.model.CartProduct
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 import com.kelvinbush.nectar.ui.theme.price2TextStyle
 import com.kelvinbush.nectar.ui.theme.priceTextStyle

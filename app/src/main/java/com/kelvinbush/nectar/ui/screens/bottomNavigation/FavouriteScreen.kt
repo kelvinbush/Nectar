@@ -1,11 +1,6 @@
 package com.kelvinbush.nectar.ui.screens.bottomNavigation
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
-import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.domain.CartProduct
-import com.kelvinbush.nectar.ui.components.ItemListScreenHolder
-import com.kelvinbush.nectar.ui.components.ProductCard
 
 @Composable
 fun FavouriteScreen() {

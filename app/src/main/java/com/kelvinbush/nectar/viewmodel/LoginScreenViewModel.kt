@@ -5,11 +5,12 @@ import androidx.lifecycle.*
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.domain.CartItemList
+import com.kelvinbush.nectar.domain.model.CartItemList
 import com.kelvinbush.nectar.domain.FruityUser
 import com.kelvinbush.nectar.network.CartAdd
-import com.kelvinbush.nectar.network.FruityService
+import com.kelvinbush.nectar.data.remote.FruityService
 import com.kelvinbush.nectar.network.NetworkProduct
+import com.kelvinbush.nectar.network.RemoveProduct
 import com.kelvinbush.nectar.utils.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -111,18 +112,25 @@ class LoginScreenViewModel @Inject constructor(
 
     fun addCart(id:String, quantity:Int =1 ){
         val user = Firebase.auth.currentUser
-        if (user != null) {
-            user.getIdToken(true).addOnSuccessListener {
-                _idToken.value = it.token
-                val token = "Bearer ${_idToken.value}"
-                val username = user.uid
-                viewModelScope.launch {
-                    fruityService.addToCart(token, CartAdd(username,id, quantity))
-                }
-                Log.d(TAG, "addCart: $id")
+        user?.getIdToken(true)?.addOnSuccessListener {
+            _idToken.value = it.token
+            val token = "Bearer ${_idToken.value}"
+            val username = user.uid
+            viewModelScope.launch {
+                fruityService.addToCart(token, CartAdd(username,id, quantity))
             }
-        } else {
-            Log.d(TAG, "getAllProducts: user not found")
+            Log.d(TAG, "addCart: $id")
+        }
+    }
+
+    fun removeFromCart(id:String){
+        val user = Firebase.auth.currentUser
+        user?.getIdToken(true)?.addOnSuccessListener {
+            _idToken.value = it.token
+            val token = "Bearer ${_idToken.value}"
+            viewModelScope.launch {
+                fruityService.deleteFromCart(token, RemoveProduct(id))
+            }
         }
     }
 

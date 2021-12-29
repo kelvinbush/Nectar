@@ -1,10 +1,10 @@
-package com.kelvinbush.nectar.domain
+package com.kelvinbush.nectar.domain.model
 
 data class CartProduct(
-    val id: String,
+    val cartId: String,
     val name: String,
     val imageUrl: String,
-    val description: String,
+    val quantity: Int,
     val price: Double,
 )
 

@@ -1,6 +1,6 @@
 package com.kelvinbush.nectar.di
 
-import com.kelvinbush.nectar.network.FruityService
+import com.kelvinbush.nectar.data.remote.FruityService
 import com.kelvinbush.nectar.utils.DefaultIfNullFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -27,7 +27,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRecipeService(moshi: Moshi): FruityService {
+    fun provideFruityService(moshi: Moshi): FruityService {
         return Retrofit.Builder()
             .baseUrl("http://10.0.2.2:1446/")
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())

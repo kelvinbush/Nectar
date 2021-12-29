@@ -1,11 +1,11 @@
-package com.kelvinbush.nectar.network
+package com.kelvinbush.nectar.data.remote
 
-import com.kelvinbush.nectar.domain.CartItemList
+import com.kelvinbush.nectar.domain.model.CartItemList
 import com.kelvinbush.nectar.domain.FruityUser
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import com.kelvinbush.nectar.network.CartAdd
+import com.kelvinbush.nectar.network.RemoveProduct
+import com.kelvinbush.nectar.network.Result
+import retrofit2.http.*
 
 interface FruityService {
 
@@ -20,4 +20,7 @@ interface FruityService {
 
     @POST("/api/addCart")
     suspend fun addToCart(@Header("Authorization") authToken: String, @Body item: CartAdd)
+
+    @DELETE("/api/updateCart")
+    suspend fun deleteFromCart(@Header("Authorization") authToken: String, @Body item: RemoveProduct)
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.PopUpToBuilder
 import com.google.accompanist.systemuicontroller.SystemUiController
@@ -39,16 +40,15 @@ import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 @Composable
 fun SplashScreen(
     navController: NavController,
-    systemUiController: SystemUiController,
-    viewModel: LoginScreenViewModel
+    viewModel: LoginScreenViewModel = hiltViewModel()
 ) {
     val currentUser = Firebase.auth.currentUser
-    SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = BGreen,
-            darkIcons = false
-        )
-    }
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = BGreen,
+        darkIcons = false
+    )
+
     LaunchedEffect(key1 = 1) {
         currentUser?.getIdToken(true)?.addOnSuccessListener {
             viewModel.setToken(it.token.toString())

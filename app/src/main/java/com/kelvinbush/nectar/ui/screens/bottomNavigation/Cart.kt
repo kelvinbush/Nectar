@@ -13,7 +13,7 @@ import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 @Composable
 fun CartScreen(viewModel: LoginScreenViewModel) {
     val itemsInCart by viewModel.cart.observeAsState()
-    val refreshCart by remember { mutableStateOf(false)}
+    val refreshCart by remember { mutableStateOf(false) }
 
 
     LaunchedEffect(key1 = refreshCart) {
@@ -22,24 +22,15 @@ fun CartScreen(viewModel: LoginScreenViewModel) {
 
     itemsInCart?.let { cartItemList ->
         ItemListScreenHolder(
-        headText = "My Cart", proList = cartItemList, btnText = "Go to Checkout"
-    ) {
-        ProductCard(
-            product = it, endCol = {
-                LastColumnCart(price = it.price, iconId = R.drawable.close)
-            },
-            lastColAlignment = Alignment.End,
-            lastColArrangement = Arrangement.SpaceBetween
-        )
+            headText = "My Cart", proList = cartItemList, btnText = "Go to Checkout"
+        ) {
+            ProductCard(
+                product = it, endCol = {
+                    LastColumnCart(price = it.price, iconId = R.drawable.close)
+                },
+                lastColAlignment = Alignment.End,
+                lastColArrangement = Arrangement.SpaceBetween
+            )
+        }
     }
-    }
-
 }
-
-data class Product(
-    val image: Int,
-    val name: String,
-    val size: String,
-    val price: Double,
-    var quantity: Int = 1
-)

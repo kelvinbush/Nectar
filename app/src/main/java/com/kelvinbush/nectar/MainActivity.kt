@@ -50,16 +50,13 @@ class MainActivity : ComponentActivity() {
 @ExperimentalFoundationApi
 @Composable
 fun NectarApp() {
-    val systemUiController = rememberSystemUiController()
     val navController = rememberNavController()
     val loginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
     Scaffold {
         NavHost(navController = navController, startDestination = Splash.name) {
             composable(Splash.name) {
                 SplashScreen(
-                    navController,
-                    systemUiController,
-                    loginScreenViewModel
+                    navController
                 )
             }
             /*composable(OnBoarding.name) { OnBoardingScreen(navController) }*/
