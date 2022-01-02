@@ -35,6 +35,8 @@ class CartViewModel @Inject constructor(
         return token
     }
 
+    fun refreshCart() = getCartItems()
+
 
     private fun getCartItems() = viewModelScope.launch(Dispatchers.IO) {
         _cart.value = fruityService.getCart(getIdToken())
