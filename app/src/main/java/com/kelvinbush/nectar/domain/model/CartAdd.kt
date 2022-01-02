@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.network
+package com.kelvinbush.nectar.domain.model
 
 data class CartAdd(
     val username: String,

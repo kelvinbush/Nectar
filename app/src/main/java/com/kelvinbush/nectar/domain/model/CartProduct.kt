@@ -1,5 +1,8 @@
 package com.kelvinbush.nectar.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CartProduct(
     val cartId: String,
     val name: String,
@@ -8,6 +11,7 @@ data class CartProduct(
     val price: Double,
 )
 
+@Serializable
 data class CartItemList(
     val cartItems:List<CartProduct>
 )

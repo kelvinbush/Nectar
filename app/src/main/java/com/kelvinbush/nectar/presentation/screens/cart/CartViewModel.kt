@@ -1,26 +1,25 @@
 package com.kelvinbush.nectar.presentation.screens.cart
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.data.remote.FruityApi
 import com.kelvinbush.nectar.domain.model.CartItemList
+import com.kelvinbush.nectar.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val fruityApi: FruityApi
+    private val useCases: UseCases
 ) : ViewModel() {
 
-    private var _cart = MutableLiveData<CartItemList>()
-    val cart: LiveData<CartItemList>
-        get() = _cart
+    private var _cart = MutableStateFlow(CartItemList(emptyList()))
+    val cart = _cart
 
     init {
         getCartItems()
@@ -37,8 +36,9 @@ class CartViewModel @Inject constructor(
 
     fun refreshCart() = getCartItems()
 
-
     private fun getCartItems() = viewModelScope.launch(Dispatchers.IO) {
-        _cart.value = fruityApi.getCart(getIdToken())
+        useCases.getCartUseCase(authToken = getIdToken()).collect {
+            _cart.value = it
+        }
     }
 }

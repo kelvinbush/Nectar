@@ -13,8 +13,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,13 +34,11 @@ fun MyCart(
     navController: NavHostController,
     cartViewModel: CartViewModel = hiltViewModel()
 ) {
-    val itemsInCart by cartViewModel.cart.observeAsState()
-    itemsInCart?.let { products ->
-        LazyColumn() {
-            products.cartItems.forEach {
-                item {
-                    CartItem(cartItem = it)
-                }
+    val itemsInCart by cartViewModel.cart.collectAsState()
+    LazyColumn() {
+        itemsInCart.cartItems.forEach {
+            item {
+                CartItem(cartItem = it)
             }
         }
     }

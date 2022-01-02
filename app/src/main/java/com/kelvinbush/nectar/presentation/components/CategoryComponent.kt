@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.network.NetworkProduct
+import com.kelvinbush.nectar.domain.model.NetworkProduct
 import com.kelvinbush.nectar.ui.theme.itemCategoryTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
 import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle

@@ -2,9 +2,9 @@ package com.kelvinbush.nectar.data.remote
 
 import com.kelvinbush.nectar.domain.model.CartItemList
 import com.kelvinbush.nectar.domain.FruityUser
-import com.kelvinbush.nectar.network.CartAdd
-import com.kelvinbush.nectar.network.RemoveProduct
-import com.kelvinbush.nectar.network.Result
+import com.kelvinbush.nectar.domain.model.CartAdd
+import com.kelvinbush.nectar.domain.model.RemoveProduct
+import com.kelvinbush.nectar.domain.model.Result
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.*
 

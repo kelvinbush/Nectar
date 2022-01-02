@@ -8,9 +8,9 @@ import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.data.remote.FruityApi
 import com.kelvinbush.nectar.domain.FruityUser
 import com.kelvinbush.nectar.domain.model.CartItemList
-import com.kelvinbush.nectar.network.CartAdd
-import com.kelvinbush.nectar.network.NetworkProduct
-import com.kelvinbush.nectar.network.RemoveProduct
+import com.kelvinbush.nectar.domain.model.CartAdd
+import com.kelvinbush.nectar.domain.model.NetworkProduct
+import com.kelvinbush.nectar.domain.model.RemoveProduct
 import com.kelvinbush.nectar.util.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +43,6 @@ class LoginScreenViewModel @Inject constructor(
     private var _cart = MutableLiveData<CartItemList>()
     val cart: LiveData<CartItemList>
         get() = _cart
-
 
     init {
         Log.d(TAG, "init: called")
@@ -106,10 +105,10 @@ class LoginScreenViewModel @Inject constructor(
     }
 
     fun getCartItems() {
-        viewModelScope.launch(Dispatchers.IO) {
+       /* viewModelScope.launch(Dispatchers.IO) {
             val token = "Bearer ${_idToken.value}"
             _cart.value = fruityApi.getCart(token)
-        }
+        }*/
     }
 
     fun addCart(id: String, quantity: Int = 1) {
@@ -135,5 +134,4 @@ class LoginScreenViewModel @Inject constructor(
             }
         }
     }
-
 }

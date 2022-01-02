@@ -32,7 +32,6 @@ import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 @ExperimentalMaterialApi
 @Composable
 fun BottomNavHost(viewModel: LoginScreenViewModel) {
-    val currentUser = Firebase.auth.currentUser
     val navController = rememberNavController()
     val bottomItems = listOf(
         Screen.Shop,
@@ -41,9 +40,7 @@ fun BottomNavHost(viewModel: LoginScreenViewModel) {
         Screen.Favourite,
         Screen.Account
     )
-    val token by viewModel.idToken.observeAsState()
-    val products by viewModel.products.observeAsState()
-    Log.d("BottomNavHost: ", products.toString())
+
     LaunchedEffect(key1 = 1) {
         viewModel.getAllProducts()
     }

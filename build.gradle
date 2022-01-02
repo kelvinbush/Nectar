@@ -5,7 +5,7 @@ buildscript {
         accompanist_version = '0.18.0'
         nav = '2.4.0-beta02'
         retrofit_version = "2.9.0"
-        hilt_version = '2.37'
+        hilt_version = '2.38.1'
         moshi_version = '1.12.0'
     }
     repositories {

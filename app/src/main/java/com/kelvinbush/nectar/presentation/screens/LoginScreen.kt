@@ -68,10 +68,8 @@ fun LoginScreen(
                 viewModel.signWithCredential(credential)
                 if (currentUser != null) {
                     if (fUser != null) {
-                        navController.navigate(NectarScreen.Pager.name) {
-                            popUpTo(NectarScreen.Login.name) { inclusive = true }
-                            launchSingleTop = true
-                        }
+                        navController.popBackStack()
+                        navController.navigate(NectarScreen.Pager.name)
                     }
                 }
             } catch (e: ApiException) {
