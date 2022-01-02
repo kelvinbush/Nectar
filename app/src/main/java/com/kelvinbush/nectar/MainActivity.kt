@@ -1,8 +1,6 @@
 package com.kelvinbush.nectar
 
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -13,17 +11,13 @@ import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.google.firebase.auth.FirebaseAuth
 import com.kelvinbush.nectar.NectarScreen.*
-import com.kelvinbush.nectar.ui.screens.GetStartedScreen
-import com.kelvinbush.nectar.ui.screens.LoginScreen
-import com.kelvinbush.nectar.ui.screens.ProductDetailScreen
-import com.kelvinbush.nectar.ui.screens.SplashScreen
-import com.kelvinbush.nectar.ui.screens.bottomNavigation.BottomNavHost
+import com.kelvinbush.nectar.presentation.screens.GetStartedScreen
+import com.kelvinbush.nectar.presentation.screens.LoginScreen
+import com.kelvinbush.nectar.presentation.screens.SplashScreen
+import com.kelvinbush.nectar.presentation.screens.bottomNavigation.BottomNavHost
 import com.kelvinbush.nectar.ui.theme.NectarTheme
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint

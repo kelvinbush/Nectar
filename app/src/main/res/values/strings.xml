@@ -5,4 +5,6 @@
     <string name="account">Account</string>
     <string name="cart">Cart</string>
     <string name="favourite">Liked</string>
+    <string name="cart_item">cart item</string>
+    <string name="CLOSE_ICON">Close Icon</string>
 </resources>

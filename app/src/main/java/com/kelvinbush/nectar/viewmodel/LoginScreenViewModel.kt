@@ -5,13 +5,13 @@ import androidx.lifecycle.*
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.data.remote.FruityService
+import com.kelvinbush.nectar.data.remote.FruityApi
 import com.kelvinbush.nectar.domain.FruityUser
 import com.kelvinbush.nectar.domain.model.CartItemList
 import com.kelvinbush.nectar.network.CartAdd
 import com.kelvinbush.nectar.network.NetworkProduct
 import com.kelvinbush.nectar.network.RemoveProduct
-import com.kelvinbush.nectar.utils.LoadingState
+import com.kelvinbush.nectar.util.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +24,7 @@ private const val TAG = "LoginScreenViewModel"
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val fruityService: FruityService
+    private val fruityApi: FruityApi
 ) : ViewModel() {
 
     val loadingState = MutableStateFlow(LoadingState.IDLE)
@@ -86,7 +86,7 @@ class LoginScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val token = "Bearer $accessToken"
             Log.d(TAG, token)
-            _fUser.value = fruityService.login(token)
+            _fUser.value = fruityApi.login(token)
         }
     }
 
@@ -97,7 +97,7 @@ class LoginScreenViewModel @Inject constructor(
                 _idToken.value = it.token
                 val token = "Bearer ${_idToken.value}"
                 viewModelScope.launch(Dispatchers.IO) {
-                    _products.value = fruityService.getAllProducts(token).result
+                    _products.value = fruityApi.getAllProducts(token).result
                 }
             }
         } else {
@@ -108,7 +108,7 @@ class LoginScreenViewModel @Inject constructor(
     fun getCartItems() {
         viewModelScope.launch(Dispatchers.IO) {
             val token = "Bearer ${_idToken.value}"
-            _cart.value = fruityService.getCart(token)
+            _cart.value = fruityApi.getCart(token)
         }
     }
 
@@ -119,7 +119,7 @@ class LoginScreenViewModel @Inject constructor(
             val token = "Bearer ${_idToken.value}"
             val username = user.uid
             viewModelScope.launch(Dispatchers.IO) {
-                fruityService.addToCart(token, CartAdd(username, id, quantity))
+                fruityApi.addToCart(token, CartAdd(username, id, quantity))
             }
             Log.d(TAG, "addCart: $id")
         }
@@ -131,7 +131,7 @@ class LoginScreenViewModel @Inject constructor(
             _idToken.value = it.token
             val token = "Bearer ${_idToken.value}"
             viewModelScope.launch(Dispatchers.IO) {
-                fruityService.deleteFromCart(token, RemoveProduct(id))
+                fruityApi.deleteFromCart(token, RemoveProduct(id))
             }
         }
     }

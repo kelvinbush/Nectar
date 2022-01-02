@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cart_item">cart item</string>
+    <string name="CLOSE_ICON">Close Icon</string>
+</resources>
