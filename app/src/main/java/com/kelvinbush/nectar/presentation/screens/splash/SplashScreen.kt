@@ -1,7 +1,10 @@
 package com.kelvinbush.nectar.presentation.screens.splash
 
+
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,6 +12,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,36 +24,49 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.navigation.Screen
-import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.ui.theme.BGreen
-import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
-    viewModel: LoginScreenViewModel = hiltViewModel()
+    navController: NavHostController,
 ) {
     val currentUser = Firebase.auth.currentUser
+
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
         color = BGreen,
         darkIcons = false
     )
 
-    LaunchedEffect(key1 = 1) {
-        currentUser?.getIdToken(true)?.addOnSuccessListener {
-            viewModel.setToken(it.token.toString())
+    val degrees = remember { Animatable(0f) }
+
+    LaunchedEffect(key1 = true) {
+        degrees.animateTo(
+            targetValue = 360f,
+            animationSpec = tween(
+                durationMillis = 1000,
+                delayMillis = 200
+            )
+        )
+
+        navController.popBackStack()
+        if (currentUser != null) {
+            navController.navigate(Screen.Welcome.route)
+        } else {
+            navController.navigate(Screen.Login.route)
         }
     }
-    Scaffold(bottomBar ={}) {
+
+
+
+    Scaffold {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -89,17 +106,4 @@ fun SplashScreen(
             }
         }
     }
-
-    Handler(Looper.getMainLooper()).postDelayed({
-        navController.popBackStack()
-        if (currentUser != null) {
-            navController.navigate(Screen.Welcome.route) {
-                launchSingleTop = true
-            }
-        } else {
-            navController.navigate(Screen.Login.route) {
-                launchSingleTop = true
-            }
-        }
-    }, 2500)
 }

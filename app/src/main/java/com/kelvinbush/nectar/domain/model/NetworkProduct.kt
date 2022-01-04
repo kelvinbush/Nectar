@@ -10,7 +10,7 @@ data class NetworkProduct(
     val description: String,
     val price: Double,
     val category: ProductCategory,
-    val inventory: ProductInventory
+    val inventory: ProductInventory,
 )
 
 @Serializable
@@ -19,13 +19,14 @@ data class ProductCategory(
     val name: String,
     val description: String,
 )
+
 @Serializable
 data class ProductInventory(
     val id: String,
-    val quantity: Int
+    val quantity: Int,
 )
 
 @Serializable
 data class AllNetworkProducts(
-    val result: List<NetworkProduct>
+    val result: List<NetworkProduct>? = emptyList(),
 )

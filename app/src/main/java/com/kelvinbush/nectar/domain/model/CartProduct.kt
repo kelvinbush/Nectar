@@ -13,5 +13,5 @@ data class CartProduct(
 
 @Serializable
 data class CartItemList(
-    val cartItems:List<CartProduct>
+    val cartItems: List<CartProduct>? = emptyList(),
 )

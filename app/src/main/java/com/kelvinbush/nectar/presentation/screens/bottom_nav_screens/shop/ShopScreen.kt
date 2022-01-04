@@ -1,31 +1,34 @@
-package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens
+package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.CategoryComponent
 import com.kelvinbush.nectar.presentation.components.SearchTextField
 import com.kelvinbush.nectar.presentation.components.ShopHeaderComponent
-import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @ExperimentalCoilApi
 @Composable
-fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel= hiltViewModel()) {
-    val items = (0..5).toList()
-    val products by viewModel.products.observeAsState()
+fun ShopScreen(
+    navController: NavHostController,
+    viewModel: ShopViewModel = hiltViewModel(),
+) {
+    val products by viewModel.products.collectAsState()
     val categories = ArrayList<String>()
-    products?.forEach { item ->
+    products.result?.forEach { item ->
         categories.add(item.category.name)
     }
     var searchItem by remember { mutableStateOf("") }
@@ -54,11 +57,11 @@ fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel= h
             }
             categories.toSet().forEach { category ->
                 item {
-                    products?.let {
+                    products.result?.let {
                         CategoryComponent(
                             category = category,
                             products = it,
-                            addItem = { id -> viewModel.addCart(id) })
+                            addItem = { })
                     }
                 }
             }
