@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens.cart
+package com.kelvinbush.nectar.presentation.screens.bottomNavigation.cart
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

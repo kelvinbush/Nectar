@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens
+package com.kelvinbush.nectar.presentation.screens.splash
 
 import android.os.Handler
 import android.os.Looper
@@ -25,11 +25,9 @@ import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.NectarScreen
-import com.kelvinbush.nectar.NectarScreen.Splash
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.navigation.Screen
-import com.kelvinbush.nectar.presentation.screens.bottomNavigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.ui.theme.BGreen
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 

@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens
+package com.kelvinbush.nectar.presentation.screens.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

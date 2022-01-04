@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens.bottomNavigation
+package com.kelvinbush.nectar.presentation.screens.bottomNavigation.favourite
 
 import androidx.compose.runtime.Composable
 

@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens
+package com.kelvinbush.nectar.presentation.screens.signup
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,23 +26,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen.Login
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.fieldColors
 
 @Composable
-fun SignupScreen(/*systemUiController: SystemUiController,*/ navController: NavController) {
+fun SignupScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
 
-    /*SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = Color.Transparent,
-            darkIcons = true
-        )
-    }*/
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = Color.Transparent,
+        darkIcons = true
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()

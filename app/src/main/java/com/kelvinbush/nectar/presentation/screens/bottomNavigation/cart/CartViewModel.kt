@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens.cart
+package com.kelvinbush.nectar.presentation.screens.bottomNavigation.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

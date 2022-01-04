@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens
+package com.kelvinbush.nectar.presentation.screens.login
 
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -35,11 +35,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.NectarScreen.Start
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.Btn
 import com.kelvinbush.nectar.presentation.components.fieldColors
+import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.util.LoadingState
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
@@ -70,14 +70,13 @@ fun LoginScreen(
                 if (currentUser != null) {
                     if (fUser != null) {
                         navController.popBackStack()
-                        navController.navigate(NectarScreen.Pager.name)
+                        navController.navigate(BottomNavScreen.Shop.route)
                     }
                 }
             } catch (e: ApiException) {
                 Log.w("TAG", "Google sign in failed", e)
             }
         }
-    idToken?.let { Log.d("LoginScreen idToken: ", it) }
 
 
     Scaffold(

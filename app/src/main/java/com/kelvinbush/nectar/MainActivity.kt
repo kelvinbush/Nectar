@@ -5,21 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.core.view.WindowCompat
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
-import com.kelvinbush.nectar.NectarScreen.*
-import com.kelvinbush.nectar.presentation.screens.GetStartedScreen
-import com.kelvinbush.nectar.presentation.screens.LoginScreen
-import com.kelvinbush.nectar.presentation.screens.SplashScreen
-import com.kelvinbush.nectar.presentation.screens.bottomNavigation.BottomNavHost
+import com.kelvinbush.nectar.navigation.SetUpNavGraph
 import com.kelvinbush.nectar.ui.theme.NectarTheme
-import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalCoilApi
@@ -32,19 +22,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
         setContent {
+            val navController = rememberNavController()
             NectarTheme {
-                NectarApp()
+                SetUpNavGraph(navController = navController)
             }
         }
     }
-}
-
-@ExperimentalCoilApi
-@ExperimentalMaterialApi
-@ExperimentalFoundationApi
-@Composable
-fun NectarApp() {
-    val navController = rememberNavController()
-    val loginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
-    BottomNavHost(navController = navController)
 }

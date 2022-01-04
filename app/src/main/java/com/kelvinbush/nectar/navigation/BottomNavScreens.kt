@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens.bottomNavigation
+package com.kelvinbush.nectar.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

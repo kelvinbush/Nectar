@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens
+package com.kelvinbush.nectar.presentation.screens.bottomNavigation.detail
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*

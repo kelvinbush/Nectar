@@ -14,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @Composable
@@ -37,7 +38,10 @@ fun AccountScreen(
     ) {
         Text(text = fUser.toString())
         Button(onClick = {
-            loginViewModel.login(token)
+            navController.popBackStack()
+            navController.navigate(Screen.Login.route) {
+                launchSingleTop = true
+            }
         }) {
             Text(text = "Logout", style = MaterialTheme.typography.button)
         }
