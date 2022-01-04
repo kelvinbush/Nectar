@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
@@ -20,7 +21,7 @@ import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @ExperimentalCoilApi
 @Composable
-fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel) {
+fun ShopScreen(navController1: NavController, viewModel: LoginScreenViewModel= hiltViewModel()) {
     val items = (0..5).toList()
     val products by viewModel.products.observeAsState()
     val categories = ArrayList<String>()

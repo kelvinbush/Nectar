@@ -5,6 +5,7 @@ import android.os.Looper
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,6 +28,8 @@ import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.NectarScreen.Splash
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.navigation.Screen
+import com.kelvinbush.nectar.presentation.screens.bottomNavigation.BottomNavScreen
 import com.kelvinbush.nectar.ui.theme.BGreen
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
@@ -48,55 +51,55 @@ fun SplashScreen(
             viewModel.setToken(it.token.toString())
         }
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BGreen),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row {
-            Column(modifier = Modifier.padding(end = 8.dp)) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_carrot),
-                    contentDescription = "logo",
-                )
-            }
-            Column {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_logo),
-                    contentDescription = "logo",
-                )
-                Text(
-                    text = "online  groceries", style = TextStyle(
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.White,
-                        lineHeight = 18.sp,
-                        letterSpacing = 6.sp,
-                        fontFamily = FontFamily(
-                            Font(
-                                R.font.gilroymedium,
-                                weight = FontWeight.Medium
+    Scaffold(bottomBar ={}) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(BGreen),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row {
+                Column(modifier = Modifier.padding(end = 8.dp)) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_carrot),
+                        contentDescription = "logo",
+                    )
+                }
+                Column {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_logo),
+                        contentDescription = "logo",
+                    )
+                    Text(
+                        text = "online  groceries", style = TextStyle(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White,
+                            lineHeight = 18.sp,
+                            letterSpacing = 6.sp,
+                            fontFamily = FontFamily(
+                                Font(
+                                    R.font.gilroymedium,
+                                    weight = FontWeight.Medium
+                                )
                             )
-                        )
-                    ),
-                    textAlign = TextAlign.Center
-                )
+                        ),
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
     }
 
     Handler(Looper.getMainLooper()).postDelayed({
+        navController.popBackStack()
         if (currentUser != null) {
-            navController.popBackStack()
-            navController.navigate(NectarScreen.Pager.name) {
+            navController.navigate(BottomNavScreen.Shop.route) {
                 launchSingleTop = true
             }
         } else {
-            navController.navigate(NectarScreen.Login.name) {
-                popUpTo(Splash.name) { inclusive = true }
+            navController.navigate(Screen.Login.route) {
                 launchSingleTop = true
             }
         }

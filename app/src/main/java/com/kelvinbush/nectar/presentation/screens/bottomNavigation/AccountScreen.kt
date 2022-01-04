@@ -10,13 +10,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @Composable
-fun AccountScreen(navController: NavController, loginViewModel: LoginScreenViewModel) {
+fun AccountScreen(
+    navController: NavController,
+    loginViewModel: LoginScreenViewModel = hiltViewModel(),
+) {
     val fUser by loginViewModel.fUser.observeAsState()
     val currentUser = Firebase.auth.currentUser
     var token by remember { mutableStateOf("") }

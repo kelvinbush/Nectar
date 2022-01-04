@@ -46,12 +46,5 @@ class MainActivity : ComponentActivity() {
 fun NectarApp() {
     val navController = rememberNavController()
     val loginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
-    Scaffold {
-        NavHost(navController = navController, startDestination = Splash.name) {
-            composable(Splash.name) { SplashScreen(navController) }
-            composable(Start.name) { GetStartedScreen(navController) }
-            composable(Login.name) { LoginScreen(navController, loginScreenViewModel) }
-            composable(Pager.name) { BottomNavHost(loginScreenViewModel) }
-        }
-    }
+    BottomNavHost(navController = navController)
 }
