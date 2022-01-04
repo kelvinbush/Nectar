@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.viewmodel
+package com.kelvinbush.nectar.presentation.screens.login
 
 import android.util.Log
 import androidx.lifecycle.*
@@ -44,10 +44,6 @@ class LoginScreenViewModel @Inject constructor(
     val cart: LiveData<CartItemList>
         get() = _cart
 
-    init {
-        Log.d(TAG, "init: called")
-        getAllProducts()
-    }
 
     fun setToken(accessToken: String) {
         Log.d(TAG, "setToken: ")
@@ -89,27 +85,6 @@ class LoginScreenViewModel @Inject constructor(
         }
     }
 
-    private fun getAllProducts() {
-        val user = Firebase.auth.currentUser
-        if (user != null) {
-            user.getIdToken(true).addOnSuccessListener {
-                _idToken.value = it.token
-                val token = "Bearer ${_idToken.value}"
-                viewModelScope.launch {
-                    _products.value = fruityApi.getAllProducts(token).result
-                }
-            }
-        } else {
-            Log.d(TAG, "getAllProducts: user not found")
-        }
-    }
-
-    fun getCartItems() {
-       /* viewModelScope.launch(Dispatchers.IO) {
-            val token = "Bearer ${_idToken.value}"
-            _cart.value = fruityApi.getCart(token)
-        }*/
-    }
 
     fun addCart(id: String, quantity: Int = 1) {
         val user = Firebase.auth.currentUser

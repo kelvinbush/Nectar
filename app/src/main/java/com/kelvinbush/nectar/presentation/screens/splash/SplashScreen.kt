@@ -1,8 +1,6 @@
 package com.kelvinbush.nectar.presentation.screens.splash
 
 
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -51,7 +49,7 @@ fun SplashScreen(
         degrees.animateTo(
             targetValue = 360f,
             animationSpec = tween(
-                durationMillis = 1000,
+                durationMillis = 1800,
                 delayMillis = 200
             )
         )

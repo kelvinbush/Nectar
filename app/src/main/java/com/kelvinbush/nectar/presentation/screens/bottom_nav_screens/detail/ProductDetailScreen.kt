@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.MidCol
 import com.kelvinbush.nectar.ui.theme.categoryTextStyle
@@ -20,7 +21,7 @@ import com.kelvinbush.nectar.ui.theme.price2TextStyle
 import com.kelvinbush.nectar.ui.theme.productTextStyle
 
 @Composable
-fun ProductDetailScreen(navController: NavController) {
+fun ProductDetailScreen(navController: NavHostController) {
     var liked by remember { mutableStateOf(false) }
     var amount by remember { mutableStateOf(1) }
     val likedIconId = if (liked) R.drawable.favorite else R.drawable.outline_favorite_border

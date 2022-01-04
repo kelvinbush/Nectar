@@ -22,7 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.AccountScreen
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.account.AccountScreen
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop.ShopScreen
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.cart.MyCart
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.explore.ExploreScreen

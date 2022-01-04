@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.R
@@ -29,7 +30,7 @@ import com.kelvinbush.nectar.presentation.components.fieldColors
 private const val TAG = "GetStartedScreen"
 
 @Composable
-fun GetStartedScreen(navController: NavController) {
+fun GetStartedScreen(navController: NavHostController) {
     var phoneNumber by remember { mutableStateOf("") }
 
     val systemUiController = rememberSystemUiController()
