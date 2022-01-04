@@ -3,4 +3,9 @@
     <string name="cart_item">cart item</string>
     <string name="CLOSE_ICON">Close Icon</string>
     <string name="screen_label">Screen label</string>
+    <string name="welcome">Welcome</string>
+    <string name="to_our_store">to our store</string>
+    <string name="get_groceries">Get your groceries as fast as one hour</string>
+    <string name="get_started">Get Started</string>
+    <string name="logo">logo</string>
 </resources>

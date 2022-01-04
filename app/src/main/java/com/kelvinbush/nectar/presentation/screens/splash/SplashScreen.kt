@@ -93,7 +93,7 @@ fun SplashScreen(
     Handler(Looper.getMainLooper()).postDelayed({
         navController.popBackStack()
         if (currentUser != null) {
-            navController.navigate(BottomNavScreen.Shop.route) {
+            navController.navigate(Screen.Welcome.route) {
                 launchSingleTop = true
             }
         } else {

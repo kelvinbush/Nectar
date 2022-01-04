@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens.bottomNavigation
+package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

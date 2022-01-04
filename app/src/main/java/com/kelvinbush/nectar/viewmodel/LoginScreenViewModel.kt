@@ -89,7 +89,7 @@ class LoginScreenViewModel @Inject constructor(
         }
     }
 
-    fun getAllProducts() {
+    private fun getAllProducts() {
         val user = Firebase.auth.currentUser
         if (user != null) {
             user.getIdToken(true).addOnSuccessListener {

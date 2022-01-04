@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens.bottomNavigation.detail
+package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.detail
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -24,7 +24,7 @@ fun ProductDetailScreen(navController: NavController) {
     var liked by remember { mutableStateOf(false) }
     var amount by remember { mutableStateOf(1) }
     val likedIconId = if (liked) R.drawable.favorite else R.drawable.outline_favorite_border
-    val loremIpsum = "I would like say that after conquerored React " +
+    val loremIpsum = "I would like say that after conquered React " +
             "also" +
             " maintain consistency for your entire developer journey. Learn new " +
             "things" +

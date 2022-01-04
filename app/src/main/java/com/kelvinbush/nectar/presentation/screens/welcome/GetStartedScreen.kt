@@ -1,4 +1,4 @@
-package com.kelvinbush.nectar.presentation.screens
+package com.kelvinbush.nectar.presentation.screens.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.NectarScreen
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.Btn
@@ -28,14 +29,14 @@ import com.kelvinbush.nectar.presentation.components.fieldColors
 private const val TAG = "GetStartedScreen"
 
 @Composable
-fun GetStartedScreen(navController: NavController/*, systemUiController: SystemUiController*/) {
+fun GetStartedScreen(navController: NavController) {
     var phoneNumber by remember { mutableStateOf("") }
-    /*SideEffect {
+
+    val systemUiController = rememberSystemUiController()
         systemUiController.setSystemBarsColor(
             color = Color.Transparent,
             darkIcons = true
         )
-    }*/
     Column(
         modifier = Modifier
             .background(Color(0xfffcfcfc))
@@ -127,12 +128,3 @@ fun GetStartedScreen(navController: NavController/*, systemUiController: SystemU
         }
     }
 }
-
-/*
-@Composable
-@Preview
-fun Get(){
-    NectarTheme {
-        GetStartedScreen()
-    }
-}*/

@@ -26,6 +26,6 @@ data class ProductInventory(
 )
 
 @Serializable
-data class Result(
+data class AllNetworkProducts(
     val result: List<NetworkProduct>
 )

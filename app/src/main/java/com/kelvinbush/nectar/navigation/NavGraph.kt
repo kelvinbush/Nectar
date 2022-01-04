@@ -22,12 +22,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.AccountScreen
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.ShopScreen
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.cart.MyCart
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.explore.ExploreScreen
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.favourite.FavouriteScreen
 import com.kelvinbush.nectar.presentation.screens.login.LoginScreen
-import com.kelvinbush.nectar.presentation.screens.welcome.OnBoardingScreen
 import com.kelvinbush.nectar.presentation.screens.splash.SplashScreen
-import com.kelvinbush.nectar.presentation.screens.bottomNavigation.*
-import com.kelvinbush.nectar.presentation.screens.bottomNavigation.cart.MyCart
-import com.kelvinbush.nectar.presentation.screens.bottomNavigation.favourite.FavouriteScreen
+import com.kelvinbush.nectar.presentation.screens.welcome.OnBoardingScreen
 
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
@@ -40,7 +42,7 @@ fun SetUpNavGraph(navController: NavHostController) {
         NavHost(navController = navController, startDestination = Screen.Splash.route) {
             composable(route = Screen.Splash.route) { SplashScreen(navController = navController) }
             composable(route = Screen.Login.route) { LoginScreen(navController = navController) }
-            composable(route = Screen.Welcome.route){ OnBoardingScreen(navController = navController) }
+            composable(route = Screen.Welcome.route) { OnBoardingScreen(navController = navController) }
             composable(route = BottomNavScreen.Shop.route) { ShopScreen(navController) }
             composable(route = BottomNavScreen.Explore.route) { ExploreScreen() }
             composable(route = BottomNavScreen.Cart.route) { MyCart(navController) }
@@ -61,11 +63,7 @@ fun MyBottomNav(navController: NavHostController) {
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    if (currentDestination?.route == BottomNavScreen.Shop.route ||
-        currentDestination?.route == BottomNavScreen.Explore.route ||
-        currentDestination?.route == BottomNavScreen.Cart.route ||
-        currentDestination?.route == BottomNavScreen.Favourite.route ||
-        currentDestination?.route == BottomNavScreen.Account.route
+    if (currentDestination?.route in bottomItems.map { item -> item.route }
     ) {
         BottomNavigation(
             backgroundColor = Color.White,
@@ -74,37 +72,39 @@ fun MyBottomNav(navController: NavHostController) {
         ) {
 
             bottomItems.forEach { screen ->
-                BottomNavigationItem(
-                    icon = {
-                        Icon(
-                            painterResource(screen.drawableId),
-                            contentDescription = stringResource(R.string.screen_label)
-                        )
-                    },
-                    label = {
-                        Text(
-                            stringResource(screen.resourceId),
-                            color = if (currentDestination.hierarchy.any {
-                                    it.route == screen.route
-                                })
-                                MaterialTheme.colors.primary else Color.Black,
-                            textAlign = TextAlign.Start)
-                    },
-                    selected = currentDestination.hierarchy.any { it.route == screen.route },
-                    onClick = {
-                        navController.navigate(screen.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
+                if (currentDestination != null) {
+                    BottomNavigationItem(
+                        icon = {
+                            Icon(
+                                painterResource(screen.drawableId),
+                                contentDescription = stringResource(R.string.screen_label)
+                            )
+                        },
+                        label = {
+                            Text(
+                                stringResource(screen.resourceId),
+                                color = if (currentDestination.hierarchy.any {
+                                        it.route == screen.route
+                                    })
+                                    MaterialTheme.colors.primary else Color.Black,
+                                textAlign = TextAlign.Start)
+                        },
+                        selected = currentDestination.hierarchy.any { it.route == screen.route },
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    alwaysShowLabel = true,
-                    selectedContentColor = MaterialTheme.colors.primary,
-                    unselectedContentColor = Color.Black,
-                    modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-                )
+                        },
+                        alwaysShowLabel = true,
+                        selectedContentColor = MaterialTheme.colors.primary,
+                        unselectedContentColor = Color.Black,
+                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                    )
+                }
             }
         }
     } else {
