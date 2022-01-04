@@ -12,5 +12,4 @@ fun SetUpNavGraph(navController: NavHostController) {
         composable(route = Screen.Login.route) {}
         composable(route = Screen.Favourites.route) {}
     }
-
 }

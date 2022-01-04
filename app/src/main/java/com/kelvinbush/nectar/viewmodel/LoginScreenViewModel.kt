@@ -95,7 +95,7 @@ class LoginScreenViewModel @Inject constructor(
             user.getIdToken(true).addOnSuccessListener {
                 _idToken.value = it.token
                 val token = "Bearer ${_idToken.value}"
-                viewModelScope.launch(Dispatchers.IO) {
+                viewModelScope.launch {
                     _products.value = fruityApi.getAllProducts(token).result
                 }
             }

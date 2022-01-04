@@ -25,20 +25,18 @@ class CartViewModel @Inject constructor(
         getCartItems()
     }
 
-    private fun getIdToken(): String {
-        val user = Firebase.auth.currentUser
-        var token = ""
-        user?.getIdToken(true)?.addOnSuccessListener { id ->
-            token = "Bearer ${id.token}"
-        }
-        return token
-    }
-
     fun refreshCart() = getCartItems()
 
-    private fun getCartItems() = viewModelScope.launch(Dispatchers.IO) {
-        useCases.getCartUseCase(authToken = getIdToken()).collect {
-            _cart.value = it
+    private fun getCartItems() {
+        val user = Firebase.auth.currentUser
+        user?.getIdToken(true)?.addOnSuccessListener { id ->
+            viewModelScope.launch(Dispatchers.IO) {
+                id.token?.let { token ->
+                    useCases.getCartUseCase(authToken = token).collect {
+                        _cart.value = it
+                    }
+                }
+            }
         }
     }
 }

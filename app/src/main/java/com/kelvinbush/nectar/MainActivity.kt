@@ -22,12 +22,12 @@ import com.kelvinbush.nectar.ui.theme.NectarTheme
 import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalCoilApi
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @ExperimentalCoilApi
-    @ExperimentalFoundationApi
-    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
@@ -48,23 +48,10 @@ fun NectarApp() {
     val loginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
     Scaffold {
         NavHost(navController = navController, startDestination = Splash.name) {
-            composable(Splash.name) {
-                SplashScreen(
-                    navController
-                )
-            }
-            /*composable(OnBoarding.name) { OnBoardingScreen(navController) }*/
-            composable(Start.name) { GetStartedScreen(navController/*, systemUiController*/) }
+            composable(Splash.name) { SplashScreen(navController) }
+            composable(Start.name) { GetStartedScreen(navController) }
             composable(Login.name) { LoginScreen(navController, loginScreenViewModel) }
-            /*composable(Signup.name) {
-                SignupScreen(
-                    systemUiController = systemUiController,
-                    navController
-                )
-            }*/
             composable(Pager.name) { BottomNavHost(loginScreenViewModel) }
-//            composable(ProductDetail.name) { ProductDetailScreen(navController) }
         }
-
     }
 }

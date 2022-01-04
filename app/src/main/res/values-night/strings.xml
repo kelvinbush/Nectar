@@ -2,4 +2,5 @@
 <resources>
     <string name="cart_item">cart item</string>
     <string name="CLOSE_ICON">Close Icon</string>
+    <string name="screen_label">Screen label</string>
 </resources>
