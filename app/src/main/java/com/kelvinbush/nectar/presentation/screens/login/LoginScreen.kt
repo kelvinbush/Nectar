@@ -37,11 +37,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.NectarScreen.Start
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.presentation.components.Btn
 import com.kelvinbush.nectar.presentation.components.fieldColors
-import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.util.LoadingState
-import com.kelvinbush.nectar.viewmodel.LoginScreenViewModel
 
 @Composable
 fun LoginScreen(

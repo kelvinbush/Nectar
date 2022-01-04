@@ -1,27 +1,28 @@
 package com.kelvinbush.nectar.data.remote
 
-import com.kelvinbush.nectar.domain.model.CartItemList
-import com.kelvinbush.nectar.domain.FruityUser
-import com.kelvinbush.nectar.domain.model.CartAdd
-import com.kelvinbush.nectar.domain.model.RemoveProduct
-import com.kelvinbush.nectar.domain.model.AllNetworkProducts
-import kotlinx.coroutines.flow.Flow
+import com.kelvinbush.nectar.domain.model.*
 import retrofit2.http.*
 
 interface FruityApi {
 
     @GET("/api/me")
-    suspend fun login(@Header("Authorization") authToken: String): FruityUser
+    suspend fun login(@Header("Authorization") authToken: String): FUser
 
     @GET("/api/product")
-    suspend fun getAllProducts(@Header("Authorization") authToken: String): Flow<AllNetworkProducts>
+    suspend fun getAllProducts(@Header("Authorization") authToken: String): AllNetworkProducts
 
-    @GET("/api/updateCart")
-    suspend fun getCart(@Header("Authorization") authToken: String): Flow<CartItemList>
+    @POST("/api/getMyCart")
+    suspend fun getCart(
+        @Header("Authorization") authToken: String,
+        @Body sessionId: ShoppingSession,
+    ): CartItemList
 
     @POST("/api/addCart")
     suspend fun addToCart(@Header("Authorization") authToken: String, @Body item: CartAdd)
 
     @DELETE("/api/updateCart")
-    suspend fun deleteFromCart(@Header("Authorization") authToken: String, @Body item: RemoveProduct)
+    suspend fun deleteFromCart(
+        @Header("Authorization") authToken: String,
+        @Body item: RemoveProduct,
+    )
 }

@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.presentation.screens.welcome
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,6 +8,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,15 +17,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.ui.theme.BGreen
 
 
 @Composable
-fun OnBoardingScreen(navController: NavHostController) {
+fun OnBoardingScreen(
+    navController: NavHostController,
+    splashViewModel: SplashViewModel = hiltViewModel(),
+) {
+    val user by splashViewModel.fUser.observeAsState()
+
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
         color = BGreen,
@@ -67,9 +77,10 @@ fun OnBoardingScreen(navController: NavHostController) {
             )
             Button(
                 onClick = {
-                    navController.popBackStack()
                     navController.navigate(BottomNavScreen.Shop.route)
                     { launchSingleTop = true }
+                    splashViewModel.login()
+                    Log.d("SplashScreen: ", user.toString())
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.85f)

@@ -60,7 +60,7 @@ fun ItemListScreenHolder(
 @Composable
 fun ItemList(myList: CartItemList, content: @Composable (prod: CartProduct) -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
-        myList.cartItems.forEach { elem ->
+        myList.cartItems?.forEach { elem ->
             item {
                 content(elem)
                 if (myList.cartItems.lastIndex != myList.cartItems.indexOf(elem)) {
@@ -87,7 +87,7 @@ fun ProductCard(
     },
     endCol: @Composable () -> Unit = {
         LastColumnFavourite(
-            price = product.price,
+            price = product.product.price,
             iconId = iconId,
             tint = tint
         )
@@ -110,7 +110,7 @@ fun ProductCard(
             horizontalAlignment = Alignment.Start
         ) {
             Image(
-                painter = rememberImagePainter(product.imageUrl), null,
+                painter = rememberImagePainter(product.product.imageUrl), null,
                 contentScale = ContentScale.Fit
             )
         }
@@ -121,7 +121,7 @@ fun ProductCard(
             verticalArrangement = arrangement,
             horizontalAlignment = Alignment.Start
         ) {
-            Text(text = product.name, style = productTextStyle)
+            Text(text = product.product.name, style = productTextStyle)
             Spacer(modifier = Modifier.height(2.dp))
             Text(text = "Kshs, Price", style = priceTextStyle)
             midCol()

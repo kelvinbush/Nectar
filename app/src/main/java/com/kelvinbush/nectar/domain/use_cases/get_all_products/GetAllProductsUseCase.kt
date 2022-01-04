@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 class GetAllProductsUseCase(private val repository: Repository) {
-    suspend operator fun invoke(authToken: String): Flow<AllNetworkProducts> {
+    suspend operator fun invoke(authToken: String): AllNetworkProducts {
         return repository.getAllProducts(authToken)
     }
 }

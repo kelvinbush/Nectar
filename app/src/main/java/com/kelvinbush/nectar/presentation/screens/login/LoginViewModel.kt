@@ -1,16 +1,15 @@
 package com.kelvinbush.nectar.presentation.screens.login
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.data.remote.FruityApi
-import com.kelvinbush.nectar.domain.FruityUser
-import com.kelvinbush.nectar.domain.model.CartItemList
-import com.kelvinbush.nectar.domain.model.CartAdd
-import com.kelvinbush.nectar.domain.model.NetworkProduct
-import com.kelvinbush.nectar.domain.model.RemoveProduct
+import com.kelvinbush.nectar.domain.model.FUser
+import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.util.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,8 +22,7 @@ private const val TAG = "LoginScreenViewModel"
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
-    private val fruityApi: FruityApi
+    private val useCases: UseCases,
 ) : ViewModel() {
 
     val loadingState = MutableStateFlow(LoadingState.IDLE)
@@ -32,23 +30,9 @@ class LoginScreenViewModel @Inject constructor(
     val idToken: LiveData<String>
         get() = _idToken
 
-    private var _fUser = MutableLiveData<FruityUser>()
-    val fUser: LiveData<FruityUser>
-        get() = _fUser
+    private var _fUser = MutableLiveData<FUser>()
+    val fUser = _fUser
 
-    private var _products = MutableLiveData<List<NetworkProduct>>()
-    val products: LiveData<List<NetworkProduct>>
-        get() = _products
-
-    private var _cart = MutableLiveData<CartItemList>()
-    val cart: LiveData<CartItemList>
-        get() = _cart
-
-
-    fun setToken(accessToken: String) {
-        Log.d(TAG, "setToken: ")
-        _idToken.value = accessToken
-    }
 
     fun signInWithEmailAndPassword(email: String, password: String) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -81,7 +65,7 @@ class LoginScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val token = "Bearer $accessToken"
             Log.d(TAG, token)
-            _fUser.value = fruityApi.login(token)
+            _fUser.value = useCases.loginUseCase(authToken = token)
         }
     }
 
@@ -93,7 +77,7 @@ class LoginScreenViewModel @Inject constructor(
             val token = "Bearer ${_idToken.value}"
             val username = user.uid
             viewModelScope.launch(Dispatchers.IO) {
-                fruityApi.addToCart(token, CartAdd(username, id, quantity))
+//                fruityApi.addToCart(token, CartAdd(username, id, quantity))
             }
             Log.d(TAG, "addCart: $id")
         }
@@ -105,7 +89,7 @@ class LoginScreenViewModel @Inject constructor(
             _idToken.value = it.token
             val token = "Bearer ${_idToken.value}"
             viewModelScope.launch(Dispatchers.IO) {
-                fruityApi.deleteFromCart(token, RemoveProduct(id))
+//                fruityApi.deleteFromCart(token, RemoveProduct(id))
             }
         }
     }

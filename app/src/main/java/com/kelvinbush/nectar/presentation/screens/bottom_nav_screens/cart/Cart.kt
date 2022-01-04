@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,16 +28,21 @@ import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.CartProduct
+import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.ui.theme.productTextStyle
 
 @Composable
 fun MyCart(
     navController: NavHostController,
-    cartViewModel: CartViewModel = hiltViewModel()
+    cartViewModel: CartViewModel = hiltViewModel(),
+    splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
     val itemsInCart by cartViewModel.cart.collectAsState()
+    val user by splashViewModel.fUser.observeAsState()
+    user?.user?.shoppingSession?.let { cartViewModel.getCartItems(it) }
+
     LazyColumn() {
-        itemsInCart.cartItems.forEach {
+        itemsInCart.cartItems?.forEach {
             item {
                 CartItem(cartItem = it)
             }
@@ -57,13 +63,13 @@ fun CartItem(cartItem: CartProduct) {
             horizontalAlignment = Alignment.Start
         ) {
             Image(
-                painter = rememberImagePainter(data = cartItem.imageUrl),
+                painter = rememberImagePainter(data = cartItem.product.imageUrl),
                 contentDescription = stringResource(R.string.cart_item),
                 contentScale = ContentScale.Fit
             )
         }
         Column {
-            Text(text = cartItem.name)
+            Text(text = cartItem.product.name)
             Text(text = "Quantity Price")
             QuantityToggle(
                 minusOne = { /*TODO*/ },
@@ -81,7 +87,7 @@ fun CartItem(cartItem: CartProduct) {
                     contentDescription = stringResource(R.string.CLOSE_ICON)
                 )
             }
-            Text(text = "Kshs${cartItem.price}")
+            Text(text = "Kshs${cartItem.product.price}")
         }
     }
 }
@@ -90,7 +96,7 @@ fun CartItem(cartItem: CartProduct) {
 fun QuantityToggle(
     quantity: Int = 1,
     minusOne: () -> Unit,
-    plusOne: () -> Unit
+    plusOne: () -> Unit,
 ) {
     Row(
         modifier = Modifier

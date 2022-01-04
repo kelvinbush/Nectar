@@ -9,7 +9,6 @@ import com.kelvinbush.nectar.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,8 +28,7 @@ class ShopViewModel @Inject constructor(
         user?.getIdToken(true)?.addOnSuccessListener { id ->
             viewModelScope.launch(Dispatchers.IO) {
                 id.token?.let { token ->
-                    useCases.getAllProductsUseCase(authToken = token)
-                        .collect { items -> _products.value = items }
+                    _products.value = useCases.getAllProductsUseCase(authToken = token)
                 }
             }
         }
