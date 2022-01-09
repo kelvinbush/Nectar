@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -40,7 +39,7 @@ fun MyCart(
     cartViewModel: CartViewModel = hiltViewModel(),
     splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
-    val itemsInCart by cartViewModel.cart.collectAsState()
+    val state = cartViewModel.state.value
     val user by splashViewModel.fUser.observeAsState()
     user?.user?.shoppingSession?.let { cartViewModel.getCartItems(it) }
 
@@ -62,9 +61,9 @@ fun MyCart(
         Spacer(modifier = Modifier.height(32.dp))
         Divider(color = Color(0xFFB3B3B3), modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
         LazyColumn(modifier = Modifier.fillMaxHeight(0.8f)) {
-            itemsInCart.forEach { _ ->
+            state.items.forEach { item ->
                 item {
-                    CartItem(item = CartProduct(id = "1", 30, product = product))
+                    CartItem(item = item)
                     Divider(
                         color = Color(0xFFB3B3B3),
                         modifier = Modifier

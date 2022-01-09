@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class GetCartUseCase(private val repository: FruityRepository) {
-    suspend operator fun invoke(
+    operator fun invoke(
         authToken: String,
         sessionId: ShoppingSession,
     ): Flow<Resource<CartItemList>> = flow {
