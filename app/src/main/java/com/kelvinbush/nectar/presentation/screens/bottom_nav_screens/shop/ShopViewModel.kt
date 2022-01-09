@@ -24,8 +24,6 @@ class ShopViewModel @Inject constructor(
     private val _state = mutableStateOf(ProductListState())
     val state = _state
 
-    private val _token = MutableLiveData("")
-    val token = _token
 
     init {
         getAllProducts()
