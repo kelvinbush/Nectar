@@ -9,7 +9,7 @@ interface FruityApi {
     suspend fun login(@Header("Authorization") authToken: String): FUser
 
     @GET("/api/product")
-    suspend fun getAllProducts(@Header("Authorization") authToken: String): AllNetworkProducts
+    suspend fun getAllProducts(@Header("Authorizaion") authToken: String): AllNetworkProducts
 
     @POST("/api/getMyCart")
     suspend fun getCart(

@@ -1,7 +1,10 @@
 package com.kelvinbush.nectar.di
 
-import com.kelvinbush.nectar.data.repository.Repository
+import com.kelvinbush.nectar.data.remote.FruityApi
+import com.kelvinbush.nectar.data.repository.FruityRepositoryImpl
+import com.kelvinbush.nectar.domain.FruityRepository
 import com.kelvinbush.nectar.domain.use_cases.UseCases
+import com.kelvinbush.nectar.domain.use_cases.add_to_cart.AddToCartUseCase
 import com.kelvinbush.nectar.domain.use_cases.get_all_products.GetAllProductsUseCase
 import com.kelvinbush.nectar.domain.use_cases.get_cart.GetCartUseCase
 import com.kelvinbush.nectar.domain.use_cases.login.LoginUseCase
@@ -17,10 +20,17 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUseCases(repository: Repository): UseCases =
+    fun provideFruityRepository(fruityApi: FruityApi): FruityRepositoryImpl {
+        return FruityRepositoryImpl(fruityApi = fruityApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUseCases(repository: FruityRepository): UseCases =
         UseCases(
             getCartUseCase = GetCartUseCase(repository = repository),
             getAllProductsUseCase = GetAllProductsUseCase(repository = repository),
-            loginUseCase = LoginUseCase(repository = repository)
+            loginUseCase = LoginUseCase(repository = repository),
+            addToCartUseCase = AddToCartUseCase(repository = repository)
         )
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.domain.model.AllNetworkProducts
+import com.kelvinbush.nectar.domain.model.CartAdd
 import com.kelvinbush.nectar.domain.use_cases.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,17 @@ class ShopViewModel @Inject constructor(
             viewModelScope.launch(Dispatchers.IO) {
                 id.token?.let { token ->
                     _products.value = useCases.getAllProductsUseCase(authToken = token)
+                }
+            }
+        }
+    }
+
+    fun addToCart(item: CartAdd) {
+        val user = Firebase.auth.currentUser
+        user?.getIdToken(true)?.addOnSuccessListener { id ->
+            viewModelScope.launch(Dispatchers.IO) {
+                id.token?.let { token ->
+                    useCases.addToCartUseCase(authToken = token, item = item)
                 }
             }
         }
