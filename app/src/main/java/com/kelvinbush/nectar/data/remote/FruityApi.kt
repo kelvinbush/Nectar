@@ -20,7 +20,7 @@ interface FruityApi {
     @POST("/api/addCart")
     suspend fun addToCart(@Header("Authorization") authToken: String, @Body item: CartAdd)
 
-    @DELETE("/api/updateCart")
+    @POST("/api/deleteCart")
     suspend fun deleteFromCart(
         @Header("Authorization") authToken: String,
         @Body item: RemoveProduct,

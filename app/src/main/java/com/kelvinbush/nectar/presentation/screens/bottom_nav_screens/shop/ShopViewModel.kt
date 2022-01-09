@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.domain.model.CartAdd
+import com.kelvinbush.nectar.domain.model.FUser
 import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +25,9 @@ class ShopViewModel @Inject constructor(
 
     private val _state = mutableStateOf(ProductListState())
     val state = _state
+
+    private var _fUser = MutableLiveData<FUser>()
+    val fUser = _fUser
 
 
     init {
@@ -54,7 +59,22 @@ class ShopViewModel @Inject constructor(
         }
     }
 
-    fun addToCart(item: CartAdd) {
+    fun login(id: String, quantity: Int) {
+        val user = Firebase.auth.currentUser
+        user?.getIdToken(true)?.addOnSuccessListener {
+            viewModelScope.launch {
+                _fUser.value = useCases.loginUseCase(authToken = it.token.toString())
+                fUser.value?.user?.let { it1 ->
+                    Log.d( "login: ", it1.shoppingSession.id)
+                    addToCart(item = CartAdd(sessionId = it1.shoppingSession.id,
+                        productId = id,
+                        quantity = quantity))
+                }
+            }
+        }
+    }
+
+    private fun addToCart(item: CartAdd) {
         val user = Firebase.auth.currentUser
         user?.getIdToken(true)?.addOnSuccessListener { id ->
             viewModelScope.launch(Dispatchers.IO) {

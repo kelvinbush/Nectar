@@ -36,4 +36,8 @@ class FruityRepositoryImpl @Inject constructor(
                 Log.d("getIdToken: ", "User${user.displayName}")
             }.let { withContext(Dispatchers.Unconfined){ it?.result?.token.toString()} }
         }
+
+    override suspend fun removeFromCart(authToken: String, item: RemoveProduct) {
+        fruityApi.deleteFromCart(authToken = authToken, item = item)
+    }
 }

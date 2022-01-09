@@ -10,7 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +26,7 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.CartProduct
+import com.kelvinbush.nectar.domain.model.RemoveProduct
 import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
@@ -38,11 +39,6 @@ fun MyCart(
     splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
     val state = cartViewModel.state.value
-    val user = splashViewModel.fUser.value?.user
-    var refresh by remember { mutableStateOf(1) }
-    LaunchedEffect(key1 = Unit) {
-        user?.shoppingSession?.let { cartViewModel.getCartItems(it) }
-    }
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
@@ -52,7 +48,8 @@ fun MyCart(
 
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "My Cart",
@@ -70,7 +67,8 @@ fun MyCart(
             LazyColumn(modifier = Modifier.fillMaxHeight()) {
                 state.items.forEach { item ->
                     item {
-                        CartItem(item = item)
+                        CartItem(item = item,
+                            remove = { cartViewModel.removeFromCart(RemoveProduct(it)) })
                         Divider(
                             color = Color(0xFFB3B3B3),
                             modifier = Modifier
@@ -116,7 +114,8 @@ fun MyCart(
                 contentColor = Color(0xFFFFFFFF)
             ),
             shape = RoundedCornerShape(19),
-            elevation = ButtonDefaults.elevation(defaultElevation = 4.dp, pressedElevation = 8.dp)
+            elevation = ButtonDefaults.elevation(defaultElevation = 4.dp,
+                pressedElevation = 8.dp)
         ) {
             Text(
                 text = if (state.items.isEmpty() && !state.isLoading) "Go To Shop" else "Go To Checkout",
@@ -129,7 +128,7 @@ fun MyCart(
 
 
 @Composable
-fun CartItem(item: CartProduct) {
+fun CartItem(item: CartProduct, remove: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -215,7 +214,7 @@ fun CartItem(item: CartProduct) {
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.End
         ) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { remove(item.id) }) {
                 Icon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Default.Close,

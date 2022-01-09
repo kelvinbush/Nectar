@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.domain.model.CartAdd
 import com.kelvinbush.nectar.domain.model.NetworkProduct
 import com.kelvinbush.nectar.ui.theme.itemCategoryTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
@@ -32,7 +33,7 @@ import com.kelvinbush.nectar.ui.theme.seeAllTextStyle
 fun CategoryComponent(
     category: String,
     products: List<NetworkProduct>,
-    addItem: (id: String) -> Unit
+    addItem: (id: String) -> Unit,
 ) {
     val sortedProducts = products.filter {
         it.category.name == category

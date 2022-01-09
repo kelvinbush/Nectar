@@ -9,9 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.domain.model.FUser
+import com.kelvinbush.nectar.domain.model.RemoveProduct
 import com.kelvinbush.nectar.domain.model.ShoppingSession
 import com.kelvinbush.nectar.domain.use_cases.UseCases
-import com.kelvinbush.nectar.util.Constants.CART_ARGUMENT_KEY
 import com.kelvinbush.nectar.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val useCases: UseCases,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(CartItemListState())
@@ -46,8 +46,8 @@ class CartViewModel @Inject constructor(
     }
 
 
-    fun getCartItems(sessionId: ShoppingSession) {
-        Log.d( "getCartItems: ", "called")
+    private fun getCartItems(sessionId: ShoppingSession) {
+        Log.d("getCartItems: ", "called")
         _state.value = CartItemListState(isLoading = true)
         val user = Firebase.auth.currentUser
         user?.getIdToken(true)?.addOnSuccessListener {
@@ -71,5 +71,16 @@ class CartViewModel @Inject constructor(
             _state.value = CartItemListState(error = it.message
                 ?: "An unexpected error occurred")
         }
+    }
+
+    fun removeFromCart(item: RemoveProduct) {
+        val user = Firebase.auth.currentUser
+        user?.getIdToken(true)?.addOnSuccessListener {
+            viewModelScope.launch {
+                useCases.removeCartUseCase(it.token.toString(), item = item)
+            }
+            login()
+        }
+
     }
 }

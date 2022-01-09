@@ -22,18 +22,22 @@ import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.CategoryComponent
 import com.kelvinbush.nectar.presentation.components.SearchTextField
 import com.kelvinbush.nectar.presentation.components.ShopHeaderComponent
+import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 
 @ExperimentalCoilApi
 @Composable
 fun ShopScreen(
     navController: NavHostController,
     viewModel: ShopViewModel = hiltViewModel(),
+    splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
         color = Color.Transparent,
         darkIcons = true
     )
+    val user = splashViewModel.fUser.value?.user
+
 
     val state = viewModel.state.value
     val categories = ArrayList<String>()
@@ -54,6 +58,7 @@ fun ShopScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp)
+                    .fillMaxHeight(0.9f)
             ) {
                 if (state.products.isNotEmpty()) {
                     item {
@@ -72,7 +77,9 @@ fun ShopScreen(
                         CategoryComponent(
                             category = category,
                             products = state.products,
-                            addItem = { })
+                            addItem = { id ->
+                                viewModel.login(id = id, quantity = 1)
+                            })
                     }
                 }
             }
@@ -88,7 +95,9 @@ fun ShopScreen(
                 )
             }
             if (state.isLoading) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center).padding(32.dp))
+                CircularProgressIndicator(modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(32.dp))
             }
         }
 

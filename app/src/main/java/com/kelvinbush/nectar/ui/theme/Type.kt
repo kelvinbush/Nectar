@@ -106,7 +106,7 @@ val itemPriceTextStyle = TextStyle(
     textAlign = TextAlign.Start
 )
 val itemCategoryTextStyle = TextStyle(
-    fontSize = 24.sp,
+    fontSize = 20.sp,
     fontWeight = FontWeight.SemiBold,
     color = Color(0xff181725),
     fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
