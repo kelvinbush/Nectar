@@ -10,9 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,8 +38,11 @@ fun MyCart(
     splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
     val state = cartViewModel.state.value
-    val user by splashViewModel.fUser.observeAsState()
-    user?.user?.shoppingSession?.let { cartViewModel.getCartItems(it) }
+    val user = splashViewModel.fUser.value?.user
+    var refresh by remember { mutableStateOf(1) }
+    LaunchedEffect(key1 = Unit) {
+        user?.shoppingSession?.let { cartViewModel.getCartItems(it) }
+    }
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
@@ -51,7 +52,7 @@ fun MyCart(
 
     val context = LocalContext.current
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "My Cart",
@@ -60,21 +61,44 @@ fun MyCart(
         )
         Spacer(modifier = Modifier.height(32.dp))
         Divider(color = Color(0xFFB3B3B3), modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
-        LazyColumn(modifier = Modifier.fillMaxHeight(0.8f)) {
-            state.items.forEach { item ->
-                item {
-                    CartItem(item = item)
-                    Divider(
-                        color = Color(0xFFB3B3B3),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        thickness = 1.dp
-                    )
+        Box(
+            modifier = Modifier
+                .fillMaxHeight(0.75f)
+                .fillMaxWidth(),
+            contentAlignment = Alignment.Center
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxHeight()) {
+                state.items.forEach { item ->
+                    item {
+                        CartItem(item = item)
+                        Divider(
+                            color = Color(0xFFB3B3B3),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            thickness = 1.dp
+                        )
+                    }
                 }
             }
+            if (state.error.isNotBlank()) {
+                Text(
+                    text = state.error,
+                    color = MaterialTheme.colors.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                )
+            }
+            if (state.isLoading) {
+                CircularProgressIndicator(modifier = Modifier
+                    .padding(32.dp))
+            }
+            if (state.items.isEmpty() && !state.isLoading) {
+                EmptyCart()
+            }
         }
-//        EmptyCart()
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
@@ -95,7 +119,7 @@ fun MyCart(
             elevation = ButtonDefaults.elevation(defaultElevation = 4.dp, pressedElevation = 8.dp)
         ) {
             Text(
-                text = "Go To Checkout",
+                text = if (state.items.isEmpty() && !state.isLoading) "Go To Shop" else "Go To Checkout",
                 style = itemPriceTextStyle,
                 color = Color(0xFFFFFFFF)
             )

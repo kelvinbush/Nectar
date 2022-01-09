@@ -11,7 +11,6 @@ import com.kelvinbush.nectar.R
 
 @Composable
 fun ShopHeaderComponent() {
-    Spacer(modifier = Modifier.fillMaxHeight(0.05f))
     Image(
         painter = painterResource(id = R.drawable.ic_min_carrot),
         contentDescription = null,
@@ -31,5 +30,5 @@ fun ShopHeaderComponent() {
         )
         Text(text = " Nairobi, Kenya")
     }
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(5.dp))
 }

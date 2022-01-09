@@ -47,7 +47,7 @@ fun SetUpNavGraph(navController: NavHostController) {
             composable(route = BottomNavScreen.Explore.route) { ExploreScreen() }
             composable(route = BottomNavScreen.Cart.route) { MyCart(navController) }
             composable(route = BottomNavScreen.Favourite.route) { FavouriteScreen() }
-            composable(route = BottomNavScreen.Account.route) { AccountScreen(navController) }
+            composable(route = BottomNavScreen.Account.route) { AccountScreen() }
         }
     }
 }

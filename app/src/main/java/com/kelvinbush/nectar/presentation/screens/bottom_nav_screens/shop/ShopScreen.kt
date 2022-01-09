@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.presentation.components.CategoryComponent
 import com.kelvinbush.nectar.presentation.components.SearchTextField
@@ -27,6 +29,12 @@ fun ShopScreen(
     navController: NavHostController,
     viewModel: ShopViewModel = hiltViewModel(),
 ) {
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = Color.Transparent,
+        darkIcons = true
+    )
+
     val state = viewModel.state.value
     val categories = ArrayList<String>()
     state.products.forEach { item ->
