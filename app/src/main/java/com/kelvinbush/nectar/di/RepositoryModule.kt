@@ -7,6 +7,7 @@ import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.domain.use_cases.add_to_cart.AddToCartUseCase
 import com.kelvinbush.nectar.domain.use_cases.get_all_products.GetAllProductsUseCase
 import com.kelvinbush.nectar.domain.use_cases.get_cart.GetCartUseCase
+import com.kelvinbush.nectar.domain.use_cases.get_id_token.GetIdToken
 import com.kelvinbush.nectar.domain.use_cases.login.LoginUseCase
 import dagger.Module
 import dagger.Provides
@@ -20,7 +21,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideFruityRepository(fruityApi: FruityApi): FruityRepositoryImpl {
+    fun provideFruityRepository(fruityApi: FruityApi): FruityRepository {
         return FruityRepositoryImpl(fruityApi = fruityApi)
     }
 
@@ -31,6 +32,7 @@ object RepositoryModule {
             getCartUseCase = GetCartUseCase(repository = repository),
             getAllProductsUseCase = GetAllProductsUseCase(repository = repository),
             loginUseCase = LoginUseCase(repository = repository),
-            addToCartUseCase = AddToCartUseCase(repository = repository)
+            addToCartUseCase = AddToCartUseCase(repository = repository),
+            getIdToken = GetIdToken(repository)
         )
 }

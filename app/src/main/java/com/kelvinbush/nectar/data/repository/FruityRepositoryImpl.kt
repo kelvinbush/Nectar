@@ -1,8 +1,13 @@
 package com.kelvinbush.nectar.data.repository
 
+import android.util.Log
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.data.remote.FruityApi
 import com.kelvinbush.nectar.domain.FruityRepository
 import com.kelvinbush.nectar.domain.model.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
@@ -23,4 +28,12 @@ class FruityRepositoryImpl @Inject constructor(
 
     override suspend fun addToCart(authToken: String, item: CartAdd) =
         fruityApi.addToCart(authToken, item)
+
+    override suspend fun getIdToken():String = withContext(Dispatchers.Unconfined) {
+            Log.d( "getIdTokenReWith: ", "Token")
+            val user = Firebase.auth.currentUser
+            user?.getIdToken(true)?.addOnSuccessListener {
+                Log.d("getIdToken: ", "User${user.displayName}")
+            }.let { withContext(Dispatchers.Unconfined){ it?.result?.token.toString()} }
+        }
 }

@@ -10,4 +10,6 @@ interface FruityRepository {
     suspend fun login(authToken: String): FUser
 
     suspend fun addToCart(authToken: String, item: CartAdd)
+
+    suspend fun getIdToken(): String
 }
