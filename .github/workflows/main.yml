@@ -19,7 +19,7 @@ jobs:
             DATA: ${{ secrets.GOOGLE_JSON }}
           run: echo $DATA > app/google-services.json
         - name: Gradle Build
-          run: ./gradlew build --warning-mode=all
+          run: ./gradlew build --stacktrace
         - name: Upload APK
           uses: actions/upload-artifact@v2.3.1
           with:
