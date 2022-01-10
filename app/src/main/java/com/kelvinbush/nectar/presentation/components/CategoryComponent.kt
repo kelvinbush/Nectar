@@ -67,7 +67,7 @@ fun CategoryComponent(
 @Composable
 fun FoodItemComposable(product: NetworkProduct, addingToCart: (id: String) -> Unit) {
     Card(
-        elevation = 2.dp,
+        elevation = 1.dp,
         shape = RoundedCornerShape(10),
         border = BorderStroke(1.dp, Color(0xffe2e2e2)),
         modifier = Modifier
