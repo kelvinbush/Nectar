@@ -14,12 +14,10 @@ jobs:
           uses: actions/setup-java@v1
           with:
             java-version: 11
-        - name: Create file
-          run: touch /home/runner/work/Nectar/Nectar/app/google-services.json | base64
         - name: Putting data
           env:
             DATA: ${{ secrets.GOOGLE_JSON }}
-          run: echo $DATA > /home/runner/work/Nectar/Nectar/app/google-services.json
+          run: echo $DATA > app/google-services.json
         - name: Gradle Build
           run: ./gradlew build
         - name: Upload APK
