@@ -17,7 +17,7 @@ jobs:
         - name: Decrypt google-services.json file
           env:
             GOOGLE_JSON: ${{secrets.GOOGLE_JSON}}
-          run: echo GOOGLE_JSON > google-services.json
+          run: echo GOOGLE_JSON > app/google-services.json
         - name: Gradle Build
           run: ./gradlew build
         - name: Upload APK
