@@ -14,6 +14,10 @@ jobs:
           uses: actions/setup-java@v1
           with:
             java-version: 11
+        - name: Decrypt google-services.json file
+          env:
+            GOOGLE_JSON: ${{google.GOOGLE_JSON}}
+          run: echo GOOGLE_JSON > google-services.json
         - name: Gradle Build
           run: ./gradlew build
         - name: Upload APK
