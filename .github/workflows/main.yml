@@ -16,7 +16,7 @@ jobs:
             java-version: 11
         - name: Decrypt google-services.json file
           env:
-            GOOGLE_JSON: ${{google.GOOGLE_JSON}}
+            GOOGLE_JSON: ${{secrets.GOOGLE_JSON}}
           run: echo GOOGLE_JSON > google-services.json
         - name: Gradle Build
           run: ./gradlew build
