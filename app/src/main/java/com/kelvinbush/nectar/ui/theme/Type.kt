@@ -18,11 +18,11 @@ val Typography = Typography(
         fontSize = 16.sp
     ),
     h1 = TextStyle(
-        fontSize = 48.sp,
+        fontSize = 54.sp,
         fontWeight = FontWeight.SemiBold,
         color = Color.White,
         lineHeight = 29.sp,
-        letterSpacing = 0.sp,
+        letterSpacing = 16.sp,
         fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold))
     ),
     h3 = TextStyle(
@@ -159,4 +159,13 @@ val price2TextStyle = TextStyle(
     fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
     textAlign = TextAlign.End,
     lineHeight = 27.sp
+)
+
+val orderText = TextStyle(
+    fontSize = 28.sp,
+    fontWeight = FontWeight.Medium,
+    color = Color(0xff181725),
+    fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.Medium)),
+    textAlign = TextAlign.Center,
+    lineHeight = 21.sp
 )

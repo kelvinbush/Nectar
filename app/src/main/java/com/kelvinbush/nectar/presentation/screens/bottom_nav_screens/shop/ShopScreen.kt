@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -19,11 +20,14 @@ import androidx.navigation.NavHostController
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.CategoryComponent
 import com.kelvinbush.nectar.presentation.components.SearchTextField
 import com.kelvinbush.nectar.presentation.components.ShopHeaderComponent
 import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
+import com.kelvinbush.nectar.util.Constants.DETAIL_ARGUMENT_KEY
 
+@ExperimentalMaterialApi
 @ExperimentalCoilApi
 @Composable
 fun ShopScreen(
@@ -73,12 +77,20 @@ fun ShopScreen(
                     }
                 }
                 categories.toSet().forEach { category ->
+                    val routeDetails = Screen.Detail.route + "/{$DETAIL_ARGUMENT_KEY}"
                     item {
                         CategoryComponent(
                             category = category,
                             products = state.products,
                             addItem = { id ->
                                 viewModel.login(id = id, quantity = 1)
+                            },
+                            navigateToDetail = {
+                                navController.currentBackStackEntry?.arguments?.putParcelable(
+                                    DETAIL_ARGUMENT_KEY, it)
+                                navController.navigate(routeDetails) {
+                                    launchSingleTop = true
+                                }
                             })
                     }
                 }

@@ -49,6 +49,7 @@ class LoginScreenViewModel @Inject constructor(
         }
 
     fun signWithCredential(credential: AuthCredential) = viewModelScope.launch(Dispatchers.IO) {
+        Log.d(TAG, "signWithCredential: called")
         try {
             loadingState.emit(LoadingState.LOADING)
             val user = Firebase.auth.signInWithCredential(credential).await().user

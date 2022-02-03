@@ -1,6 +1,5 @@
 package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.cart
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -27,6 +26,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.CartProduct
 import com.kelvinbush.nectar.domain.model.RemoveProduct
+import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
@@ -105,9 +106,11 @@ fun MyCart(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             onClick = {
-                Toast
-                    .makeText(context, "Go To Checkout", Toast.LENGTH_SHORT)
-                    .show()
+                if (state.items.isEmpty() && !state.isLoading) {
+                    navController.navigate(BottomNavScreen.Shop.route) { launchSingleTop = true }
+                } else {
+                    navController.navigate(Screen.Order.route) { launchSingleTop = true }
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color(0xFF53B175),

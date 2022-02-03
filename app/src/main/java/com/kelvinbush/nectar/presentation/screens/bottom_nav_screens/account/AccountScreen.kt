@@ -14,16 +14,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
 import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
 
 @ExperimentalMaterialApi
 @Composable
-fun AccountScreen() {
+fun AccountScreen(navController: NavHostController) {
     val systemUiController = rememberSystemUiController()
+    val currentUser = Firebase.auth.currentUser
     systemUiController.setSystemBarsColor(
         color = Color.Transparent,
         darkIcons = true
@@ -40,22 +46,24 @@ fun AccountScreen() {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.Start
         ) {
-            Image(
-                modifier = Modifier.size(65.dp),
-                painter = rememberImagePainter(data = "https://avatars.githubusercontent.com/u/45231382?v=4"),
-                contentDescription = "user image",
-                contentScale = ContentScale.Fit
-            )
+            if (currentUser != null) {
+                Image(
+                    modifier = Modifier.size(65.dp),
+                    painter = rememberImagePainter(data = currentUser.photoUrl),
+                    contentDescription = "user image",
+                    contentScale = ContentScale.Fit
+                )
+            }
             Column {
                 Row(modifier = Modifier.padding(top = 8.dp)) {
-                    Text(text = "Kelvin Bush", style = itemNameTextStyle)
+                    Text(text = currentUser?.displayName ?: "Name", style = itemNameTextStyle)
                     IconButton(
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .size(20.dp),
                         onClick = {
                             Toast
-                                .makeText(context, "Edit me", Toast.LENGTH_SHORT)
+                                .makeText(context, "Editing me", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     ) {
@@ -68,7 +76,8 @@ fun AccountScreen() {
                         )
                     }
                 }
-                Text(text = "kelybush@gmail.com", style = MaterialTheme.typography.h5)
+                Text(text = currentUser?.email ?: "name@gmail.com",
+                    style = MaterialTheme.typography.h5)
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -90,9 +99,13 @@ fun AccountScreen() {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             onClick = {
+                Firebase.auth.signOut()
                 Toast
                     .makeText(context, "Logging you out", Toast.LENGTH_SHORT)
                     .show()
+                navController.navigate(Screen.Start.route) {
+                    popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color(0xFFF2F3F2),

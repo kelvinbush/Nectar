@@ -7,6 +7,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.ui.theme.BGreen
 
@@ -65,9 +67,9 @@ fun SplashScreen(
 
         navController.popBackStack()
         if (currentUser != null) {
-            navController.navigate(Screen.Welcome.route)
+            navController.navigate(BottomNavScreen.Shop.route)
         } else {
-            navController.navigate(Screen.Login.route)
+            navController.navigate(Screen.Start.route)
         }
     }
 
@@ -89,10 +91,7 @@ fun SplashScreen(
                     )
                 }
                 Column {
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_logo),
-                        contentDescription = "logo",
-                    )
+                    Text(text = "fruity", style = MaterialTheme.typography.h1)
                     Text(
                         text = "online  groceries", style = TextStyle(
                             fontSize = 14.sp,

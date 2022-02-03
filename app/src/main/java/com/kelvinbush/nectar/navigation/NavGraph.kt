@@ -22,14 +22,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.domain.model.ProductDetail
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.account.AccountScreen
-import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop.ShopScreen
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.cart.MyCart
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.detail.ProductDetailScreen
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.explore.ExploreScreen
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.favourite.FavouriteScreen
+import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop.ShopScreen
 import com.kelvinbush.nectar.presentation.screens.login.LoginScreen
+import com.kelvinbush.nectar.presentation.screens.order.OrderScreen
 import com.kelvinbush.nectar.presentation.screens.splash.SplashScreen
+import com.kelvinbush.nectar.presentation.screens.welcome.GetStartedScreen
 import com.kelvinbush.nectar.presentation.screens.welcome.OnBoardingScreen
+import com.kelvinbush.nectar.util.Constants.DETAIL_ARGUMENT_KEY
 
 @ExperimentalCoilApi
 @ExperimentalFoundationApi
@@ -47,7 +52,17 @@ fun SetUpNavGraph(navController: NavHostController) {
             composable(route = BottomNavScreen.Explore.route) { ExploreScreen() }
             composable(route = BottomNavScreen.Cart.route) { MyCart(navController) }
             composable(route = BottomNavScreen.Favourite.route) { FavouriteScreen() }
-            composable(route = BottomNavScreen.Account.route) { AccountScreen() }
+            composable(route = BottomNavScreen.Account.route) { AccountScreen(navController = navController) }
+            composable(route = Screen.Order.route) { OrderScreen(navController = navController) }
+            composable(route = Screen.Start.route) { GetStartedScreen(navController = navController) }
+            composable(route = "${Screen.Detail.route}/{$DETAIL_ARGUMENT_KEY}") {
+                val product =
+                    navController.previousBackStackEntry?.arguments?.getParcelable<ProductDetail>(
+                        DETAIL_ARGUMENT_KEY)
+                if (product != null) {
+                    ProductDetailScreen(navController = navController, product = product)
+                }
+            }
         }
     }
 }
