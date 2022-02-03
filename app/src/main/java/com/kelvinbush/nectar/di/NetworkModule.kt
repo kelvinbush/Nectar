@@ -1,5 +1,7 @@
 package com.kelvinbush.nectar.di
 
+import android.content.Context
+import com.kelvinbush.nectar.data.AuthInterceptor
 import com.kelvinbush.nectar.data.remote.FruityApi
 import com.kelvinbush.nectar.util.Constants.BASE_URL
 import com.kelvinbush.nectar.util.DefaultIfNullFactory
@@ -8,6 +10,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -22,10 +25,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .readTimeout(15, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .build()
+    fun provideHttpClient(@ApplicationContext context: Context): OkHttpClient =
+        OkHttpClient.Builder()
+            .addInterceptor(AuthInterceptor(context = context))
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .build()
 
 
     @Provides
