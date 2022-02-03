@@ -46,19 +46,23 @@ class FruityRepositoryImpl @Inject constructor(
         fruityApi.deleteFromCart(authToken = authToken, item = item)
     }
 
-    override suspend fun signup(signup: UserSignup): Flow<Resource<String>> = flow {
+    override suspend fun signup(signup: UserSignup): Flow<Resource<Result>> = flow {
         emit(Resource.Loading())
         try {
             val response = fruityApi.signup(signup)
             emit(Resource.Success(data = response))
+
         } catch (e: HttpException) {
             emit(Resource.Error(
-                message = "Oops, something went wrong!",
+                message = e.message.toString(),
             ))
+            throw e
         } catch (e: IOException) {
+
             emit(Resource.Error(
                 message = "Couldn't reach server, check your internet connection.",
             ))
+            throw e
         }
     }
 }

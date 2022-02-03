@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.presentation.screens.signup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kelvinbush.nectar.domain.model.UserSignup
@@ -57,14 +58,16 @@ class SignupViewModel @Inject constructor(
     }
 
     fun signup(signup: UserSignup) {
+        Log.d("signup: ", "called")
         viewModelScope.launch {
             useCases.signupUseCase(signup = signup).onEach { result ->
                 viewModelState.update { state ->
                     when (result) {
-                        is Resource.Success -> state.copy(isLoading = false, result = result.data!!)
+                        is Resource.Success -> state.copy(isLoading = false,
+                            result = result.data?.name ?: "Some result", errorMessage = "")
                         is Resource.Error -> {
                             state.copy(isLoading = false,
-                                errorMessage = result.data!!)
+                                errorMessage = result.message ?: "Some error", result = "")
                         }
                         is Resource.Loading -> state.copy(isLoading = true)
                     }

@@ -17,5 +17,5 @@ interface FruityRepository {
 
     suspend fun removeFromCart(authToken: String, item: RemoveProduct)
 
-    suspend fun signup(signup: UserSignup): Flow<Resource<String>>
+    suspend fun signup(signup: UserSignup): Flow<Resource<Result>>
 }

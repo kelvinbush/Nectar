@@ -1,5 +1,6 @@
 package com.kelvinbush.nectar.presentation.screens.signup
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -7,11 +8,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -51,6 +50,21 @@ fun SignupScreen(
         color = Color.Transparent,
         darkIcons = true
     )
+
+    LaunchedEffect(key1 = uiState.isLoading) {
+        Log.d( "signupScreen: ", "triggered")
+        Log.d( "signupScreen: ", "Result: ${uiState.result}")
+        Log.d( "signupScreen: ", "Errors: ${uiState.errorMessage}")
+
+        if (!uiState.isLoading && uiState.result.isNotEmpty() && uiState.errorMessage.isEmpty()) {
+            Toast.makeText(context,
+                "User ${uiState.result} signed up successfully",
+                Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
+            navController.navigate(Screen.Login.route) { launchSingleTop = true }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,9 +72,9 @@ fun SignupScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+        Spacer(modifier = Modifier.height(16.dp))
         Image(painter = painterResource(id = R.drawable.ic_min_carrot), contentDescription = null)
-        Spacer(modifier = Modifier.fillMaxHeight(0.13f))
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Sign Up", style = MaterialTheme.typography.h2, modifier = Modifier
                 .fillMaxWidth(0.85f)
@@ -207,27 +221,28 @@ fun SignupScreen(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        Button(
-            onClick = {
-                val userSignup = UserSignup(name = uiState.nameInput,
-                    passwordConfirmation = uiState.passwordConfirmationInput,
-                    password = uiState.passwordInput,
-                    email = uiState.emailInput)
-                signupViewModel.signup(userSignup)
-                if (uiState.errorMessage.isEmpty() && uiState.result.isNotEmpty()) {
-                    Toast.makeText(context,
-                        "User ${uiState.result} signed up successfully",
-                        Toast.LENGTH_SHORT).show()
-                    navController.popBackStack()
-                    navController.navigate(Screen.Login.route) { launchSingleTop = true }
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
+            if (!uiState.isLoading) {
+                Button(
+                    onClick = {
+                        val userSignup = UserSignup(name = uiState.nameInput,
+                            passwordConfirmation = uiState.passwordConfirmationInput,
+                            password = uiState.passwordInput,
+                            email = uiState.emailInput)
+                        signupViewModel.signup(userSignup)
+                        Log.d("signupScreen: ", uiState.errorMessage)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth(0.85f)
+                        .height(60.dp),
+                    shape = RoundedCornerShape(30)
+                ) {
+                    Text(text = "Sign Up", style = MaterialTheme.typography.button)
                 }
-            },
-            modifier = Modifier
-                .fillMaxWidth(0.85f)
-                .height(60.dp),
-            shape = RoundedCornerShape(30)
-        ) {
-            Text(text = "Sign Up", style = MaterialTheme.typography.button)
+            } else {
+                CircularProgressIndicator()
+            }
+
         }
 
         Spacer(modifier = Modifier.height(22.dp))

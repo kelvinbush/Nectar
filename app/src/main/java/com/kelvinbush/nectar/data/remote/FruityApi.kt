@@ -30,5 +30,5 @@ interface FruityApi {
     )
 
     @POST("/api/users")
-    suspend fun signup(@Body signup: UserSignup): String
+    suspend fun signup(@Body signup: UserSignup): Result
 }
