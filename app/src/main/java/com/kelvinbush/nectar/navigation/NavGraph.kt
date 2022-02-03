@@ -31,6 +31,7 @@ import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.favourite.F
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop.ShopScreen
 import com.kelvinbush.nectar.presentation.screens.login.LoginScreen
 import com.kelvinbush.nectar.presentation.screens.order.OrderScreen
+import com.kelvinbush.nectar.presentation.screens.signup.SignupScreen
 import com.kelvinbush.nectar.presentation.screens.splash.SplashScreen
 import com.kelvinbush.nectar.presentation.screens.welcome.GetStartedScreen
 import com.kelvinbush.nectar.presentation.screens.welcome.OnBoardingScreen
@@ -62,6 +63,9 @@ fun SetUpNavGraph(navController: NavHostController) {
                 if (product != null) {
                     ProductDetailScreen(navController = navController, product = product)
                 }
+            }
+            composable(route = Screen.SignUp.route) {
+                SignupScreen(navController = navController)
             }
         }
     }

@@ -1,7 +1,10 @@
 package com.kelvinbush.nectar.data.remote
 
 import com.kelvinbush.nectar.domain.model.*
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
 
 interface FruityApi {
 
@@ -25,4 +28,7 @@ interface FruityApi {
         @Header("Authorization") authToken: String,
         @Body item: RemoveProduct,
     )
+
+    @POST("/api/users")
+    suspend fun signup(@Body signup: UserSignup): String
 }

@@ -63,13 +63,15 @@ fun SplashScreen(
                 delayMillis = 200
             )
         )
-        Log.d("SplashScreen: ", user.toString())
+
 
         navController.popBackStack()
         if (currentUser != null) {
+            Log.d("SplashScreen: ", "Shop route")
             navController.navigate(BottomNavScreen.Shop.route)
         } else {
-            navController.navigate(Screen.Start.route)
+            Log.d("SplashScreen: ", "Sign up route")
+            navController.navigate(Screen.SignUp.route)
         }
     }
 
