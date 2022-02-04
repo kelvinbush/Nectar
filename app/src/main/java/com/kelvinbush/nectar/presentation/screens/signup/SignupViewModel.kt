@@ -3,7 +3,7 @@ package com.kelvinbush.nectar.presentation.screens.signup
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kelvinbush.nectar.domain.model.UserSignup
+import com.kelvinbush.nectar.domain.model.SignupUser
 import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,7 +57,7 @@ class SignupViewModel @Inject constructor(
         }
     }
 
-    fun signup(signup: UserSignup) {
+    fun signup(signup: SignupUser) {
         Log.d("signup: ", "called")
         viewModelScope.launch {
             useCases.signupUseCase(signup = signup).onEach { result ->

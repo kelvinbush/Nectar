@@ -1,7 +1,7 @@
 package com.kelvinbush.nectar.domain.model
 
 
-data class UserSignup(
+data class SignupUser(
     val name: String,
     val password: String,
     val passwordConfirmation: String,

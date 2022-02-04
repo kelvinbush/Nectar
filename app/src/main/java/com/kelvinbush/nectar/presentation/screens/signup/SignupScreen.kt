@@ -32,7 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.domain.model.UserSignup
+import com.kelvinbush.nectar.domain.model.SignupUser
 import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.fieldColors
 
@@ -225,7 +225,7 @@ fun SignupScreen(
             if (!uiState.isLoading) {
                 Button(
                     onClick = {
-                        val userSignup = UserSignup(name = uiState.nameInput,
+                        val userSignup = SignupUser(name = uiState.nameInput,
                             passwordConfirmation = uiState.passwordConfirmationInput,
                             password = uiState.passwordInput,
                             email = uiState.emailInput)
