@@ -11,6 +11,7 @@ interface FruityApi {
     @GET("/api/me")
     suspend fun login(@Header("Authorization") authToken: String): FUser
 
+
     @GET("/api/product")
     suspend fun getAllProducts(@Header("Authorization") authToken: String): AllNetworkProducts
 
@@ -30,5 +31,8 @@ interface FruityApi {
     )
 
     @POST("/api/users")
-    suspend fun signup(@Body signup: SignupUser): Result
+    suspend fun signup(@Body signup: SignupUser): SignupResult
+
+    @POST("/api/sessions")
+    suspend fun loginUser(@Body loginCredentials: LoginCredentials): LoginResult
 }

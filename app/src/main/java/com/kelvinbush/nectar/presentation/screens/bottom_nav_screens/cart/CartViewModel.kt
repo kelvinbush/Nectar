@@ -39,8 +39,8 @@ class CartViewModel @Inject constructor(
         val user = Firebase.auth.currentUser
         user?.getIdToken(true)?.addOnSuccessListener {
             viewModelScope.launch {
-                _fUser.value = useCases.loginUseCase(authToken = it.token.toString())
-                fUser.value?.user?.let { it1 -> getCartItems(sessionId = it1.shoppingSession) }
+               /* _fUser.value = useCases.loginUseCase(authToken = it.token.toString())
+                fUser.value?.user?.let { it1 -> getCartItems(sessionId = it1.shoppingSession) }*/
             }
         }
     }

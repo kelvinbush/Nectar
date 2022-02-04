@@ -52,10 +52,6 @@ fun SignupScreen(
     )
 
     LaunchedEffect(key1 = uiState.isLoading) {
-        Log.d( "signupScreen: ", "triggered")
-        Log.d( "signupScreen: ", "Result: ${uiState.result}")
-        Log.d( "signupScreen: ", "Errors: ${uiState.errorMessage}")
-
         if (!uiState.isLoading && uiState.result.isNotEmpty() && uiState.errorMessage.isEmpty()) {
             Toast.makeText(context,
                 "User ${uiState.result} signed up successfully",
@@ -96,7 +92,7 @@ fun SignupScreen(
                 .fillMaxWidth(0.85f)
         )
         TextField(
-            value = uiState.nameInput, onValueChange = { signupViewModel.onNameInputChanged(it) },
+            value = uiState.nameInput, onValueChange = signupViewModel::onNameInputChanged,
             textStyle = MaterialTheme.typography.h4,
             modifier = Modifier
                 .background(Color.Transparent)
@@ -115,7 +111,7 @@ fun SignupScreen(
                 .fillMaxWidth(0.85f)
         )
         TextField(
-            value = uiState.emailInput, onValueChange = { signupViewModel.onEmailInputChanged(it) },
+            value = uiState.emailInput, onValueChange = signupViewModel::onEmailInputChanged,
             textStyle = MaterialTheme.typography.h4,
             modifier = Modifier
                 .background(Color.Transparent)
@@ -136,7 +132,7 @@ fun SignupScreen(
         )
         TextField(
             value = uiState.passwordInput,
-            onValueChange = { signupViewModel.onPasswordInputChanged(it) },
+            onValueChange = signupViewModel::onPasswordInputChanged,
             textStyle = MaterialTheme.typography.h4,
             modifier = Modifier
                 .background(Color.Transparent)
@@ -171,9 +167,8 @@ fun SignupScreen(
 
         )
         TextField(
-            value = uiState.passwordConfirmationInput, onValueChange = {
-                signupViewModel.onPasswordConfirmationInputChanged(it)
-            },
+            value = uiState.passwordConfirmationInput,
+            onValueChange = signupViewModel::onPasswordConfirmationInputChanged,
             textStyle = MaterialTheme.typography.h4,
             modifier = Modifier
                 .background(Color.Transparent)

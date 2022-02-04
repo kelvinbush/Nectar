@@ -1,6 +1,7 @@
 package com.kelvinbush.nectar.presentation.screens.login
 
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -35,9 +36,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.NectarScreen.Start
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.domain.model.LoginCredentials
 import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.Btn
 import com.kelvinbush.nectar.presentation.components.fieldColors
 import com.kelvinbush.nectar.util.LoadingState
@@ -45,17 +47,15 @@ import com.kelvinbush.nectar.util.LoadingState
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginScreenViewModel = hiltViewModel(),
+    loginScreenViewModel: LoginScreenViewModel = hiltViewModel(),
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
+    val uiState by loginScreenViewModel.uiState.collectAsState()
+
     val snackBarHostState = remember { SnackbarHostState() }
-    val state by viewModel.loadingState.collectAsState()
-    val idToken by viewModel.idToken.observeAsState()
+    val state by loginScreenViewModel.loadingState.collectAsState()
     val context = LocalContext.current
     val currentUser = Firebase.auth.currentUser
-    val fUser by viewModel.fUser.observeAsState()
+    val fUser by loginScreenViewModel.fUser.observeAsState()
     val token = "1094590299473-1edm1h1dmpo1cq64p95ne4lvre6jp2u7.apps.googleusercontent.com"
 
     // Equivalent of onActivityResult
@@ -65,7 +65,7 @@ fun LoginScreen(
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-                viewModel.signWithCredential(credential)
+                loginScreenViewModel.signWithCredential(credential)
                 if (currentUser != null) {
                     if (fUser != null) {
                         navController.popBackStack()
@@ -76,6 +76,17 @@ fun LoginScreen(
                 Log.w("TAG", "Google sign in failed", e)
             }
         }
+
+
+    LaunchedEffect(key1 = uiState.isLoading) {
+        if (!uiState.isLoading && uiState.result.isNotEmpty() && uiState.errorMessage.isEmpty()) {
+            Toast.makeText(context,
+                "User ${uiState.result} login successful",
+                Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
+            navController.navigate(Screen.SignUp.route) { launchSingleTop = true }
+        }
+    }
 
 
     Scaffold(
@@ -115,12 +126,14 @@ fun LoginScreen(
                         .fillMaxWidth(0.85f)
                 )
                 TextField(
-                    value = email, onValueChange = { email = it },
+                    value = uiState.emailInput,
+                    onValueChange = loginScreenViewModel::onEmailInputChanged,
                     textStyle = MaterialTheme.typography.h4,
                     modifier = Modifier
                         .background(Color.Transparent)
                         .fillMaxWidth(0.85f),
-                    colors = fieldColors(), singleLine = true,
+                    colors = fieldColors(),
+                    singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Email,
                         imeAction = ImeAction.Done
@@ -135,27 +148,29 @@ fun LoginScreen(
 
                 )
                 TextField(
-                    value = password, onValueChange = { password = it },
+                    value = uiState.passwordInput,
+                    onValueChange = loginScreenViewModel::onPasswordInputChanged,
                     textStyle = MaterialTheme.typography.h4,
                     modifier = Modifier
                         .background(Color.Transparent)
                         .fillMaxWidth(0.85f)
                         .padding(bottom = 10.dp),
-                    colors = fieldColors(), singleLine = true,
+                    colors = fieldColors(),
+                    singleLine = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
                         imeAction = ImeAction.Done
                     ),
-                    visualTransformation = if (showPassword) VisualTransformation.None
+                    visualTransformation = if (uiState.showPassword) VisualTransformation.None
                     else PasswordVisualTransformation(),
                     trailingIcon = {
                         Image(
-                            painter = if (showPassword)
+                            painter = if (uiState.showPassword)
                                 painterResource(id = R.drawable.ic_visibility_24)
                             else painterResource(id = R.drawable.ic_visibility_off_24),
                             contentDescription = null,
                             modifier = Modifier.clickable {
-                                showPassword = !showPassword
+                                loginScreenViewModel.toggleShowPassword(!uiState.showPassword)
                             }
                         )
                     }
@@ -166,18 +181,29 @@ fun LoginScreen(
                         .fillMaxWidth(0.85f)
                         .padding(bottom = 22.dp)
                 )
-                Button(
-                    onClick = {
-                        viewModel.signInWithEmailAndPassword(email.trim(), password.trim())
-                        navController.navigate(Start.name) { launchSingleTop = true }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .height(60.dp),
-                    shape = RoundedCornerShape(30),
-                    enabled = email.isNotEmpty() && password.isNotEmpty()
-                ) {
-                    Text(text = "Login", style = MaterialTheme.typography.button)
+                Box(contentAlignment = Alignment.Center, modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)) {
+                    if (uiState.isLoading) {
+                        CircularProgressIndicator()
+                    } else {
+                        Button(
+                            onClick = {
+                                val loginCredentials = LoginCredentials(email = uiState.emailInput,
+                                    password = uiState.passwordInput)
+
+                                loginScreenViewModel.loginUser(loginCredentials)
+
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth(0.85f)
+                                .height(60.dp),
+                            shape = RoundedCornerShape(30),
+                            enabled = uiState.emailInput.isNotEmpty() && uiState.passwordInput.isNotEmpty()
+                        ) {
+                            Text(text = "Login", style = MaterialTheme.typography.button)
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Btn(

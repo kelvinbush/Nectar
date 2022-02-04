@@ -46,7 +46,7 @@ class FruityRepositoryImpl @Inject constructor(
         fruityApi.deleteFromCart(authToken = authToken, item = item)
     }
 
-    override suspend fun signup(signup: SignupUser): Flow<Resource<Result>> = flow {
+    override suspend fun signup(signup: SignupUser) = flow {
         emit(Resource.Loading())
         try {
             val response = fruityApi.signup(signup)
@@ -62,4 +62,21 @@ class FruityRepositoryImpl @Inject constructor(
             ))
         }
     }
+
+    override suspend fun loginUser(loginCredentials: LoginCredentials): Flow<Resource<LoginResult>> =
+        flow {
+            emit(Resource.Loading())
+            try {
+                val response = fruityApi.loginUser(loginCredentials)
+                emit(Resource.Success(data = response))
+            } catch (e: HttpException) {
+                emit(Resource.Error(
+                    message = e.message.toString(),
+                ))
+            } catch (e: IOException) {
+                emit(Resource.Error(
+                    message = e.message.toString(),
+                ))
+            }
+        }
 }

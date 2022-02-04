@@ -11,6 +11,6 @@ data class SignupUser(
 )
 
 @Serializable
-data class Result(
+data class SignupResult(
     val name: String
 )

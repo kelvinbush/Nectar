@@ -71,7 +71,7 @@ fun SplashScreen(
             navController.navigate(BottomNavScreen.Shop.route)
         } else {
             Log.d("SplashScreen: ", "Sign up route")
-            navController.navigate(Screen.SignUp.route)
+            navController.navigate(Screen.Login.route)
         }
     }
 

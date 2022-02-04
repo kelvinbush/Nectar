@@ -63,13 +63,13 @@ class ShopViewModel @Inject constructor(
         val user = Firebase.auth.currentUser
         user?.getIdToken(true)?.addOnSuccessListener {
             viewModelScope.launch {
-                _fUser.value = useCases.loginUseCase(authToken = it.token.toString())
+                /*_fUser.value = useCases.loginUseCase(authToken = it.token.toString())
                 fUser.value?.user?.let { it1 ->
                     Log.d( "login: ", it1.shoppingSession.id)
                     addToCart(item = CartAdd(sessionId = it1.shoppingSession.id,
                         productId = id,
                         quantity = quantity))
-                }
+                }*/
             }
         }
     }

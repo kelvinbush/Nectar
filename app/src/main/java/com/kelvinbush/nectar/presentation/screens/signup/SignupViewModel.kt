@@ -58,7 +58,6 @@ class SignupViewModel @Inject constructor(
     }
 
     fun signup(signup: SignupUser) {
-        Log.d("signup: ", "called")
         viewModelScope.launch {
             useCases.signupUseCase(signup = signup).onEach { result ->
                 viewModelState.update { state ->
