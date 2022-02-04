@@ -17,9 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.ProductDetail
@@ -42,6 +44,15 @@ import com.kelvinbush.nectar.util.Constants.DETAIL_ARGUMENT_KEY
 @ExperimentalMaterialApi
 @Composable
 fun SetUpNavGraph(navController: NavHostController) {
+
+    val detailNavArguments = listOf(
+        navArgument("name") { type = NavType.StringType },
+        navArgument("price") { type = NavType.FloatType },
+        navArgument("imageUrl") { type = NavType.StringType },
+        navArgument("description") { type = NavType.StringType },
+        navArgument("id") { type = NavType.StringType }
+    )
+
     Scaffold(
         bottomBar = { MyBottomNav(navController = navController) }
     ) {
@@ -70,6 +81,7 @@ fun SetUpNavGraph(navController: NavHostController) {
         }
     }
 }
+
 
 @Composable
 fun MyBottomNav(navController: NavHostController) {
