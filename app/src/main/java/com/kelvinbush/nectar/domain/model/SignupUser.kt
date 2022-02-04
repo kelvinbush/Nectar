@@ -1,6 +1,8 @@
 package com.kelvinbush.nectar.domain.model
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SignupUser(
     val name: String,
     val password: String,
@@ -8,8 +10,7 @@ data class SignupUser(
     val email: String,
 )
 
+@Serializable
 data class Result(
-    val name: String,
-    val password: String,
-    val email: String,
+    val name: String
 )
