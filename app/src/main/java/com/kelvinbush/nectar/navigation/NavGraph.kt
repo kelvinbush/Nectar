@@ -44,15 +44,6 @@ import com.kelvinbush.nectar.util.Constants.DETAIL_ARGUMENT_KEY
 @ExperimentalMaterialApi
 @Composable
 fun SetUpNavGraph(navController: NavHostController) {
-
-    val detailNavArguments = listOf(
-        navArgument("name") { type = NavType.StringType },
-        navArgument("price") { type = NavType.FloatType },
-        navArgument("imageUrl") { type = NavType.StringType },
-        navArgument("description") { type = NavType.StringType },
-        navArgument("id") { type = NavType.StringType }
-    )
-
     Scaffold(
         bottomBar = { MyBottomNav(navController = navController) }
     ) {
@@ -60,11 +51,11 @@ fun SetUpNavGraph(navController: NavHostController) {
             composable(route = Screen.Splash.route) { SplashScreen(navController = navController) }
             composable(route = Screen.Login.route) { LoginScreen(navController = navController) }
             composable(route = Screen.Welcome.route) { OnBoardingScreen(navController = navController) }
-            composable(route = BottomNavScreen.Shop.route) { ShopScreen(navController) }
-            composable(route = BottomNavScreen.Explore.route) { ExploreScreen() }
-            composable(route = BottomNavScreen.Cart.route) { MyCart(navController) }
-            composable(route = BottomNavScreen.Favourite.route) { FavouriteScreen() }
-            composable(route = BottomNavScreen.Account.route) { AccountScreen(navController = navController) }
+            composable(route = Screen.Shop.route) { ShopScreen(navController) }
+            composable(route = Screen.Explore.route) { ExploreScreen() }
+            composable(route = Screen.Cart.route) { MyCart(navController) }
+            composable(route = Screen.Favourite.route) { FavouriteScreen() }
+            composable(route = Screen.Account.route) { AccountScreen(navController = navController) }
             composable(route = Screen.Order.route) { OrderScreen(navController = navController) }
             composable(route = Screen.Start.route) { GetStartedScreen(navController = navController) }
             composable(route = "${Screen.Detail.route}/{$DETAIL_ARGUMENT_KEY}") {
@@ -86,11 +77,11 @@ fun SetUpNavGraph(navController: NavHostController) {
 @Composable
 fun MyBottomNav(navController: NavHostController) {
     val bottomItems = listOf(
-        BottomNavScreen.Shop,
-        BottomNavScreen.Explore,
-        BottomNavScreen.Cart,
-        BottomNavScreen.Favourite,
-        BottomNavScreen.Account
+        Screen.Shop,
+        Screen.Explore,
+        Screen.Cart,
+        Screen.Favourite,
+        Screen.Account
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -107,13 +98,13 @@ fun MyBottomNav(navController: NavHostController) {
                     BottomNavigationItem(
                         icon = {
                             Icon(
-                                painterResource(screen.drawableId),
+                                painterResource(screen.drawableId!!),
                                 contentDescription = stringResource(R.string.screen_label)
                             )
                         },
                         label = {
                             Text(
-                                stringResource(screen.resourceId),
+                                stringResource(screen.resourceId!!),
                                 color = if (currentDestination.hierarchy.any {
                                         it.route == screen.route
                                     })
