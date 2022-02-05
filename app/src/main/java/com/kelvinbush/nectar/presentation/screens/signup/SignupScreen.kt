@@ -4,11 +4,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,20 +19,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.SignupUser
 import com.kelvinbush.nectar.navigation.Screen
-import com.kelvinbush.nectar.presentation.components.fieldColors
+import com.kelvinbush.nectar.presentation.components.ButtonLoading
+import com.kelvinbush.nectar.presentation.components.MyTextField
+import com.kelvinbush.nectar.presentation.components.PasswordInput
 
 @Composable
 fun SignupScreen(
@@ -42,6 +37,15 @@ fun SignupScreen(
     signupViewModel: SignupViewModel = hiltViewModel(),
 ) {
     val uiState by signupViewModel.uiState.collectAsState()
+
+    val userSignup = SignupUser(name = uiState.nameInput,
+        passwordConfirmation = uiState.passwordConfirmationInput,
+        password = uiState.passwordInput,
+        email = uiState.emailInput)
+    val btnEnabled = uiState.nameInput.isNotEmpty()
+            && uiState.emailInput.isNotEmpty()
+            && uiState.passwordInput.isNotEmpty()
+            && uiState.passwordInput == uiState.passwordConfirmationInput
 
     val context = LocalContext.current
 
@@ -64,6 +68,7 @@ fun SignupScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 16.dp)
             .background(Color(0xfffcfcfc)),
         horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -73,7 +78,7 @@ fun SignupScreen(
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Sign Up", style = MaterialTheme.typography.h2, modifier = Modifier
-                .fillMaxWidth(0.85f)
+                .fillMaxWidth()
                 .padding(bottom = 6.dp)
         )
         Text(
@@ -81,120 +86,31 @@ fun SignupScreen(
             style = MaterialTheme.typography.h3,
             color = Color(0xff727272),
             textAlign = TextAlign.Start, modifier = Modifier
-                .fillMaxWidth(0.85f)
+                .fillMaxWidth()
                 .padding(bottom = 20.dp)
         )
-        Text(
-            text = "Username", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-        )
-        TextField(
-            value = uiState.nameInput, onValueChange = signupViewModel::onNameInputChanged,
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f),
-            colors = fieldColors(), singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
-            )
-        )
-        Text(
-            text = "Email", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-        )
-        TextField(
-            value = uiState.emailInput, onValueChange = signupViewModel::onEmailInputChanged,
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f),
-            colors = fieldColors(), singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Done
-            )
-        )
-        Text(
-            text = "Password", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-
-        )
-        TextField(
-            value = uiState.passwordInput,
-            onValueChange = signupViewModel::onPasswordInputChanged,
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f)
-                .padding(bottom = 10.dp),
-            colors = fieldColors(),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            visualTransformation = if (uiState.showPassword) VisualTransformation.None
-            else PasswordVisualTransformation(),
-            trailingIcon = {
-                Image(
-                    painter = if (uiState.showPassword)
-                        painterResource(id = R.drawable.ic_visibility_24)
-                    else painterResource(id = R.drawable.ic_visibility_off_24),
-                    contentDescription = null,
-                    modifier = Modifier.clickable {
-                        signupViewModel.toggleShowPassword(!uiState.showPassword)
-                    }
-                )
-            }
-        )
-        Text(
-            text = "Password Confirmation", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-
-        )
-        TextField(
-            value = uiState.passwordConfirmationInput,
-            onValueChange = signupViewModel::onPasswordConfirmationInputChanged,
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f)
-                .padding(bottom = 10.dp),
-            colors = fieldColors(), singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            visualTransformation = if (uiState.showPassword) VisualTransformation.None
-            else PasswordVisualTransformation(),
-            trailingIcon = {
-                Image(
-                    painter = if (uiState.showPassword)
-                        painterResource(id = R.drawable.ic_visibility_24)
-                    else painterResource(id = R.drawable.ic_visibility_off_24),
-                    contentDescription = null,
-                    modifier = Modifier.clickable {
-                        signupViewModel.toggleShowPassword(!uiState.showPassword)
-                    }
-                )
-            }
-        )
+        MyTextField(
+            onInputChanged = signupViewModel::onNameInputChanged,
+            inputText = uiState.nameInput,
+            name = "Name")
+        MyTextField(
+            onInputChanged = signupViewModel::onEmailInputChanged,
+            inputText = uiState.emailInput,
+            name = "Email")
+        PasswordInput(
+            onInputChanged = signupViewModel::onPasswordInputChanged,
+            inputText = uiState.passwordInput,
+            showPassword = uiState.showPassword,
+            toggleShowPassword = signupViewModel::toggleShowPassword,
+            name = "Password")
+        PasswordInput(
+            onInputChanged = signupViewModel::onPasswordConfirmationInputChanged,
+            inputText = uiState.passwordConfirmationInput,
+            showPassword = uiState.showPassword,
+            toggleShowPassword = signupViewModel::toggleShowPassword,
+            name = "Password Confirmation")
         Row(
-            modifier = Modifier.fillMaxWidth(0.85f),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
             Text(text = "By continuing you agree to our ", style = MaterialTheme.typography.h5)
@@ -205,7 +121,7 @@ fun SignupScreen(
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth(0.85f),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
             Text(text = "and ", style = MaterialTheme.typography.h5)
@@ -216,34 +132,18 @@ fun SignupScreen(
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
-            if (!uiState.isLoading) {
-                Button(
-                    onClick = {
-                        val userSignup = SignupUser(name = uiState.nameInput,
-                            passwordConfirmation = uiState.passwordConfirmationInput,
-                            password = uiState.passwordInput,
-                            email = uiState.emailInput)
-                        signupViewModel.signup(userSignup)
-                        Log.d("signupScreen: ", uiState.errorMessage)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .height(60.dp),
-                    shape = RoundedCornerShape(30)
-                ) {
-                    Text(text = "Sign Up", style = MaterialTheme.typography.button)
-                }
-            } else {
-                CircularProgressIndicator()
-            }
-
-        }
-
+        ButtonLoading(
+            name = "Sign Up",
+            isLoading = uiState.isLoading,
+            enabled = btnEnabled,
+            onClicked = {
+                signupViewModel.signup(userSignup)
+                Log.d("signupScreen: ", uiState.errorMessage)
+            })
         Spacer(modifier = Modifier.height(22.dp))
         Row(
             modifier = Modifier
-                .fillMaxWidth(0.85f),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
             Text(

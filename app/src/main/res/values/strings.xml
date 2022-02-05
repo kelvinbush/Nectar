@@ -13,4 +13,5 @@
     <string name="get_groceries">Get your groceries as fast as one hour</string>
     <string name="get_started">Get Started</string>
     <string name="logo">logo</string>
+    <string name="password_visibility">Password visibility</string>
 </resources>
