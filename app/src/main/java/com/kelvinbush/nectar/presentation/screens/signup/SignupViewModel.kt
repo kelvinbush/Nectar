@@ -1,11 +1,11 @@
 package com.kelvinbush.nectar.presentation.screens.signup
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
+import  androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kelvinbush.nectar.domain.model.SignupUser
 import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.util.Resource
+import com.kelvinbush.nectar.util.parseErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -62,13 +62,16 @@ class SignupViewModel @Inject constructor(
             useCases.signupUseCase(signup = signup).onEach { result ->
                 viewModelState.update { state ->
                     when (result) {
-                        is Resource.Success -> state.copy(isLoading = false,
-                            result = result.data?.name ?: "Some result", errorMessage = "")
+                        is Resource.Success -> state.copy(
+                            result = result.data?.name ?: "Some result",
+                        errorMessage = "", isLoading = false)
                         is Resource.Error -> {
-                            state.copy(isLoading = false,
-                                errorMessage = result.message ?: "Some error", result = "")
+                            state.copy(errorMessage = parseErrorMessage(result.message ?: "Error"),
+                                isLoading = false, result = "")
                         }
-                        is Resource.Loading -> state.copy(isLoading = true)
+                        is Resource.Loading -> state.copy(isLoading = true,
+                            errorMessage = "",
+                            result = "")
                     }
                 }
             }.launchIn(this)

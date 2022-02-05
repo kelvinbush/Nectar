@@ -27,8 +27,8 @@ fun Btn(id: Int, text: String, clicked: () -> Unit, color: Color) {
     Button(
         onClick = { clicked() },
         modifier = Modifier
-            .fillMaxWidth(0.85f)
-            .height(70.dp)
+            .fillMaxWidth()
+            .height(60.dp)
             .padding(top = 22.dp),
         shape = RoundedCornerShape(30),
         colors = ButtonDefaults.buttonColors(

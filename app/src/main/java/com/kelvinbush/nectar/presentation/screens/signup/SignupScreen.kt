@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -62,6 +63,8 @@ fun SignupScreen(
                 Toast.LENGTH_SHORT).show()
             navController.popBackStack()
             navController.navigate(Screen.Login.route) { launchSingleTop = true }
+        } else if (uiState.errorMessage.isNotEmpty()) {
+            Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -71,23 +74,23 @@ fun SignupScreen(
             .padding(horizontal = 16.dp)
             .background(Color(0xfffcfcfc)),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
 
         ) {
         Spacer(modifier = Modifier.height(16.dp))
         Image(painter = painterResource(id = R.drawable.ic_min_carrot), contentDescription = null)
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Sign Up", style = MaterialTheme.typography.h2, modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 6.dp)
+            text = "Sign Up",
+            style = MaterialTheme.typography.h2,
+            modifier = Modifier.padding(bottom = 6.dp)
         )
         Text(
             text = "Enter your credentials to continue",
             style = MaterialTheme.typography.h3,
             color = Color(0xff727272),
             textAlign = TextAlign.Start, modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
+                .padding(bottom = 10.dp)
         )
         MyTextField(
             onInputChanged = signupViewModel::onNameInputChanged,
@@ -108,10 +111,10 @@ fun SignupScreen(
             inputText = uiState.passwordConfirmationInput,
             showPassword = uiState.showPassword,
             toggleShowPassword = signupViewModel::toggleShowPassword,
-            name = "Password Confirmation")
-        Row(
+            name = "Confirm Password")
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "By continuing you agree to our ", style = MaterialTheme.typography.h5)
             Text(
@@ -119,11 +122,6 @@ fun SignupScreen(
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.primary
             )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
-        ) {
             Text(text = "and ", style = MaterialTheme.typography.h5)
             Text(
                 text = "Privacy Policy.",
@@ -144,7 +142,8 @@ fun SignupScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Already have an account?",
@@ -155,13 +154,19 @@ fun SignupScreen(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(end = 8.dp)
             )
-            Text(
-                text = "Sign in",
-                style = MaterialTheme.typography.h6,
-                fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colors.primary,
-            )
+            IconButton(
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Login.route) }) {
+                Text(
+                    text = "Sign in",
+                    style = MaterialTheme.typography.h6,
+                    fontFamily = FontFamily(Font(R.font.gilroysemibold,
+                        weight = FontWeight.SemiBold)),
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colors.primary,
+                )
+            }
         }
     }
 }

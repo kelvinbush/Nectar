@@ -20,7 +20,7 @@ class SplashViewModel @Inject constructor(
     val fUser = _fUser
 
     init {
-        login()
+//        login()
     }
 
     fun login() {

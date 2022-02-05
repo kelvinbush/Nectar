@@ -48,7 +48,7 @@ fun PasswordInput(
     TextField(
         modifier = Modifier
             .background(Color.Transparent)
-            .padding(bottom = 10.dp),
+            .padding(bottom = 16.dp),
         value = inputText,
         onValueChange = { onInputChanged(it) },
         textStyle = MaterialTheme.typography.h4,
@@ -78,7 +78,8 @@ fun MyTextField(
         onValueChange = { onInputChanged(it) },
         textStyle = MaterialTheme.typography.h4,
         modifier = Modifier
-            .background(Color.Transparent),
+            .background(Color.Transparent)
+            .padding(bottom = 16.dp),
         colors = fieldColors(),
         singleLine = true,
         keyboardOptions = myKeyboardOptions,

@@ -75,7 +75,7 @@ class FruityRepositoryImpl @Inject constructor(
                 ))
             } catch (e: IOException) {
                 emit(Resource.Error(
-                    message = e.message.toString(),
+                    message = "Couldn't reach server, check your internet connection.",
                 ))
             }
         }

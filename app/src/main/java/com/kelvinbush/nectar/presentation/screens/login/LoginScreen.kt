@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -49,7 +51,6 @@ fun LoginScreen(
         )
     }
 
-
     LaunchedEffect(key1 = uiState.isLoading) {
         if (!uiState.isLoading && uiState.result.isNotEmpty() && uiState.errorMessage.isEmpty()) {
             Toast.makeText(context,
@@ -57,6 +58,8 @@ fun LoginScreen(
                 Toast.LENGTH_SHORT).show()
             navController.popBackStack()
             navController.navigate(Screen.SignUp.route) { launchSingleTop = true }
+        } else if (uiState.errorMessage.isNotEmpty()) {
+            Toast.makeText(context, "Error ${uiState.errorMessage}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -71,20 +74,18 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
 
                 ) {
-                Spacer(modifier = Modifier.fillMaxHeight(0.1f))
                 Image(
+                    modifier = Modifier
+                        .padding(top = 32.dp, bottom = 62.dp),
                     painter = painterResource(id = R.drawable.ic_min_carrot),
-                    contentDescription = null
+                    contentDescription = stringResource(id = R.string.logo)
                 )
-                Spacer(modifier = Modifier.fillMaxHeight(0.13f))
-                Text(modifier = Modifier.fillMaxWidth(),
+                Text(
                     text = "Login", style = MaterialTheme.typography.h2,
                     textAlign = TextAlign.Start
                 )
-
                 Text(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp, top = 20.dp),
+                    .padding(bottom = 16.dp, top = 6.dp),
                     text = "Enter your email and password",
                     style = MaterialTheme.typography.h3,
                     color = Color(0xff727272),
@@ -95,7 +96,6 @@ fun LoginScreen(
                     onInputChanged = loginScreenViewModel::onEmailInputChanged,
                     inputText = uiState.emailInput,
                     name = "Email")
-                Spacer(modifier = Modifier.height(10.dp))
                 PasswordInput(
                     onInputChanged = loginScreenViewModel::onPasswordInputChanged,
                     inputText = uiState.passwordInput,
@@ -123,7 +123,8 @@ fun LoginScreen(
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = "Don't have an account?",
@@ -134,18 +135,24 @@ fun LoginScreen(
                         fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(end = 8.dp)
                     )
-                    Text(
-                        text = "Signup",
-                        style = MaterialTheme.typography.h6,
-                        fontFamily = FontFamily(
-                            Font(
-                                R.font.gilroysemibold,
-                                weight = FontWeight.SemiBold
-                            )
-                        ),
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colors.primary,
-                    )
+                    IconButton(
+                        onClick = {
+                            navController.popBackStack()
+                            navController.navigate(Screen.SignUp.route) { launchSingleTop = true }
+                        }) {
+                        Text(
+                            text = "Signup",
+                            style = MaterialTheme.typography.h6,
+                            fontFamily = FontFamily(
+                                Font(
+                                    R.font.gilroysemibold,
+                                    weight = FontWeight.SemiBold
+                                )
+                            ),
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colors.primary,
+                        )
+                    }
                 }
             }
         }
