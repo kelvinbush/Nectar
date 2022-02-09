@@ -13,7 +13,7 @@ interface FruityApi {
 
 
     @GET("/api/product")
-    suspend fun getAllProducts(@Header("Authorization") authToken: String): AllNetworkProducts
+    suspend fun getAllProducts(): AllNetworkProducts
 
     @POST("/api/getMyCart")
     suspend fun getCart(

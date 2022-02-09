@@ -40,8 +40,6 @@ fun ShopScreen(
         color = Color.Transparent,
         darkIcons = true
     )
-    val user = splashViewModel.fUser.value?.user
-
 
     val state = viewModel.state.value
     val categories = ArrayList<String>()

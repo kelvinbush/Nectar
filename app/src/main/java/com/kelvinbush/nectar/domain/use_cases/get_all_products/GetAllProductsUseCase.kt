@@ -10,15 +10,5 @@ import java.io.IOException
 
 
 class GetAllProductsUseCase(private val repository: FruityRepository) {
-    operator fun invoke(authToken: String): Flow<Resource<AllNetworkProducts>> = flow {
-        try {
-            emit(Resource.Loading())
-            val products = repository.getAllProducts(authToken = authToken)
-            emit(Resource.Success(products))
-        } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
-        }
-    }
+    suspend operator fun invoke() = repository.getAllProducts()
 }

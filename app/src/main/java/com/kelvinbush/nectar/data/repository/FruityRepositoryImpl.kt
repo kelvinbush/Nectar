@@ -23,8 +23,21 @@ class FruityRepositoryImpl @Inject constructor(
         return fruityApi.getCart(authToken = authToken, sessionId = sessionId)
     }
 
-    override suspend fun getAllProducts(authToken: String): AllNetworkProducts {
-        return fruityApi.getAllProducts(authToken = authToken)
+    override suspend fun getAllProducts() = flow {
+        emit(Resource.Loading())
+        try {
+            val response = fruityApi.getAllProducts()
+            emit(Resource.Success(data = response))
+
+        } catch (e: HttpException) {
+            emit(Resource.Error(
+                message = e.message.toString(),
+            ))
+        } catch (e: IOException) {
+            emit(Resource.Error(
+                message = e.message.toString(),
+            ))
+        }
     }
 
     override suspend fun login(authToken: String): FUser {

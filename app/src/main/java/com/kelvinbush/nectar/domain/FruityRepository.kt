@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface FruityRepository {
     suspend fun getCart(authToken: String, sessionId: ShoppingSession): CartItemList
 
-    suspend fun getAllProducts(authToken: String): AllNetworkProducts
+    suspend fun getAllProducts(): Flow<Resource<AllNetworkProducts>>
 
     suspend fun login(authToken: String): FUser
 

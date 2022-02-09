@@ -28,5 +28,5 @@ data class ProductInventory(
 
 @Serializable
 data class AllNetworkProducts(
-    val result: List<NetworkProduct>? = emptyList(),
+    val result: List<NetworkProduct>,
 )

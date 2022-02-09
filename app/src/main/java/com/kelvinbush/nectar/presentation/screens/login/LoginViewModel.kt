@@ -74,7 +74,7 @@ class LoginScreenViewModel @Inject constructor(
             loadingState.emit(LoadingState.error(e.localizedMessage))
         }
     }
-
+    
     fun login(accessToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val token = "Bearer $accessToken"

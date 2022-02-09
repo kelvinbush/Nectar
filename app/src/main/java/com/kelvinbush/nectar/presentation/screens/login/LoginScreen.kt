@@ -138,7 +138,7 @@ fun LoginScreen(
                     IconButton(
                         onClick = {
                             navController.popBackStack()
-                            navController.navigate(Screen.SignUp.route) { launchSingleTop = true }
+                            navController.navigate(Screen.Shop.route) { launchSingleTop = true }
                         }) {
                         Text(
                             text = "Signup",
