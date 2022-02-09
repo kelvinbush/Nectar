@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
 import com.kelvinbush.nectar.ui.theme.orderText
 import com.kelvinbush.nectar.ui.theme.priceTextStyle
@@ -44,7 +44,7 @@ fun OrderScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             onClick = {
-                navController.navigate(BottomNavScreen.Shop.route)
+                navController.navigate(Screen.Shop.route)
                 { launchSingleTop = true }
             },
             colors = ButtonDefaults.buttonColors(

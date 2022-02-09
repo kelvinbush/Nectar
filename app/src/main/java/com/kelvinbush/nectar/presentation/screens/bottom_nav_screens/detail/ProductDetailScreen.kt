@@ -202,7 +202,7 @@ fun ProductDetailScreen(
             ) {
                 Button(
                     onClick = {
-                        shopViewModel.login(id = product.id, quantity = amount)
+//                        shopViewModel.login(id = product.id, quantity = amount)
                         Toast.makeText(context,
                             "${product.name} was added to cart",
                             Toast.LENGTH_SHORT).show()

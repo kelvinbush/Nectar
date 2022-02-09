@@ -24,7 +24,6 @@ import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.CategoryComponent
 import com.kelvinbush.nectar.presentation.components.SearchTextField
 import com.kelvinbush.nectar.presentation.components.ShopHeaderComponent
-import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.util.Constants.DETAIL_ARGUMENT_KEY
 
 @ExperimentalMaterialApi
@@ -32,8 +31,7 @@ import com.kelvinbush.nectar.util.Constants.DETAIL_ARGUMENT_KEY
 @Composable
 fun ShopScreen(
     navController: NavHostController,
-    viewModel: ShopViewModel = hiltViewModel(),
-    splashViewModel: SplashViewModel = hiltViewModel(),
+    shopViewModel: ShopViewModel = hiltViewModel(),
 ) {
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
@@ -41,9 +39,9 @@ fun ShopScreen(
         darkIcons = true
     )
 
-    val state = viewModel.state.value
+    val state by shopViewModel.uiState.collectAsState()
     val categories = ArrayList<String>()
-    state.products.forEach { item ->
+    state.products?.forEach { item ->
         categories.add(item.category.name)
     }
     var searchItem by remember { mutableStateOf("") }
@@ -54,7 +52,7 @@ fun ShopScreen(
             .fillMaxSize()
     ) {
         ShopHeaderComponent()
-        SearchTextField(searchItem = searchItem, changeEvent = { searchItem = it })
+//        SearchTextField(searchItem = searchItem, changeEvent = { searchItem = it })
         Box() {
             LazyColumn(
                 modifier = Modifier
@@ -62,7 +60,7 @@ fun ShopScreen(
                     .padding(start = 16.dp)
                     .fillMaxHeight(0.9f)
             ) {
-                if (state.products.isNotEmpty()) {
+                if (state.products?.isNotEmpty() == true) {
                     item {
                         Image(
                             painter = painterResource(id = R.drawable.carousel_1),
@@ -77,19 +75,19 @@ fun ShopScreen(
                 categories.toSet().forEach { category ->
                     val routeDetails = Screen.Detail.route + "/{$DETAIL_ARGUMENT_KEY}"
                     item {
-                        CategoryComponent(
-                            category = category,
-                            products = state.products,
-                            addItem = { id ->
-                                viewModel.login(id = id, quantity = 1)
-                            },
-                            navigateToDetail = {
-                                navController.currentBackStackEntry?.arguments?.putParcelable(
-                                    DETAIL_ARGUMENT_KEY, it)
-                                navController.navigate(routeDetails) {
-                                    launchSingleTop = true
-                                }
-                            })
+                        state.products?.let {
+                            CategoryComponent(
+                                category = category,
+                                products = it,
+                                addItem = {},
+                                navigateToDetail = {
+                                    navController.currentBackStackEntry?.arguments?.putParcelable(
+                                        DETAIL_ARGUMENT_KEY, it)
+                                    navController.navigate(routeDetails) {
+                                        launchSingleTop = true
+                                    }
+                                })
+                        }
                     }
                 }
             }
