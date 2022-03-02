@@ -33,6 +33,7 @@ class FruityRepositoryImpl @Inject constructor(
             emit(Resource.Error(
                 message = e.message.toString(),
             ))
+
         } catch (e: IOException) {
             emit(Resource.Error(
                 message = e.message.toString(),

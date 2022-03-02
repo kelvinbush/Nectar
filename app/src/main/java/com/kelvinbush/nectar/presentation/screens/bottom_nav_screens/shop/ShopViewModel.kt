@@ -38,10 +38,12 @@ class ShopViewModel @Inject constructor(
             useCases.getAllProductsUseCase().onEach { result ->
                 viewModelState.update { state ->
                     when (result) {
-                        is Resource.Success -> state.copy(products = result.data?.result)
+                        is Resource.Success -> state.copy(products = result.data?.result,
+                            isLoading = false,
+                            error = "")
                         is Resource.Error -> state.copy(error = result.message
-                            ?: "An error occurred")
-                        is Resource.Loading -> state.copy(isLoading = true)
+                            ?: "An error occurred", products = emptyList(), isLoading = false)
+                        is Resource.Loading -> state.copy(isLoading = true, error = "")
                     }
                 }
             }.launchIn(this)

@@ -57,7 +57,7 @@ fun LoginScreen(
                 "User ${uiState.result} login successful",
                 Toast.LENGTH_SHORT).show()
             navController.popBackStack()
-            navController.navigate(Screen.SignUp.route) { launchSingleTop = true }
+            navController.navigate(Screen.Shop.route) { launchSingleTop = true }
         } else if (uiState.errorMessage.isNotEmpty()) {
             Toast.makeText(context, "Error ${uiState.errorMessage}", Toast.LENGTH_SHORT).show()
         }
