@@ -13,14 +13,14 @@ Jetpack compose, authentication with jwt and clean architecture.
 
 ### The final app screens:
 
-<p align="center">
-<img src="images/1.png" width="33%"/>
-<img src="images/2.png" width="33%"/> 
-<img src="images/3.png" width="33%"/> 
-<img src="images/4.png" width="33%"/>
-<img src="images/5.png" width="33%"/> 
-<img src="images/6.png" width="33%"/> 
-</p>
+<div align="center">
+<img src="images/1.png" width="20%"/>
+<img src="images/2.png" width="20%"/> 
+<img src="images/3.png" width="20%"/> 
+<img src="images/4.png" width="20%"/>
+<img src="images/5.png" width="20%"/> 
+<img src="images/6.png" width="20%"/> 
+</div>
 
 * Tech-stack
     * [Kotlin](https://kotlinlang.org/) - a cross-platform, statically typed, general-purpose programming language with type inference.
@@ -44,3 +44,6 @@ Jetpack compose, authentication with jwt and clean architecture.
 - [ ] Adding Paging 3
 - [ ] Adding payment methods
 - [ ] Uploading to Google Playstore
+
+### Attributions
+UI kit designs by [Afsar Hossen](https://dribbble.com/imshuvo97?ref=uistore.design)
