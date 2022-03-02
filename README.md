@@ -1,4 +1,4 @@
-# Nectar 
+# Nectar
 An android ecommerce application for groceries consuming the [Fruity API](https://github.com/kelvinbush/Fruity-S). Using
 Jetpack compose, authentication with jwt and clean architecture.
 
@@ -22,6 +22,7 @@ Jetpack compose, authentication with jwt and clean architecture.
 <img src="images/6.png" width="20%"/> 
 </div>
 
+
 * Tech-stack
     * [Kotlin](https://kotlinlang.org/) - a cross-platform, statically typed, general-purpose programming language with type inference.
     * [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - perform background operations.
@@ -31,7 +32,7 @@ Jetpack compose, authentication with jwt and clean architecture.
         * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - store and manage UI-related data in a lifecycle conscious way.
         * [Compose](https://developer.android.com/jetpack/compose?gclsrc=ds&gclsrc=ds) - build clean modern android UIs.
         * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - dependency injection library for Android that reduces the boilerplate of doing manual dependency
-        * [Navigation component](https://developer.android.com/guide/navigation) - perform complex navigation. 
+        * [Navigation component](https://developer.android.com/guide/navigation) - perform complex navigation.
 
 * Architecture
     * MVVM - Model View View Model
@@ -47,3 +48,29 @@ Jetpack compose, authentication with jwt and clean architecture.
 
 ### Attributions
 UI kit designs by [Afsar Hossen](https://dribbble.com/imshuvo97?ref=uistore.design)
+
+## License
+```
+MIT License 
+
+Copyright (c) 2022 Kelvin Bush
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
