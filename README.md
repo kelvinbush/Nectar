@@ -1,9 +1,9 @@
-#Nectar 
+# Nectar 
 An android ecommerce application for groceries consuming the [Fruity API](https://github.com/kelvinbush/Fruity-S). Using
 Jetpack compose, authentication with jwt and clean architecture.
 
 
-###Features
+### Features
 * User can sign up and register on the app - authentication by jwt provided by the backend ([Fruity API](https://github.com/kelvinbush/Fruity-S)) or via social login.
 * User can explore available products on the shop.
 * User can view details of the product.
@@ -11,7 +11,7 @@ Jetpack compose, authentication with jwt and clean architecture.
 * User can manage products in the cart (Increase or decrease or remove from cart).
 * User can manage their account.
 
-###The final app screens:
+### The final app screens:
 
 <p align="center">
 <img src="images/1.png" width="33%"/>
@@ -37,7 +37,7 @@ Jetpack compose, authentication with jwt and clean architecture.
     * MVVM - Model View View Model
 
 
-###Features under heavy construction
+### Features under heavy construction
 
 - [ ] Adding social login
 - [ ] Implementing search via the API
