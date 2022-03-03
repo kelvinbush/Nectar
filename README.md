@@ -14,7 +14,7 @@ Jetpack compose, authentication with jwt and clean architecture.
 ### The final app screens:
 
 <div align="center">
-<img src="images/1.png" width="20%"/>
+<img src="images/1.png" width="20%" style="object-fit:contain;"/>
 <img src="images/2.png" width="20%"/> 
 <img src="images/3.png" width="20%"/> 
 <img src="images/4.png" width="20%"/>
