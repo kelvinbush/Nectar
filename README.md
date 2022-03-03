@@ -3,13 +3,13 @@ An android ecommerce application for groceries consuming the [Fruity API](https:
 Jetpack compose, authentication with jwt and clean architecture.
 
 
-### Features
-* User can sign up and register on the app - authentication by jwt provided by the backend ([Fruity API](https://github.com/kelvinbush/Fruity-S)) or via social login.
-* User can explore available products on the shop.
-* User can view details of the product.
-* User can add a product to cart.
-* User can manage products in the cart (Increase or decrease or remove from cart).
-* User can manage their account.
+### User stories
+* I can sign up and register on the app - authentication by jwt provided by the backend ([Fruity API](https://github.com/kelvinbush/Fruity-S)) or via social login.
+* I can explore available products on the shop.
+* I can view details of the product.
+* I can add a product to cart.
+* I can manage products in the cart (Increase or decrease or remove from cart).
+* I can manage their account.
 
 ### The final app screens:
 
@@ -38,7 +38,7 @@ Jetpack compose, authentication with jwt and clean architecture.
     * MVVM - Model View View Model
 
 
-### Features under heavy construction
+### Features under heavy development
 
 - [ ] Adding social login
 - [ ] Implementing search via the API
@@ -47,7 +47,7 @@ Jetpack compose, authentication with jwt and clean architecture.
 - [ ] Uploading to Google Playstore
 
 ### Attributions
-UI kit designs by [Afsar Hossen](https://dribbble.com/imshuvo97?ref=uistore.design)
+UI kit design by [Afsar Hossen](https://dribbble.com/imshuvo97?ref=uistore.design)
 
 ## License
 ```
