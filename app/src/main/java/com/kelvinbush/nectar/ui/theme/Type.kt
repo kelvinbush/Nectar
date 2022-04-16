@@ -10,10 +10,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.kelvinbush.nectar.R
 
-// Set of Material typography styles to start with
+private val GilroyFontFamily = FontFamily(
+    Font(R.font.gilroysemibold, weight = FontWeight.SemiBold),
+    Font(R.font.gilroymedium, weight = FontWeight.Medium),
+    Font(R.font.gilroybold, weight = FontWeight.Bold)
+
+)
 val Typography = Typography(
+    defaultFontFamily = GilroyFontFamily,
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     ),
@@ -22,24 +27,21 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         color = Color.White,
         lineHeight = 29.sp,
-        letterSpacing = 16.sp,
-        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold))
+        letterSpacing = 16.sp
     ),
     h3 = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
         color = Color.White,
         lineHeight = 15.sp,
-        letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.Medium))
+        letterSpacing = 0.sp
     ),
     button = TextStyle(
         fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold,
         color = Color.White,
         lineHeight = 18.sp,
-        letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold))
+        letterSpacing = 0.sp
     ),
     h2 = TextStyle(
         fontSize = 26.sp,
@@ -47,7 +49,6 @@ val Typography = Typography(
         color = Color(0xff030303),
         lineHeight = 29.sp,
         letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
         textAlign = TextAlign.Start
     ),
     h4 = TextStyle(
@@ -56,7 +57,6 @@ val Typography = Typography(
         color = Color(0xff030303),
         lineHeight = 29.sp,
         letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
         textAlign = TextAlign.Start
     ),
     caption = TextStyle(
@@ -65,7 +65,6 @@ val Typography = Typography(
         color = Color(0xff828282),
         lineHeight = 0.sp,
         letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
         textAlign = TextAlign.Center
     ),
     h6 = TextStyle(
@@ -74,7 +73,6 @@ val Typography = Typography(
         color = Color(0xff181725),
         lineHeight = 1.08.sp,
         letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.SemiBold)),
         textAlign = TextAlign.End
     ),
     h5 = TextStyle(
@@ -83,7 +81,6 @@ val Typography = Typography(
         color = Color(0xff7c7c7c),
         lineHeight = 1.1.sp,
         letterSpacing = 0.sp,
-        fontFamily = FontFamily(Font(R.font.gilroymedium, weight = FontWeight.Medium)),
         textAlign = TextAlign.Start
     )
 )

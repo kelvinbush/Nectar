@@ -33,7 +33,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.Btn
 import com.kelvinbush.nectar.presentation.components.Leading
 import com.kelvinbush.nectar.presentation.components.fieldColors
@@ -64,7 +64,7 @@ fun GetStartedScreen(
                 viewModel.signWithCredential(credential)
 
                 navController.popBackStack()
-                navController.navigate(BottomNavScreen.Shop.route)
+                navController.navigate(Screen.Shop.route)
 
             } catch (e: ApiException) {
                 Log.w("TAG", "Google sign in failed", e)

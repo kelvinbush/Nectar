@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.ui.theme.BGreen
 
@@ -77,7 +77,7 @@ fun OnBoardingScreen(
             )
             Button(
                 onClick = {
-                    navController.navigate(BottomNavScreen.Shop.route)
+                    navController.navigate(Screen.Shop.route)
                     { launchSingleTop = true }
                     splashViewModel.login()
                     Log.d("SplashScreen: ", user.toString())

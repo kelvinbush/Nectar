@@ -9,11 +9,13 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.domain.model.FUser
+import com.kelvinbush.nectar.domain.model.LoginCredentials
 import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.util.LoadingState
+import com.kelvinbush.nectar.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -24,6 +26,17 @@ private const val TAG = "LoginScreenViewModel"
 class LoginScreenViewModel @Inject constructor(
     private val useCases: UseCases,
 ) : ViewModel() {
+
+
+    private val viewModelState = MutableStateFlow(LoginViewModelState())
+    val uiState = viewModelState
+        .map { it.toUiState() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            viewModelState.value.toUiState()
+        )
+
 
     val loadingState = MutableStateFlow(LoadingState.IDLE)
     private var _idToken = MutableLiveData("")
@@ -61,37 +74,48 @@ class LoginScreenViewModel @Inject constructor(
             loadingState.emit(LoadingState.error(e.localizedMessage))
         }
     }
-
+    
     fun login(accessToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val token = "Bearer $accessToken"
             Log.d(TAG, token)
-            _fUser.value = useCases.loginUseCase(authToken = token)
+//            _fUser.value = useCases.loginUseCase(authToken = token)
         }
     }
 
-
-    fun addCart(id: String, quantity: Int = 1) {
-        val user = Firebase.auth.currentUser
-        user?.getIdToken(true)?.addOnSuccessListener {
-            _idToken.value = it.token
-            val token = "Bearer ${_idToken.value}"
-            val username = user.uid
-            viewModelScope.launch(Dispatchers.IO) {
-//                fruityApi.addToCart(token, CartAdd(username, id, quantity))
-            }
-            Log.d(TAG, "addCart: $id")
+    fun loginUser(loginCredentials: LoginCredentials) {
+        viewModelScope.launch {
+            useCases.loginUseCase(loginCredentials = loginCredentials).onEach { result ->
+                viewModelState.update { state ->
+                    when (result) {
+                        is Resource.Success -> state.copy(isLoading = false,
+                            result = result.data?.user?.name ?: "Some result", errorMessage = "")
+                        is Resource.Error -> {
+                            state.copy(isLoading = false,
+                                errorMessage = result.message ?: "Some error", result = "")
+                        }
+                        is Resource.Loading -> state.copy(isLoading = true)
+                    }
+                }
+            }.launchIn(this)
         }
     }
 
-    fun removeFromCart(id: String) {
-        val user = Firebase.auth.currentUser
-        user?.getIdToken(true)?.addOnSuccessListener {
-            _idToken.value = it.token
-            val token = "Bearer ${_idToken.value}"
-            viewModelScope.launch(Dispatchers.IO) {
-//                fruityApi.deleteFromCart(token, RemoveProduct(id))
-            }
+    fun onEmailInputChanged(emailInput: String) {
+        viewModelState.update {
+            it.copy(emailInput = emailInput)
+        }
+    }
+
+    fun onPasswordInputChanged(passwordInput: String) {
+        viewModelState.update {
+            it.copy(passwordInput = passwordInput)
+        }
+    }
+
+    fun toggleShowPassword(show: Boolean) {
+        viewModelState.update {
+            it.copy(showPassword = show)
         }
     }
 }

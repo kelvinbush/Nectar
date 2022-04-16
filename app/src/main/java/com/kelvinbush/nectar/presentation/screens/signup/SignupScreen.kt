@@ -1,146 +1,120 @@
 package com.kelvinbush.nectar.presentation.screens.signup
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.kelvinbush.nectar.NectarScreen.Login
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.presentation.components.fieldColors
+import com.kelvinbush.nectar.domain.model.SignupUser
+import com.kelvinbush.nectar.navigation.Screen
+import com.kelvinbush.nectar.presentation.components.ButtonLoading
+import com.kelvinbush.nectar.presentation.components.MyTextField
+import com.kelvinbush.nectar.presentation.components.PasswordInput
 
 @Composable
-fun SignupScreen(navController: NavController) {
-    var email by remember { mutableStateOf("") }
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
+fun SignupScreen(
+    navController: NavController,
+    signupViewModel: SignupViewModel = hiltViewModel(),
+) {
+    val uiState by signupViewModel.uiState.collectAsState()
+
+    val userSignup = SignupUser(name = uiState.nameInput,
+        passwordConfirmation = uiState.passwordConfirmationInput,
+        password = uiState.passwordInput,
+        email = uiState.emailInput)
+    val btnEnabled = uiState.nameInput.isNotEmpty()
+            && uiState.emailInput.isNotEmpty()
+            && uiState.passwordInput.isNotEmpty()
+            && uiState.passwordInput == uiState.passwordConfirmationInput
+
+    val context = LocalContext.current
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
         color = Color.Transparent,
         darkIcons = true
     )
+
+    LaunchedEffect(key1 = uiState.isLoading) {
+        if (!uiState.isLoading && uiState.result.isNotEmpty() && uiState.errorMessage.isEmpty()) {
+            Toast.makeText(context,
+                "User ${uiState.result} signed up successfully",
+                Toast.LENGTH_SHORT).show()
+            navController.popBackStack()
+            navController.navigate(Screen.Login.route) { launchSingleTop = true }
+        } else if (uiState.errorMessage.isNotEmpty()) {
+            Toast.makeText(context, uiState.errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 16.dp)
             .background(Color(0xfffcfcfc)),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
 
         ) {
-        Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+        Spacer(modifier = Modifier.height(16.dp))
         Image(painter = painterResource(id = R.drawable.ic_min_carrot), contentDescription = null)
-        Spacer(modifier = Modifier.fillMaxHeight(0.13f))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
-            text = "Sign Up", style = MaterialTheme.typography.h2, modifier = Modifier
-                .fillMaxWidth(0.85f)
-                .padding(bottom = 6.dp)
+            text = "Sign Up",
+            style = MaterialTheme.typography.h2,
+            modifier = Modifier.padding(bottom = 6.dp)
         )
         Text(
             text = "Enter your credentials to continue",
             style = MaterialTheme.typography.h3,
             color = Color(0xff727272),
             textAlign = TextAlign.Start, modifier = Modifier
-                .fillMaxWidth(0.85f)
-                .padding(bottom = 20.dp)
+                .padding(bottom = 10.dp)
         )
-        Text(
-            text = "Username", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-        )
-        TextField(
-            value = username, onValueChange = { username = it },
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f),
-            colors = fieldColors(), singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Done
-            )
-        )
-        Text(
-            text = "Email", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-        )
-        TextField(
-            value = email, onValueChange = { email = it },
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f),
-            colors = fieldColors(), singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Done
-            )
-        )
-        Text(
-            text = "Password", style = MaterialTheme.typography.h3,
-            color = Color(0xff727272),
-            textAlign = TextAlign.Start,
-            lineHeight = 29.sp, modifier = Modifier
-                .fillMaxWidth(0.85f)
-
-        )
-        TextField(
-            value = password, onValueChange = { password = it },
-            textStyle = MaterialTheme.typography.h4,
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(0.85f)
-                .padding(bottom = 10.dp),
-            colors = fieldColors(), singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            visualTransformation = if (showPassword) VisualTransformation.None
-            else PasswordVisualTransformation(),
-            trailingIcon = {
-                Image(
-                    painter = if (showPassword)
-                        painterResource(id = R.drawable.ic_visibility_24)
-                    else painterResource(id = R.drawable.ic_visibility_off_24),
-                    contentDescription = null,
-                    modifier = Modifier.clickable {
-                        showPassword = !showPassword
-                    }
-                )
-            }
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(0.85f),
-            horizontalArrangement = Arrangement.Start
+        MyTextField(
+            onInputChanged = signupViewModel::onNameInputChanged,
+            inputText = uiState.nameInput,
+            name = "Name")
+        MyTextField(
+            onInputChanged = signupViewModel::onEmailInputChanged,
+            inputText = uiState.emailInput,
+            name = "Email")
+        PasswordInput(
+            onInputChanged = signupViewModel::onPasswordInputChanged,
+            inputText = uiState.passwordInput,
+            showPassword = uiState.showPassword,
+            toggleShowPassword = signupViewModel::toggleShowPassword,
+            name = "Password")
+        PasswordInput(
+            onInputChanged = signupViewModel::onPasswordConfirmationInputChanged,
+            inputText = uiState.passwordConfirmationInput,
+            showPassword = uiState.showPassword,
+            toggleShowPassword = signupViewModel::toggleShowPassword,
+            name = "Confirm Password")
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "By continuing you agree to our ", style = MaterialTheme.typography.h5)
             Text(
@@ -148,11 +122,6 @@ fun SignupScreen(navController: NavController) {
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.primary
             )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(0.85f),
-            horizontalArrangement = Arrangement.Start
-        ) {
             Text(text = "and ", style = MaterialTheme.typography.h5)
             Text(
                 text = "Privacy Policy.",
@@ -161,21 +130,20 @@ fun SignupScreen(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(22.dp))
-        Button(
-            onClick = { navController.navigate(Login.name) { launchSingleTop = true } },
-            modifier = Modifier
-                .fillMaxWidth(0.85f)
-                .height(60.dp),
-            shape = RoundedCornerShape(30)
-        ) {
-            Text(text = "Sign Up", style = MaterialTheme.typography.button)
-        }
-
+        ButtonLoading(
+            name = "Sign Up",
+            isLoading = uiState.isLoading,
+            enabled = btnEnabled,
+            onClicked = {
+                signupViewModel.signup(userSignup)
+                Log.d("signupScreen: ", uiState.errorMessage)
+            })
         Spacer(modifier = Modifier.height(22.dp))
         Row(
             modifier = Modifier
-                .fillMaxWidth(0.85f),
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Already have an account?",
@@ -186,14 +154,19 @@ fun SignupScreen(navController: NavController) {
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(end = 8.dp)
             )
-            Text(
-                text = "Sign in",
-                style = MaterialTheme.typography.h6,
-                fontFamily = FontFamily(Font(R.font.gilroysemibold, weight = FontWeight.SemiBold)),
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colors.primary,
-            )
+            IconButton(
+                onClick = {
+                    navController.popBackStack()
+                    navController.navigate(Screen.Login.route) }) {
+                Text(
+                    text = "Sign in",
+                    style = MaterialTheme.typography.h6,
+                    fontFamily = FontFamily(Font(R.font.gilroysemibold,
+                        weight = FontWeight.SemiBold)),
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colors.primary,
+                )
+            }
         }
-
     }
 }

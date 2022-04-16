@@ -20,14 +20,14 @@ class SplashViewModel @Inject constructor(
     val fUser = _fUser
 
     init {
-        login()
+//        login()
     }
 
     fun login() {
         val user = Firebase.auth.currentUser
         user?.getIdToken(true)?.addOnSuccessListener {
             viewModelScope.launch {
-                _fUser.value = useCases.loginUseCase(authToken = it.token.toString())
+//                _fUser.value = useCases.loginUseCase(authToken = it.token.toString())
             }
         }
     }

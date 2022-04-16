@@ -33,7 +33,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.R
-import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.ui.theme.BGreen
 
@@ -63,13 +62,15 @@ fun SplashScreen(
                 delayMillis = 200
             )
         )
-        Log.d("SplashScreen: ", user.toString())
+
 
         navController.popBackStack()
         if (currentUser != null) {
-            navController.navigate(BottomNavScreen.Shop.route)
+            Log.d("SplashScreen: ", "Shop route")
+            navController.navigate(Screen.Shop.route)
         } else {
-            navController.navigate(Screen.Start.route)
+            Log.d("SplashScreen: ", "Sign up route")
+            navController.navigate(Screen.Login.route)
         }
     }
 

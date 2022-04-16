@@ -17,9 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.ProductDetail
@@ -31,6 +33,7 @@ import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.favourite.F
 import com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.shop.ShopScreen
 import com.kelvinbush.nectar.presentation.screens.login.LoginScreen
 import com.kelvinbush.nectar.presentation.screens.order.OrderScreen
+import com.kelvinbush.nectar.presentation.screens.signup.SignupScreen
 import com.kelvinbush.nectar.presentation.screens.splash.SplashScreen
 import com.kelvinbush.nectar.presentation.screens.welcome.GetStartedScreen
 import com.kelvinbush.nectar.presentation.screens.welcome.OnBoardingScreen
@@ -48,11 +51,11 @@ fun SetUpNavGraph(navController: NavHostController) {
             composable(route = Screen.Splash.route) { SplashScreen(navController = navController) }
             composable(route = Screen.Login.route) { LoginScreen(navController = navController) }
             composable(route = Screen.Welcome.route) { OnBoardingScreen(navController = navController) }
-            composable(route = BottomNavScreen.Shop.route) { ShopScreen(navController) }
-            composable(route = BottomNavScreen.Explore.route) { ExploreScreen() }
-            composable(route = BottomNavScreen.Cart.route) { MyCart(navController) }
-            composable(route = BottomNavScreen.Favourite.route) { FavouriteScreen() }
-            composable(route = BottomNavScreen.Account.route) { AccountScreen(navController = navController) }
+            composable(route = Screen.Shop.route) { ShopScreen(navController) }
+            composable(route = Screen.Explore.route) { ExploreScreen() }
+            composable(route = Screen.Cart.route) { MyCart(navController) }
+            composable(route = Screen.Favourite.route) { FavouriteScreen() }
+            composable(route = Screen.Account.route) { AccountScreen(navController = navController) }
             composable(route = Screen.Order.route) { OrderScreen(navController = navController) }
             composable(route = Screen.Start.route) { GetStartedScreen(navController = navController) }
             composable(route = "${Screen.Detail.route}/{$DETAIL_ARGUMENT_KEY}") {
@@ -63,18 +66,22 @@ fun SetUpNavGraph(navController: NavHostController) {
                     ProductDetailScreen(navController = navController, product = product)
                 }
             }
+            composable(route = Screen.SignUp.route) {
+                SignupScreen(navController = navController)
+            }
         }
     }
 }
 
+
 @Composable
 fun MyBottomNav(navController: NavHostController) {
     val bottomItems = listOf(
-        BottomNavScreen.Shop,
-        BottomNavScreen.Explore,
-        BottomNavScreen.Cart,
-        BottomNavScreen.Favourite,
-        BottomNavScreen.Account
+        Screen.Shop,
+        Screen.Explore,
+        Screen.Cart,
+        Screen.Favourite,
+        Screen.Account
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -91,13 +98,13 @@ fun MyBottomNav(navController: NavHostController) {
                     BottomNavigationItem(
                         icon = {
                             Icon(
-                                painterResource(screen.drawableId),
+                                painterResource(screen.drawableId!!),
                                 contentDescription = stringResource(R.string.screen_label)
                             )
                         },
                         label = {
                             Text(
-                                stringResource(screen.resourceId),
+                                stringResource(screen.resourceId!!),
                                 color = if (currentDestination.hierarchy.any {
                                         it.route == screen.route
                                     })
