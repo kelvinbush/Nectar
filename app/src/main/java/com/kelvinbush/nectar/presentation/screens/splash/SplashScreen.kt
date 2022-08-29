@@ -67,9 +67,10 @@ fun SplashScreen(
 
         navController.popBackStack()
         if (currentUser != null) {
+            splashViewModel.login()
             navController.navigate(BottomNavScreen.Shop.route)
         } else {
-            navController.navigate(Screen.Start.route)
+            navController.navigate(Screen.SignUp.route)
         }
     }
 

@@ -1,8 +1,5 @@
 package com.kelvinbush.nectar.presentation.screens.login
 
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,11 +8,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -29,15 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.kelvinbush.nectar.NectarScreen.Start
+import com.kelvinbush.nectar.NectarScreen.Shop
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.navigation.BottomNavScreen
+import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.Btn
 import com.kelvinbush.nectar.presentation.components.fieldColors
 import com.kelvinbush.nectar.util.LoadingState
@@ -47,12 +37,11 @@ fun LoginScreen(
     navController: NavController,
     viewModel: LoginScreenViewModel = hiltViewModel(),
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val uiState by viewModel.uiState
     var showPassword by remember { mutableStateOf(false) }
     val snackBarHostState = remember { SnackbarHostState() }
     val state by viewModel.loadingState.collectAsState()
-    val idToken by viewModel.idToken.observeAsState()
+    /*val idToken by viewModel.idToken.observeAsState()
     val context = LocalContext.current
     val currentUser = Firebase.auth.currentUser
     val fUser by viewModel.fUser.observeAsState()
@@ -75,7 +64,7 @@ fun LoginScreen(
             } catch (e: ApiException) {
                 Log.w("TAG", "Google sign in failed", e)
             }
-        }
+        }*/
 
 
     Scaffold(
@@ -115,7 +104,7 @@ fun LoginScreen(
                         .fillMaxWidth(0.85f)
                 )
                 TextField(
-                    value = email, onValueChange = { email = it },
+                    value = uiState.email, onValueChange = viewModel::onEmailChange,
                     textStyle = MaterialTheme.typography.h4,
                     modifier = Modifier
                         .background(Color.Transparent)
@@ -135,7 +124,7 @@ fun LoginScreen(
 
                 )
                 TextField(
-                    value = password, onValueChange = { password = it },
+                    value = uiState.password, onValueChange = viewModel::onPasswordChange,
                     textStyle = MaterialTheme.typography.h4,
                     modifier = Modifier
                         .background(Color.Transparent)
@@ -151,8 +140,8 @@ fun LoginScreen(
                     trailingIcon = {
                         Image(
                             painter = if (showPassword)
-                                painterResource(id = R.drawable.ic_visibility_24)
-                            else painterResource(id = R.drawable.ic_visibility_off_24),
+                                painterResource(id = R.drawable.ic_visibility_on)
+                            else painterResource(id = R.drawable.ic_visibility_off),
                             contentDescription = null,
                             modifier = Modifier.clickable {
                                 showPassword = !showPassword
@@ -168,14 +157,16 @@ fun LoginScreen(
                 )
                 Button(
                     onClick = {
-                        viewModel.signInWithEmailAndPassword(email.trim(), password.trim())
-                        navController.navigate(Start.name) { launchSingleTop = true }
+                        if (viewModel.onSignInClick()) {
+                            navController.popBackStack()
+                            navController.navigate(BottomNavScreen.Shop.route) { launchSingleTop = true }
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
                         .height(60.dp),
                     shape = RoundedCornerShape(30),
-                    enabled = email.isNotEmpty() && password.isNotEmpty()
+                    enabled = uiState.email.isNotEmpty() && uiState.password.isNotEmpty()
                 ) {
                     Text(text = "Login", style = MaterialTheme.typography.button)
                 }
@@ -184,13 +175,13 @@ fun LoginScreen(
                     id = R.drawable.ic_google,
                     text = "Continue with Google",
                     clicked = {
-                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        /*val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                             .requestIdToken(token)
                             .requestEmail()
                             .build()
 
                         val googleSignInClient = GoogleSignIn.getClient(context, gso)
-                        launcher.launch(googleSignInClient.signInIntent)
+                        launcher.launch(googleSignInClient.signInIntent)*/
                     },
                     color = Color(0xff5383ec)
                 )

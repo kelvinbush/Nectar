@@ -13,4 +13,12 @@
     <string name="get_groceries">Get your groceries as fast as one hour</string>
     <string name="get_started">Get Started</string>
     <string name="logo">logo</string>
+    <string name="password_error">Your password should have at least six digits and include one digit, one lower case letter and one upper case letter.</string>
+    <string name="password_match_error">Passwords do not match.</string>
+    <string name="email_error">Please insert a valid email.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="empty_password_error">Password cannot be empty.</string>
+    <string name="generic_error">Something wrong happened. Please try again.</string>
 </resources>

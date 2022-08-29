@@ -48,6 +48,7 @@ fun GetStartedScreen(
 ) {
     var phoneNumber by remember { mutableStateOf("") }
     val state by viewModel.loadingState.collectAsState()
+    /*
     val idToken by viewModel.idToken.observeAsState()
     val context = LocalContext.current
     val currentUser = Firebase.auth.currentUser
@@ -69,7 +70,7 @@ fun GetStartedScreen(
             } catch (e: ApiException) {
                 Log.w("TAG", "Google sign in failed", e)
             }
-        }
+        }*/
 
     val systemUiController = rememberSystemUiController()
     systemUiController.setSystemBarsColor(
@@ -152,13 +153,13 @@ fun GetStartedScreen(
                 id = R.drawable.ic_google,
                 text = "Continue with Google",
                 clicked = {
-                    val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                   /* val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(token)
                         .requestEmail()
                         .build()
 
                     val googleSignInClient = GoogleSignIn.getClient(context, gso)
-                    launcher.launch(googleSignInClient.signInIntent)
+                    launcher.launch(googleSignInClient.signInIntent)*/
                 },
                 color = Color(0xff5383ec)
             )
