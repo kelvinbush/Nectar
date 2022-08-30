@@ -2,11 +2,11 @@ package com.kelvinbush.nectar.presentation.screens.bottom_nav_screens.cart
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kelvinbush.nectar.domain.model.FUser
 import com.kelvinbush.nectar.domain.model.RemoveProduct
+import com.kelvinbush.nectar.domain.model.UpdateCart
 import com.kelvinbush.nectar.domain.model.service.AccountService
 import com.kelvinbush.nectar.domain.use_cases.UseCases
 import com.kelvinbush.nectar.util.Resource
@@ -59,6 +59,13 @@ class CartViewModel @Inject constructor(
     fun removeFromCart(item: RemoveProduct) {
         viewModelScope.launch {
             useCases.removeCartUseCase(accountService.getIdToken(), item = item)
+            getCartItems()
+        }
+    }
+
+    fun updateCart(item: UpdateCart) {
+        viewModelScope.launch {
+            useCases.updateCartUseCase(accountService.getIdToken(), item)
             getCartItems()
         }
     }

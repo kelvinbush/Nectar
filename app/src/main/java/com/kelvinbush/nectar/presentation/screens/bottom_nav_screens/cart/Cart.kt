@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,9 +25,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.domain.model.CartProduct
 import com.kelvinbush.nectar.domain.model.RemoveProduct
+import com.kelvinbush.nectar.domain.model.UpdateCart
 import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.navigation.Screen
-import com.kelvinbush.nectar.presentation.screens.splash.SplashViewModel
 import com.kelvinbush.nectar.ui.theme.headerTextStyle
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
 import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
@@ -66,7 +65,9 @@ fun MyCart(
                 state.items.forEach { item ->
                     item {
                         CartItem(item = item,
-                            remove = { cartViewModel.removeFromCart(RemoveProduct(it)) })
+                            remove = { cartViewModel.removeFromCart(RemoveProduct(it)) },
+                            update = { cartViewModel.updateCart(it) }
+                        )
                         Divider(
                             color = Color(0xFFB3B3B3),
                             modifier = Modifier
@@ -128,7 +129,7 @@ fun MyCart(
 
 
 @Composable
-fun CartItem(item: CartProduct, remove: (String) -> Unit) {
+fun CartItem(item: CartProduct, remove: (String) -> Unit, update: (item: UpdateCart) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -171,7 +172,7 @@ fun CartItem(item: CartProduct, remove: (String) -> Unit) {
                             color = Color(0xFFB3B3B3)
                         ),
                     enabled = item.quantity > 1,
-                    onClick = { /*TODO*/ }) {
+                    onClick = { update(UpdateCart(item.id, item.quantity - 1)) }) {
                     Icon(
                         modifier = Modifier
                             .width(17.dp)
@@ -194,7 +195,7 @@ fun CartItem(item: CartProduct, remove: (String) -> Unit) {
                             width = 1.dp,
                             color = Color(0xFFB3B3B3)
                         ),
-                    onClick = { /*TODO*/ }
+                    onClick = { update(UpdateCart(item.id, item.quantity + 1)) }
                 ) {
                     Icon(
                         modifier = Modifier
