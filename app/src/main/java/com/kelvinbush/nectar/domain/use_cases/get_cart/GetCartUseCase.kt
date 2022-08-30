@@ -11,12 +11,11 @@ import java.io.IOException
 
 class GetCartUseCase(private val repository: FruityRepository) {
     operator fun invoke(
-        authToken: String,
-        sessionId: ShoppingSession,
+        authToken: String
     ): Flow<Resource<CartItemList>> = flow {
         try {
             emit(Resource.Loading())
-            val items = repository.getCart(authToken = authToken, sessionId = sessionId)
+            val items = repository.getCart(authToken = authToken)
             emit(Resource.Success(items))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))

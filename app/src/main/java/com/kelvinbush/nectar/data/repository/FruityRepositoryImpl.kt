@@ -14,8 +14,8 @@ import javax.inject.Inject
 class FruityRepositoryImpl @Inject constructor(
     private val fruityApi: FruityApi,
 ) : FruityRepository {
-    override suspend fun getCart(authToken: String, sessionId: ShoppingSession): CartItemList {
-        return fruityApi.getCart(authToken = authToken, sessionId = sessionId)
+    override suspend fun getCart(authToken: String): CartItemList {
+        return fruityApi.getCart(authToken = authToken)
     }
 
     override suspend fun getAllProducts(authToken: String): AllNetworkProducts {
@@ -29,13 +29,13 @@ class FruityRepositoryImpl @Inject constructor(
     override suspend fun addToCart(authToken: String, item: CartAdd) =
         fruityApi.addToCart(authToken, item)
 
-    override suspend fun getIdToken():String = withContext(Dispatchers.Unconfined) {
-            Log.d( "getIdTokenReWith: ", "Token")
-            val user = Firebase.auth.currentUser
-            user?.getIdToken(true)?.addOnSuccessListener {
-                Log.d("getIdToken: ", "User${user.displayName}")
-            }.let { withContext(Dispatchers.Unconfined){ it?.result?.token.toString()} }
-        }
+    override suspend fun getIdToken(): String = withContext(Dispatchers.Unconfined) {
+        Log.d("getIdTokenReWith: ", "Token")
+        val user = Firebase.auth.currentUser
+        user?.getIdToken(true)?.addOnSuccessListener {
+            Log.d("getIdToken: ", "User${user.displayName}")
+        }.let { withContext(Dispatchers.Unconfined) { it?.result?.token.toString() } }
+    }
 
     override suspend fun removeFromCart(authToken: String, item: RemoveProduct) {
         fruityApi.deleteFromCart(authToken = authToken, item = item)

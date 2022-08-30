@@ -83,7 +83,7 @@ fun ShopScreen(
                             category = category,
                             products = state.products,
                             addItem = { id ->
-                                viewModel.login(id = id, quantity = 1)
+                                viewModel.addToCart(id = id, quantity = 1)
                             },
                             navigateToDetail = {
                                 navController.currentBackStackEntry?.arguments?.putParcelable(

@@ -3,7 +3,7 @@ package com.kelvinbush.nectar.domain
 import com.kelvinbush.nectar.domain.model.*
 
 interface FruityRepository {
-    suspend fun getCart(authToken: String, sessionId: ShoppingSession): CartItemList
+    suspend fun getCart(authToken: String): CartItemList
 
     suspend fun getAllProducts(authToken: String): AllNetworkProducts
 
