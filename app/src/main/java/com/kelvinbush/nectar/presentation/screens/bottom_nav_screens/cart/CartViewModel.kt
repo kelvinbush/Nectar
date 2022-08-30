@@ -59,6 +59,8 @@ class CartViewModel @Inject constructor(
     fun removeFromCart(item: RemoveProduct) {
         viewModelScope.launch {
             useCases.removeCartUseCase(accountService.getIdToken(), item = item)
+            getCartItems()
         }
+
     }
 }
