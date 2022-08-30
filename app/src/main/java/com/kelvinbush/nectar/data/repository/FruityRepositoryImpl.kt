@@ -40,4 +40,8 @@ class FruityRepositoryImpl @Inject constructor(
     override suspend fun removeFromCart(authToken: String, item: RemoveProduct) {
         fruityApi.deleteFromCart(authToken = authToken, item = item)
     }
+
+    override suspend fun updateCart(authToken: String, item: UpdateCart) {
+        fruityApi.updateCart(authToken = authToken, item = item)
+    }
 }

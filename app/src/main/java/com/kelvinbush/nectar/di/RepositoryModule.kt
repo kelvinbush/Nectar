@@ -10,6 +10,7 @@ import com.kelvinbush.nectar.domain.use_cases.get_cart.GetCartUseCase
 import com.kelvinbush.nectar.domain.use_cases.get_id_token.GetIdToken
 import com.kelvinbush.nectar.domain.use_cases.login.LoginUseCase
 import com.kelvinbush.nectar.domain.use_cases.remove_from_cart.RemoveCartUseCase
+import com.kelvinbush.nectar.domain.use_cases.update_cart.UpdateCartUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,6 +36,7 @@ object RepositoryModule {
             loginUseCase = LoginUseCase(repository = repository),
             addToCartUseCase = AddToCartUseCase(repository = repository),
             getIdToken = GetIdToken(repository = repository),
-            removeCartUseCase = RemoveCartUseCase(repository = repository)
+            removeCartUseCase = RemoveCartUseCase(repository = repository),
+            updateCartUseCase = UpdateCartUseCase(repository = repository)
         )
 }

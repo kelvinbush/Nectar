@@ -61,6 +61,5 @@ class CartViewModel @Inject constructor(
             useCases.removeCartUseCase(accountService.getIdToken(), item = item)
             getCartItems()
         }
-
     }
 }

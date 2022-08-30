@@ -14,4 +14,6 @@ interface FruityRepository {
     suspend fun getIdToken(): String
 
     suspend fun removeFromCart(authToken: String, item: RemoveProduct)
+
+    suspend fun updateCart(authToken: String, item: UpdateCart)
 }

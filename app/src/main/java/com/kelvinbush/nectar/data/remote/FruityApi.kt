@@ -27,4 +27,10 @@ interface FruityApi {
         @Header("Authorization") authToken: String,
         @Body item: RemoveProduct,
     )
+
+    @POST("/api/updateCart")
+    suspend fun updateCart(
+        @Header("Authorization") authToken: String,
+        @Body item: UpdateCart,
+    )
 }

@@ -37,7 +37,6 @@ import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
 fun MyCart(
     navController: NavHostController,
     cartViewModel: CartViewModel = hiltViewModel(),
-    splashViewModel: SplashViewModel = hiltViewModel(),
 ) {
     val state = cartViewModel.state.value
 
@@ -46,8 +45,6 @@ fun MyCart(
         color = Color.Transparent,
         darkIcons = true
     )
-
-    val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {

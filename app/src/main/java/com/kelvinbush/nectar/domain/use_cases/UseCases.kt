@@ -6,6 +6,7 @@ import com.kelvinbush.nectar.domain.use_cases.get_cart.GetCartUseCase
 import com.kelvinbush.nectar.domain.use_cases.get_id_token.GetIdToken
 import com.kelvinbush.nectar.domain.use_cases.login.LoginUseCase
 import com.kelvinbush.nectar.domain.use_cases.remove_from_cart.RemoveCartUseCase
+import com.kelvinbush.nectar.domain.use_cases.update_cart.UpdateCartUseCase
 
 data class UseCases(
     val getCartUseCase: GetCartUseCase,
@@ -13,5 +14,6 @@ data class UseCases(
     val loginUseCase: LoginUseCase,
     val addToCartUseCase: AddToCartUseCase,
     val getIdToken: GetIdToken,
-    val removeCartUseCase: RemoveCartUseCase
+    val removeCartUseCase: RemoveCartUseCase,
+    val updateCartUseCase: UpdateCartUseCase
 )
