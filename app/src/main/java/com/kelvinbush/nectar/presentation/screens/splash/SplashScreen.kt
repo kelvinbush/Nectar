@@ -70,7 +70,7 @@ fun SplashScreen(
             splashViewModel.login()
             navController.navigate(BottomNavScreen.Shop.route)
         } else {
-            navController.navigate(Screen.SignUp.route)
+            navController.navigate(Screen.Login.route)
         }
     }
 

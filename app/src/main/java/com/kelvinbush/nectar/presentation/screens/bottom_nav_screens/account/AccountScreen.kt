@@ -14,13 +14,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.kelvinbush.nectar.R
+import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.ui.theme.itemNameTextStyle
 import com.kelvinbush.nectar.ui.theme.itemPriceTextStyle
@@ -103,8 +103,10 @@ fun AccountScreen(navController: NavHostController) {
                 Toast
                     .makeText(context, "Logging you out", Toast.LENGTH_SHORT)
                     .show()
-                navController.navigate(Screen.Start.route) {
-                    popUpTo(navController.graph.findStartDestination().id) { inclusive = true }
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(BottomNavScreen.Account.route) {
+                        inclusive = true
+                    }
                 }
             },
             colors = ButtonDefaults.buttonColors(

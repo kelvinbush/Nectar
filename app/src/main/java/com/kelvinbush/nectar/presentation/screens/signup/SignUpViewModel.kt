@@ -38,31 +38,37 @@ class SignUpViewModel @Inject constructor(
         uiState.value = uiState.value.copy(repeatPassword = newValue)
     }
 
-    fun onSignUpClick(): Boolean {
+    fun onSignUpClick() {
         if (!email.isValidEmail()) {
-            SnackbarManager.showMessage(AppText.email_error)
-            return false
+            uiState.value =
+                uiState.value.copy(hasError = true, error = "Please enter a valid email")
         }
 
         if (!password.isValidPassword()) {
             SnackbarManager.showMessage(AppText.password_error)
-            return false
+            uiState.value =
+                uiState.value.copy(hasError = true,
+                    error = "Your password should have at least six digits and include one digit, one lower case letter and one upper case letter.")
         }
 
         if (!password.passwordMatches(uiState.value.repeatPassword)) {
-            SnackbarManager.showMessage(AppText.password_match_error)
-            return false
+            uiState.value =
+                uiState.value.copy(hasError = true, error = "Password do not match")
         }
-        var check = ""
         viewModelScope.launch() {
             accountService.createAccount(email, password) { error ->
                 if (error == null) {
-                    check = "Check"
+                    uiState.value = uiState.value.copy(isAuthenticated = true, hasError = false)
                 } else {
-                    Log.d(TAG, "onSignUpClick: $error")
+                    if (error.message.toString().contains("The password is invalid")) {
+                        uiState.value = uiState.value.copy(hasError = true,
+                            error = "Invalid Username or Password")
+                    } else {
+                        uiState.value = uiState.value.copy(hasError = true,
+                            error = error.message.toString())
+                    }
                 }
             }
         }
-        return check.isNotEmpty()
     }
 }

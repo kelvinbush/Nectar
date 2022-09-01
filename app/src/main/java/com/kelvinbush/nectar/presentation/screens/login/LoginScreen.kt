@@ -24,51 +24,41 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.kelvinbush.nectar.NectarScreen.Shop
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.kelvinbush.nectar.R
 import com.kelvinbush.nectar.navigation.BottomNavScreen
 import com.kelvinbush.nectar.navigation.Screen
 import com.kelvinbush.nectar.presentation.components.Btn
 import com.kelvinbush.nectar.presentation.components.fieldColors
-import com.kelvinbush.nectar.util.LoadingState
 
 @Composable
 fun LoginScreen(
     navController: NavController,
     viewModel: LoginScreenViewModel = hiltViewModel(),
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
 ) {
     val uiState by viewModel.uiState
     var showPassword by remember { mutableStateOf(false) }
-    val snackBarHostState = remember { SnackbarHostState() }
-    val state by viewModel.loadingState.collectAsState()
-    /*val idToken by viewModel.idToken.observeAsState()
-    val context = LocalContext.current
-    val currentUser = Firebase.auth.currentUser
-    val fUser by viewModel.fUser.observeAsState()
-    val token = "1094590299473-1edm1h1dmpo1cq64p95ne4lvre6jp2u7.apps.googleusercontent.com"
-
-    // Equivalent of onActivityResult
-    val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            try {
-                val account = task.getResult(ApiException::class.java)!!
-                val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-                viewModel.signWithCredential(credential)
-                if (currentUser != null) {
-                    if (fUser != null) {
-                        navController.popBackStack()
-                        navController.navigate(BottomNavScreen.Shop.route)
-                    }
+    if (uiState.hasError) {
+        LaunchedEffect(scaffoldState.snackbarHostState) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = uiState.error
+            )
+        }
+    } else if (uiState.isAuthenticated) {
+        LaunchedEffect(key1 = null) {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = "Logging you in"
+            )
+            navController.navigate(BottomNavScreen.Shop.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    inclusive = true
                 }
-            } catch (e: ApiException) {
-                Log.w("TAG", "Google sign in failed", e)
             }
-        }*/
+        }
+    }
 
-
-    Scaffold(
-        scaffoldState = rememberScaffoldState(snackbarHostState = snackBarHostState),
+    Scaffold(scaffoldState = scaffoldState,
         content = {
             Column(
                 modifier = Modifier
@@ -157,10 +147,7 @@ fun LoginScreen(
                 )
                 Button(
                     onClick = {
-                        if (viewModel.onSignInClick()) {
-                            navController.popBackStack()
-                            navController.navigate(BottomNavScreen.Shop.route) { launchSingleTop = true }
-                        }
+                        viewModel.onSignInClick()
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
@@ -183,7 +170,7 @@ fun LoginScreen(
                         val googleSignInClient = GoogleSignIn.getClient(context, gso)
                         launcher.launch(googleSignInClient.signInIntent)*/
                     },
-                    color = Color(0xff5383ec)
+                    color = Color(0xff5383ec),
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
@@ -211,19 +198,15 @@ fun LoginScreen(
                         ),
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colors.primary,
+                        modifier = Modifier.clickable {
+                            navController.navigate(Screen.SignUp.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    inclusive = true
+                                }
+                            }
+                        }
                     )
                 }
-                when (state.status) {
-                    LoadingState.Status.SUCCESS -> {
-                        Text(text = "Success")
-                    }
-                    LoadingState.Status.FAILED -> {
-                        Text(text = state.msg ?: "Error")
-                    }
-                    else -> {
-                    }
-                }
-
             }
         }
     )
