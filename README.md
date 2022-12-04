@@ -1,3 +1,4 @@
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=kelvinbush&repo=nectar)](https://github.com/kelvinbush/Nectar)
 # Nectar
 An android ecommerce application for groceries consuming the [Fruity API](https://github.com/kelvinbush/Fruity-S). Using
 Jetpack compose, authentication with jwt and clean architecture.
